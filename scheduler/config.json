@@ -1,0 +1,53 @@
+{
+  "api": {
+    "electricitymap_key": "YOUR_API_KEY_HERE",
+    "cache_ttl_seconds": 300
+  },
+  "regions": {
+    "IN": {
+      "name": "India",
+      "flag": "🇮🇳",
+      "cloud_function_url": "",
+      "enabled": true
+    },
+    "FI": {
+      "name": "Finland",
+      "flag": "🇫🇮",
+      "cloud_function_url": "",
+      "enabled": true
+    },
+    "DE": {
+      "name": "Germany",
+      "flag": "🇩🇪",
+      "cloud_function_url": "",
+      "enabled": true
+    },
+    "JP": {
+      "name": "Japan",
+      "flag": "🇯🇵",
+      "cloud_function_url": "",
+      "enabled": true
+    },
+    "AU-NSW": {
+      "name": "New South Wales, Australia",
+      "flag": "🇦🇺",
+      "cloud_function_url": "",
+      "enabled": true
+    },
+    "BR-CS": {
+      "name": "Central-South Brazil",
+      "flag": "🇧🇷",
+      "cloud_function_url": "",
+      "enabled": true
+    }
+  },
+  "firestore": {
+    "collection": "carbon_logs",
+    "project_id": ""
+  },
+  "scheduler": {
+    "check_interval_minutes": 15,
+    "retry_attempts": 3,
+    "retry_delay_seconds": 5
+  }
+}
