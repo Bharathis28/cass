@@ -1,0 +1,6 @@
+# CASS-Lite v2 - Worker Function Dependencies
+# Python 3.11+
+
+# Flask (required for Cloud Functions)
+flask==3.0.0
+functions-framework==3.5.0

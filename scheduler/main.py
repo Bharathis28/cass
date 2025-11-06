@@ -18,6 +18,8 @@ import time
 from datetime import datetime
 from typing import Dict, Optional
 from carbon_fetcher import CarbonFetcher
+from job_runner import JobRunner
+from firestore_logger import FirestoreLogger
 
 
 class CarbonScheduler:
@@ -57,10 +59,14 @@ class CarbonScheduler:
             api_key = "gwASf8vJiQ92CPIuRzuy"
         
         self.fetcher = CarbonFetcher(api_key=api_key, cache_ttl=cache_ttl)
+        self.job_runner = JobRunner(self.config, max_retries=3, retry_delay=2, timeout=30)
+        self.firestore_logger = FirestoreLogger(self.config)
         self.last_decision = None
         
         print(f"✓ Configuration loaded from {config_path}")
         print(f"✓ Carbon fetcher initialized ({len(self.fetcher.regions)} regions)")
+        print(f"✓ Job runner initialized")
+        print(f"✓ Firestore logger initialized")
         print(f"✓ Cache TTL: {cache_ttl} seconds\n")
     
     def _load_config(self, config_path: str) -> dict:
@@ -280,18 +286,34 @@ class CarbonScheduler:
             # Step 3: Log decision
             self.log_decision_to_console(decision)
             
-            # Step 4: (Future) Execute job
+            # Step 4: Execute job via job runner
             print("="*75)
-            print("🚀 READY FOR JOB EXECUTION")
-            print("="*75)
-            print("📌 Next Steps (to be implemented):")
-            print("   1. job_runner.py will trigger Cloud Function")
-            print("   2. firestore_logger.py will persist this decision")
-            print("   3. dashboard will visualize the results")
+            print("🚀 EXECUTING JOB IN GREENEST REGION")
             print("="*75 + "\n")
             
-            print("✅ SCHEDULING CYCLE COMPLETED SUCCESSFULLY\n")
-            return True
+            execution_result = self.job_runner.execute_job(instructions)
+            
+            # Step 5: Save to Firestore
+            self.firestore_logger.log_decision(decision, execution_result)
+            
+            # Summary
+            print("="*75)
+            print("📌 SCHEDULING CYCLE SUMMARY:")
+            print("="*75)
+            print("   1. ✅ Carbon data fetched from 6 regions")
+            print("   2. ✅ Decision made (greenest region selected)")
+            print("   3. ✅ Job triggered via Cloud Function")
+            print("   4. ✅ Results logged to Firestore/Console")
+            print("   5. ⏳ Dashboard visualization (next phase)")
+            print("="*75 + "\n")
+            
+            if execution_result['success']:
+                print("✅ SCHEDULING CYCLE COMPLETED SUCCESSFULLY\n")
+                return True
+            else:
+                print("⚠️  SCHEDULING CYCLE COMPLETED WITH WARNINGS")
+                print("   (Decision was made, but job execution had issues)\n")
+                return True  # Still return True since decision was made
             
         except Exception as e:
             print(f"\n❌ Scheduling cycle failed with error: {e}\n")

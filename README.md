@@ -39,13 +39,13 @@ cass-lite-v2/
 ├── scheduler/           # Core scheduling logic
 │   ├── main.py         # ✅ Scheduler decision engine (DONE)
 │   ├── carbon_fetcher.py   # ✅ Carbon API integration (DONE)
-│   ├── job_runner.py   # Cloud Function trigger (TODO)
-│   ├── firestore_logger.py # Database logging (TODO)
+│   ├── job_runner.py   # ✅ Cloud Function trigger (DONE)
+│   ├── firestore_logger.py # ✅ Database logging (DONE)
 │   └── config.json     # ✅ Configuration (DONE)
 │
 ├── cloud_functions/    # Serverless workers
-│   ├── worker_job/     # (TODO)
-│   └── scheduler_function/ # (TODO)
+│   ├── worker_job/     # ✅ Worker function (DONE)
+│   └── scheduler_function/ # ✅ Scheduler function (DONE)
 │
 ├── dashboard/          # Streamlit analytics
 │   ├── app.py          # (TODO)
@@ -89,11 +89,27 @@ cass-lite-v2/
 - Job instruction preparation
 - Complete scheduling cycle orchestration
 
-### 🚧 Phase 3: Execution (IN PROGRESS)
-- Cloud Function triggering
-- Firestore logging
+### ✅ Phase 3: Job Execution (COMPLETE)
+- Cloud Function triggering with retries
+- HTTP POST requests to worker functions
+- Response handling and validation
+
+### ✅ Phase 4: Database Logging (COMPLETE)
+- Firestore integration
+- Decision persistence
+- Historical data queries
+- Statistics computation
+
+### ✅ Phase 5: Cloud Deployment (COMPLETE)
+- Scheduler Cloud Function
+- Worker Cloud Function
+- Deployment scripts (bash)
+- Multi-region support
+
+### 🚧 Phase 6: Visualization (IN PROGRESS)
 - Streamlit dashboard
-- Automated deployment scripts
+- Real-time analytics
+- Carbon savings visualization
 
 ---
 
@@ -109,22 +125,24 @@ cass-lite-v2/
 
 ---
 
-## �🛠️ Development Progress
+## ️ Development Progress
 
-### ✅ Completed
+### ✅ Completed (11/13 files = 85%)
 - [x] Carbon fetcher module with 6 regions
 - [x] Configuration system (config.json)
 - [x] Dependencies defined
 - [x] Main scheduler decision engine
+- [x] Job runner (Cloud Function HTTP trigger)
+- [x] Firestore logger (database persistence)
+- [x] Scheduler Cloud Function
+- [x] Worker Cloud Function
+- [x] Deployment scripts (scheduler & worker)
 - [x] Console logging
 - [x] Job instruction preparation
 
-### 🚧 In Progress
-- [ ] Job runner (Cloud Function trigger)
-- [ ] Firestore logger (database persistence)
-- [ ] Cloud Functions (worker jobs)
-- [ ] Streamlit dashboard (visualization)
-- [ ] Deployment scripts
+### 🚧 Remaining (Phase 6)
+- [ ] Streamlit dashboard (app.py)
+- [ ] Dashboard utilities (utils.py)
 
 ---
 
