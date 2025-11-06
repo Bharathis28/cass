@@ -22,8 +22,21 @@ Date: November 2025
 import json
 import time
 from datetime import datetime
+import random
+
+# Import functions_framework - will be available in Cloud Functions runtime
+try:
+    import functions_framework
+except ImportError:
+    # For local testing - create a mock decorator
+    class MockFramework:
+        @staticmethod
+        def http(func):
+            return func
+    functions_framework = MockFramework()
 
 
+@functions_framework.http
 def run_worker_job(request):
     """
     HTTP Cloud Function entry point for worker job execution.

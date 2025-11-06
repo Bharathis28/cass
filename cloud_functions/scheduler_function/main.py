@@ -20,12 +20,24 @@ import sys
 import os
 from datetime import datetime
 
+# Import functions_framework - will be available in Cloud Functions runtime
+try:
+    import functions_framework
+except ImportError:
+    # For local testing - create a mock decorator
+    class MockFramework:
+        @staticmethod
+        def http(func):
+            return func
+    functions_framework = MockFramework()
+
 # Add parent directories to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../scheduler'))
 
 from main import CarbonScheduler
 
 
+@functions_framework.http
 def run_scheduler(request):
     """
     HTTP Cloud Function entry point for scheduling.
