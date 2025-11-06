@@ -45,6 +45,18 @@ st.markdown("""
         font-family: 'Rajdhani', sans-serif;
     }
     
+    /* Ensure Streamlit columns are uniform */
+    [data-testid="column"] {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    [data-testid="column"] > div {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
     /* Hero Header */
     .hero-header {
         background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
@@ -112,6 +124,10 @@ st.markdown("""
         box-shadow: 0 4px 20px rgba(0, 255, 255, 0.15);
         transition: all 0.3s ease;
         height: 100%;
+        min-height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
     
     .metric-card:hover {
@@ -138,12 +154,18 @@ st.markdown("""
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 0.3rem;
+        line-height: 1.2;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
     }
     
     .metric-delta {
         font-size: 0.85rem;
         color: #9333ea;
         font-weight: 500;
+        min-height: 24px;
     }
     
     /* Chart Container */
@@ -260,7 +282,7 @@ def render_hero():
         <h1 class="hero-title">CASS-Lite v2</h1>
         <p class="hero-subtitle">Carbon-Aware Cloud Intelligence Dashboard</p>
         <div class="carbon-ticker">
-            ⚡ Optimizing workloads for a sustainable cloud future ⚡
+             Optimizing workloads for a sustainable cloud future 
         </div>
     </div>
     """, unsafe_allow_html=True)
