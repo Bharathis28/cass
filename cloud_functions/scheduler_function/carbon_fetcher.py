@@ -39,12 +39,12 @@ class CarbonFetcher:
         
         # Define supported regions (6 working zones with flags)
         self.regions = {
-            "IN": {"name": "India", "flag": "🇮🇳"},
-            "FI": {"name": "Finland", "flag": "🇫🇮"},
-            "DE": {"name": "Germany", "flag": "🇩🇪"},
-            "JP": {"name": "Japan", "flag": "🇯🇵"},
-            "AU-NSW": {"name": "New South Wales, Australia", "flag": "🇦🇺"},
-            "BR-CS": {"name": "Central-South Brazil", "flag": "🇧🇷"}
+            "IN": {"name": "India", "flag": ""},
+            "FI": {"name": "Finland", "flag": ""},
+            "DE": {"name": "Germany", "flag": ""},
+            "JP": {"name": "Japan", "flag": ""},
+            "AU-NSW": {"name": "New South Wales, Australia", "flag": ""},
+            "BR-CS": {"name": "Central-South Brazil", "flag": ""}
         }
     
     def fetch_carbon_intensity(self, zone: str, use_cache: bool = True) -> Optional[Dict]:
@@ -144,7 +144,7 @@ class CarbonFetcher:
         results = {}
         
         print(f"\n{'='*70}")
-        print(f"🌍 FETCHING CARBON INTENSITY DATA FROM {len(self.regions)} REGIONS")
+        print(f" FETCHING CARBON INTENSITY DATA FROM {len(self.regions)} REGIONS")
         print(f"{'='*70}")
         
         for i, zone in enumerate(self.regions.keys(), 1):
@@ -154,7 +154,7 @@ class CarbonFetcher:
         # Display detailed results table with colorized output
         if display_details:
             print(f"\n{'='*75}")
-            print(f"📊 CARBON INTENSITY REPORT - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            print(f" CARBON INTENSITY REPORT - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
             print(f"{'='*75}")
             print(f"{'Region':<38} {'Carbon':<18} {'Time':<10}")
             print(f"{'-'*75}")
@@ -244,17 +244,17 @@ class CarbonFetcher:
         
         # Display recommendation with colorized output
         print(f"\n{'='*75}")
-        print(f"🎯 DEPLOYMENT RECOMMENDATION")
+        print(f" DEPLOYMENT RECOMMENDATION")
         print(f"{'='*75}")
-        print(f"✅ Recommended Region: {result['flag']} {result['name']} ({result['zone']})")
-        print(f"🌱 Carbon Intensity: {result['carbonIntensity']} gCO₂/kWh")
-        print(f"💰 Savings vs Average: {savings} gCO₂/kWh ({round((savings/avg_carbon)*100, 1)}% reduction)")
-        print(f"📊 Compared across {len(valid_regions)} regions (avg: {round(avg_carbon)} gCO₂/kWh)")
+        print(f" Recommended Region: {result['flag']} {result['name']} ({result['zone']})")
+        print(f" Carbon Intensity: {result['carbonIntensity']} gCO₂/kWh")
+        print(f" Savings vs Average: {savings} gCO₂/kWh ({round((savings/avg_carbon)*100, 1)}% reduction)")
+        print(f" Compared across {len(valid_regions)} regions (avg: {round(avg_carbon)} gCO₂/kWh)")
         
         # Show failed regions if any
         failed_count = len(self.regions) - len(valid_regions)
         if failed_count > 0:
-            print(f"⚠️  Note: {failed_count} region(s) failed to fetch data")
+            print(f"  Note: {failed_count} region(s) failed to fetch data")
         
         print(f"{'='*75}\n")
         
@@ -286,17 +286,17 @@ class CarbonFetcher:
         comparison.sort(key=lambda x: x['carbonIntensity'])
         
         print(f"\n{'='*75}")
-        print("🏆 CARBON INTENSITY RANKING (Cleanest → Dirtiest)")
+        print(" CARBON INTENSITY RANKING (Cleanest → Dirtiest)")
         print(f"{'='*75}")
         for i, region in enumerate(comparison, 1):
             if i == 1:
-                medal = "🥇"
+                medal = ""
                 marker = "← BEST"
             elif i == 2:
-                medal = "🥈"
+                medal = ""
                 marker = ""
             elif i == 3:
-                medal = "🥉"
+                medal = ""
                 marker = ""
             else:
                 medal = f"{i}."
@@ -323,7 +323,7 @@ class CarbonFetcher:
             {
                 'zone': 'FI',
                 'name': 'Finland',
-                'flag': '🇫🇮',
+                'flag': '',
                 'carbonIntensity': 40,
                 'savings': 254,
                 'averageCarbon': 294
@@ -382,7 +382,7 @@ if __name__ == "__main__":
     API_KEY = "gwASf8vJiQ92CPIuRzuy"
     
     if API_KEY == "YOUR_API_KEY_HERE":
-        print("\n⚠️  WARNING: Please add your ElectricityMap API key first!")
+        print("\n  WARNING: Please add your ElectricityMap API key first!")
         print("   Get one at: https://api-portal.electricitymap.org/")
         print("   Then update the API_KEY variable in this file.\n")
     else:

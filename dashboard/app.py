@@ -25,8 +25,7 @@ from utils import (
 # ============================================================================
 
 st.set_page_config(
-    page_title="🌍 CASS-Lite v2 - Carbon Intelligence",
-    page_icon="🌱",
+    page_title="CASS-Lite v2 - Carbon Intelligence",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -125,9 +124,10 @@ st.markdown("""
         font-size: 0.9rem;
         color: #00ffaa;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: 600;
+        letter-spacing: 1.5px;
+        font-weight: 700;
         margin-bottom: 0.5rem;
+        text-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
     }
     
     .metric-value {
@@ -257,7 +257,7 @@ st.markdown("""
 def render_hero():
     st.markdown("""
     <div class="hero-header">
-        <h1 class="hero-title">🌍 CASS-Lite v2</h1>
+        <h1 class="hero-title">CASS-Lite v2</h1>
         <p class="hero-subtitle">Carbon-Aware Cloud Intelligence Dashboard</p>
         <div class="carbon-ticker">
             ⚡ Optimizing workloads for a sustainable cloud future ⚡
@@ -275,7 +275,7 @@ def render_metrics(stats):
     with col1:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-label">🌱 Avg Carbon Intensity</div>
+            <div class="metric-label">Avg Carbon Intensity</div>
             <div class="metric-value">{stats['avg_carbon']:.1f}</div>
             <div class="metric-delta">gCO₂/kWh</div>
         </div>
@@ -284,7 +284,7 @@ def render_metrics(stats):
     with col2:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-label">⚡ Carbon Savings</div>
+            <div class="metric-label">Carbon Savings</div>
             <div class="metric-value">{stats['savings_percent']:.1f}%</div>
             <div class="metric-delta">vs Average</div>
         </div>
@@ -293,7 +293,7 @@ def render_metrics(stats):
     with col3:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-label">🌏 Greenest Region</div>
+            <div class="metric-label">Greenest Region</div>
             <div class="metric-value">{stats['greenest_region']}</div>
             <div class="metric-delta">{stats['greenest_flag']}</div>
         </div>
@@ -302,7 +302,7 @@ def render_metrics(stats):
     with col4:
         st.markdown(f"""
         <div class="metric-card">
-            <div class="metric-label">💾 Total Decisions</div>
+            <div class="metric-label">Total Decisions</div>
             <div class="metric-value">{stats['total_decisions']}</div>
             <div class="metric-delta">Last 7 days</div>
         </div>
@@ -314,7 +314,7 @@ def render_metrics(stats):
 
 def render_carbon_intensity_chart(data):
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-    st.markdown('<h3 class="chart-title">📊 Real-Time Carbon Intensity by Region</h3>', unsafe_allow_html=True)
+    st.markdown('<h3 class="chart-title">Real-Time Carbon Intensity by Region</h3>', unsafe_allow_html=True)
     
     fig = go.Figure()
     
@@ -366,7 +366,7 @@ def render_carbon_intensity_chart(data):
 
 def render_region_frequency_chart(data):
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-    st.markdown('<h3 class="chart-title">🏆 Greenest Region Selection Frequency</h3>', unsafe_allow_html=True)
+    st.markdown('<h3 class="chart-title">Greenest Region Selection Frequency</h3>', unsafe_allow_html=True)
     
     region_counts = data['region'].value_counts().reset_index()
     region_counts.columns = ['region', 'count']
@@ -423,7 +423,7 @@ def render_region_frequency_chart(data):
 
 def render_savings_gauge(savings_percent):
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-    st.markdown('<h3 class="chart-title">💰 Carbon Savings Achievement</h3>', unsafe_allow_html=True)
+    st.markdown('<h3 class="chart-title">Carbon Savings Achievement</h3>', unsafe_allow_html=True)
     
     fig = go.Figure(go.Indicator(
         mode="gauge+number+delta",
@@ -466,7 +466,7 @@ def render_savings_gauge(savings_percent):
 
 def render_logs_table(logs_df):
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-    st.markdown('<h3 class="chart-title">📋 Recent Scheduling Decisions</h3>', unsafe_allow_html=True)
+    st.markdown('<h3 class="chart-title">Recent Scheduling Decisions</h3>', unsafe_allow_html=True)
     
     if not logs_df.empty:
         # Format the dataframe for display
@@ -475,7 +475,7 @@ def render_logs_table(logs_df):
         
         # Add status badges
         display_df['status'] = display_df['status'].apply(
-            lambda x: '✅ Success' if x == 'success' else '⚠️ Warning'
+            lambda x: '✅ Success' if x == 'success' else 'Warning'
         )
         
         st.dataframe(
@@ -497,9 +497,9 @@ def render_footer():
     st.markdown("""
     <div class="footer">
         <p>Built with <span class="footer-icon">❤️</span> by <strong>Bharathi Senthilkumar</strong></p>
-        <p>🌍 Powered by Google Cloud | ⚡ ElectricityMap API | 🔥 Firestore</p>
+        <p> Powered by Google Cloud /p>
         <p style="font-size: 0.8rem; color: #7f00ff; margin-top: 1rem;">
-            Making the cloud greener, one decision at a time 🌱
+            Making the cloud greener, one decision at a time 
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -514,36 +514,36 @@ def main():
     
     # Sidebar controls
     with st.sidebar:
-        st.markdown("### ⚙️ Dashboard Controls")
+        st.markdown("### Dashboard Controls")
         
-        auto_refresh = st.checkbox("🔄 Auto-refresh", value=False)
+        auto_refresh = st.checkbox(" Auto-refresh", value=False)
         refresh_interval = st.slider("Refresh interval (seconds)", 5, 60, 10)
         
         st.markdown("---")
-        st.markdown("### 📊 Data Range")
+        st.markdown("###  Data Range")
         days_filter = st.selectbox("Show last", [1, 3, 7, 14, 30], index=2)
         
         st.markdown("---")
-        st.markdown("### 🎯 Quick Actions")
+        st.markdown("###  Quick Actions")
         
-        if st.button("🚀 Trigger Scheduler"):
+        if st.button(" Trigger Scheduler"):
             st.info("Triggering scheduler function...")
             # Add logic to call Cloud Function
         
-        if st.button("🔄 Refresh Data"):
+        if st.button(" Refresh Data"):
             st.rerun()
         
         st.markdown("---")
-        st.markdown("### 📌 Project Info")
+        st.markdown("###  Project Info")
         st.markdown("""
         **Project:** CASS-Lite v2  
         **Version:** 2.0.0  
-        **Status:** 🟢 Active  
+        **Status:**  Active  
         **Region:** asia-south1  
         """)
     
     # Fetch data
-    with st.spinner("🔄 Loading carbon intelligence data..."):
+    with st.spinner(" Loading carbon intelligence data..."):
         stats = get_summary_stats(days=days_filter)
         recent_logs = fetch_recent_decisions(limit=50)
         

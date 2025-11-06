@@ -50,7 +50,7 @@ class JobRunner:
         self.timeout = timeout
         
         print("="*75)
-        print("🚀 JOB RUNNER INITIALIZED")
+        print(" JOB RUNNER INITIALIZED")
         print("="*75)
         print(f"✓ Max Retries: {self.max_retries}")
         print(f"✓ Retry Delay: {self.retry_delay}s")
@@ -71,7 +71,7 @@ class JobRunner:
         url = region_config.get('cloud_function_url', '')
         
         if not url:
-            print(f"⚠️  No Cloud Function URL configured for region {region}")
+            print(f"  No Cloud Function URL configured for region {region}")
             # Generate placeholder URL for demonstration
             url = f"https://{region.lower()}-worker.cloudfunctions.net/execute"
             print(f"   Using placeholder: {url}")
@@ -90,16 +90,16 @@ class JobRunner:
             Tuple of (success: bool, response_data: dict or None)
         """
         print("\n" + "="*75)
-        print("🎯 TRIGGERING CLOUD FUNCTION")
+        print(" TRIGGERING CLOUD FUNCTION")
         print("="*75)
-        print(f"📍 Region: {region}")
+        print(f" Region: {region}")
         print(f"📦 Task ID: {payload.get('task_id', 'N/A')}")
-        print(f"⏰ Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f" Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         
         # Get Cloud Function URL
         function_url = self.get_function_url(region)
         if not function_url:
-            print("❌ Cannot trigger function: No URL available")
+            print(" Cannot trigger function: No URL available")
             return False, None
         
         print(f"🔗 URL: {function_url}")
@@ -107,7 +107,7 @@ class JobRunner:
         
         # Attempt to trigger with retries
         for attempt in range(1, self.max_retries + 1):
-            print(f"🔄 Attempt {attempt}/{self.max_retries}...")
+            print(f" Attempt {attempt}/{self.max_retries}...")
             
             try:
                 # Send POST request
@@ -129,27 +129,27 @@ class JobRunner:
                 success, response_data = self.handle_response(response, elapsed_time)
                 
                 if success:
-                    print(f"✅ Function triggered successfully (attempt {attempt})")
+                    print(f" Function triggered successfully (attempt {attempt})")
                     return True, response_data
                 else:
-                    print(f"⚠️  Function returned error (attempt {attempt})")
+                    print(f"  Function returned error (attempt {attempt})")
                     
                     # Retry if not last attempt
                     if attempt < self.max_retries:
                         print(f"⏳ Retrying in {self.retry_delay} seconds...\n")
                         time.sleep(self.retry_delay)
                     else:
-                        print("❌ All retry attempts exhausted")
+                        print(" All retry attempts exhausted")
                         return False, response_data
             
             except requests.exceptions.Timeout:
-                print(f"⏱️  Request timeout (>{self.timeout}s)")
+                print(f"  Request timeout (>{self.timeout}s)")
                 
                 if attempt < self.max_retries:
                     print(f"⏳ Retrying in {self.retry_delay} seconds...\n")
                     time.sleep(self.retry_delay)
                 else:
-                    print("❌ All retry attempts exhausted")
+                    print(" All retry attempts exhausted")
                     return False, {'error': 'timeout', 'message': 'Request timed out'}
             
             except requests.exceptions.ConnectionError as e:
@@ -159,21 +159,21 @@ class JobRunner:
                     print(f"⏳ Retrying in {self.retry_delay} seconds...\n")
                     time.sleep(self.retry_delay)
                 else:
-                    print("❌ All retry attempts exhausted")
+                    print(" All retry attempts exhausted")
                     return False, {'error': 'connection_error', 'message': str(e)}
             
             except requests.exceptions.RequestException as e:
-                print(f"❌ Request failed: {str(e)[:100]}")
+                print(f" Request failed: {str(e)[:100]}")
                 
                 if attempt < self.max_retries:
                     print(f"⏳ Retrying in {self.retry_delay} seconds...\n")
                     time.sleep(self.retry_delay)
                 else:
-                    print("❌ All retry attempts exhausted")
+                    print(" All retry attempts exhausted")
                     return False, {'error': 'request_exception', 'message': str(e)}
             
             except Exception as e:
-                print(f"❌ Unexpected error: {str(e)[:100]}")
+                print(f" Unexpected error: {str(e)[:100]}")
                 return False, {'error': 'unexpected', 'message': str(e)}
         
         return False, None
@@ -192,8 +192,8 @@ class JobRunner:
         print("\n" + "="*75)
         print("📨 CLOUD FUNCTION RESPONSE")
         print("="*75)
-        print(f"⏱️  Response Time: {elapsed_time} ms")
-        print(f"📊 Status Code: {response.status_code}")
+        print(f"  Response Time: {elapsed_time} ms")
+        print(f" Status Code: {response.status_code}")
         
         # Parse response body
         try:
@@ -206,7 +206,7 @@ class JobRunner:
         
         # Check status code
         if response.status_code == 200:
-            print("✅ Status: SUCCESS (200 OK)")
+            print(" Status: SUCCESS (200 OK)")
             print(f"📦 Response Data:")
             
             # Pretty print response
@@ -220,34 +220,34 @@ class JobRunner:
             return True, response_data
         
         elif response.status_code == 404:
-            print("❌ Status: NOT FOUND (404)")
+            print(" Status: NOT FOUND (404)")
             print("   The Cloud Function URL does not exist")
-            print("   💡 Tip: Update config.json with correct URL or deploy function")
+            print("    Tip: Update config.json with correct URL or deploy function")
             print("="*75 + "\n")
             return False, {'error': 'not_found', 'status_code': 404, 'data': response_data}
         
         elif response.status_code == 403:
-            print("❌ Status: FORBIDDEN (403)")
+            print(" Status: FORBIDDEN (403)")
             print("   Authentication or permission error")
-            print("   💡 Tip: Check IAM permissions for the Cloud Function")
+            print("    Tip: Check IAM permissions for the Cloud Function")
             print("="*75 + "\n")
             return False, {'error': 'forbidden', 'status_code': 403, 'data': response_data}
         
         elif response.status_code == 500:
-            print("❌ Status: INTERNAL SERVER ERROR (500)")
+            print(" Status: INTERNAL SERVER ERROR (500)")
             print("   Cloud Function encountered an error")
             print(f"   Error: {response_data}")
             print("="*75 + "\n")
             return False, {'error': 'server_error', 'status_code': 500, 'data': response_data}
         
         elif response.status_code == 503:
-            print("❌ Status: SERVICE UNAVAILABLE (503)")
+            print(" Status: SERVICE UNAVAILABLE (503)")
             print("   Cloud Function is temporarily unavailable")
             print("="*75 + "\n")
             return False, {'error': 'unavailable', 'status_code': 503, 'data': response_data}
         
         else:
-            print(f"⚠️  Status: UNEXPECTED ({response.status_code})")
+            print(f"  Status: UNEXPECTED ({response.status_code})")
             print(f"   Response: {response_data}")
             print("="*75 + "\n")
             return False, {'error': 'unexpected_status', 'status_code': response.status_code, 'data': response_data}
@@ -279,17 +279,17 @@ class JobRunner:
             }
         """
         print("\n" + "="*75)
-        print("⚡ EXECUTING JOB")
+        print(" EXECUTING JOB")
         print("="*75)
         
         target_region = instructions.get('target_region')
         payload = instructions.get('payload', {})
         metadata = instructions.get('metadata', {})
         
-        print(f"🎯 Target Region: {target_region}")
+        print(f" Target Region: {target_region}")
         print(f"📦 Task ID: {payload.get('task_id', 'N/A')}")
-        print(f"🌱 Carbon Intensity: {payload.get('carbon_intensity', 'N/A')} gCO₂/kWh")
-        print(f"💡 Reason: {payload.get('reason', 'N/A')}")
+        print(f" Carbon Intensity: {payload.get('carbon_intensity', 'N/A')} gCO₂/kWh")
+        print(f" Reason: {payload.get('reason', 'N/A')}")
         print("="*75)
         
         # Trigger the function
@@ -310,16 +310,16 @@ class JobRunner:
         # Final status
         print("\n" + "="*75)
         if success:
-            print("✅ JOB EXECUTION SUCCESSFUL")
+            print(" JOB EXECUTION SUCCESSFUL")
             print("="*75)
-            print(f"🎯 Region: {target_region}")
-            print(f"⏱️  Total Time: {execution_time} ms")
+            print(f" Region: {target_region}")
+            print(f"  Total Time: {execution_time} ms")
             print(f"✓ Task Completed Successfully")
         else:
-            print("❌ JOB EXECUTION FAILED")
+            print(" JOB EXECUTION FAILED")
             print("="*75)
-            print(f"🎯 Region: {target_region}")
-            print(f"⏱️  Total Time: {execution_time} ms")
+            print(f" Region: {target_region}")
+            print(f"  Total Time: {execution_time} ms")
             print(f"✗ Task Failed After {self.max_retries} Attempts")
             if response_data:
                 print(f"   Error: {response_data.get('error', 'Unknown')}")
@@ -350,7 +350,7 @@ if __name__ == "__main__":
         with open('config.json', 'r', encoding='utf-8') as f:
             config = json.load(f)
     except FileNotFoundError:
-        print("⚠️  config.json not found, using test configuration")
+        print("  config.json not found, using test configuration")
         config = {
             'regions': {
                 'FI': {
@@ -382,7 +382,7 @@ if __name__ == "__main__":
         }
     }
     
-    print("\n📋 Sample Job Instructions Created:")
+    print("\n Sample Job Instructions Created:")
     print(f"   Region: {sample_instructions['target_region']}")
     print(f"   Task ID: {sample_instructions['payload']['task_id']}")
     print(f"   Carbon: {sample_instructions['payload']['carbon_intensity']} gCO₂/kWh\n")
@@ -392,7 +392,7 @@ if __name__ == "__main__":
     
     # Display result
     print("\n" + "="*75)
-    print("📊 EXECUTION RESULT")
+    print(" EXECUTION RESULT")
     print("="*75)
     print(f"Success: {result['success']}")
     print(f"Region: {result['region']}")
@@ -401,10 +401,10 @@ if __name__ == "__main__":
     print("="*75)
     
     if result['success']:
-        print("\n✅ Job Runner test completed successfully!")
+        print("\n Job Runner test completed successfully!")
     else:
-        print("\n⚠️  Job Runner test completed with errors")
-        print("💡 Note: This is expected if Cloud Functions are not deployed yet")
+        print("\n  Job Runner test completed with errors")
+        print(" Note: This is expected if Cloud Functions are not deployed yet")
         print("   The runner is working correctly - URLs just need to be deployed!")
     
     print("\n" + "="*75)

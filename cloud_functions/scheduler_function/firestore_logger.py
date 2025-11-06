@@ -49,7 +49,7 @@ class FirestoreLogger:
                 }
         """
         print("\n" + "="*75)
-        print("🗄️  INITIALIZING FIRESTORE LOGGER")
+        print("  INITIALIZING FIRESTORE LOGGER")
         print("="*75)
         
         self.config = config
@@ -61,7 +61,7 @@ class FirestoreLogger:
         try:
             self._initialize_client()
         except Exception as e:
-            print(f"⚠️  Could not initialize Firestore client: {str(e)[:100]}")
+            print(f"  Could not initialize Firestore client: {str(e)[:100]}")
             print("   Logger will operate in console-only mode")
             print("="*75 + "\n")
     
@@ -82,7 +82,7 @@ class FirestoreLogger:
             credentials_path = firestore_config.get('credentials_path', '')
             
             if not project_id:
-                print("⚠️  No Firestore project_id configured")
+                print("  No Firestore project_id configured")
                 print("   Update config.json with your GCP project ID")
                 print("   Operating in console-only mode")
                 print("="*75 + "\n")
@@ -100,7 +100,7 @@ class FirestoreLogger:
                     )
                     print(f"✓ Credentials loaded from: {credentials_path}")
                 except FileNotFoundError:
-                    print(f"⚠️  Credentials file not found: {credentials_path}")
+                    print(f"  Credentials file not found: {credentials_path}")
                     print("   Attempting default authentication...")
                     self.client = firestore.Client(project=project_id)
             else:
@@ -112,19 +112,19 @@ class FirestoreLogger:
             self.client.collection(self.collection_name).limit(1).get()
             
             self.connected = True
-            print(f"✅ Connected to Firestore successfully!")
+            print(f" Connected to Firestore successfully!")
             print(f"   Project: {project_id}")
             print(f"   Collection: {self.collection_name}")
             print("="*75 + "\n")
             
         except ImportError:
-            print("⚠️  google-cloud-firestore package not installed")
+            print("  google-cloud-firestore package not installed")
             print("   Install with: pip install google-cloud-firestore")
             print("   Operating in console-only mode")
             print("="*75 + "\n")
         
         except Exception as e:
-            print(f"⚠️  Firestore connection failed: {str(e)[:150]}")
+            print(f"  Firestore connection failed: {str(e)[:150]}")
             print("   Operating in console-only mode")
             print("="*75 + "\n")
     
@@ -154,11 +154,11 @@ class FirestoreLogger:
             True if logged successfully, False otherwise
         """
         print("\n" + "="*75)
-        print("💾 LOGGING DECISION TO FIRESTORE")
+        print(" LOGGING DECISION TO FIRESTORE")
         print("="*75)
         
         if not self.connected or not self.client:
-            print("⚠️  Firestore not connected - logging to console only")
+            print("  Firestore not connected - logging to console only")
             self._log_to_console(decision_data, execution_result)
             print("="*75 + "\n")
             return False
@@ -194,21 +194,21 @@ class FirestoreLogger:
             doc_ref = self.client.collection(self.collection_name).add(log_doc)
             doc_id = doc_ref[1].id
             
-            print(f"✅ Decision logged successfully!")
+            print(f" Decision logged successfully!")
             print(f"   Document ID: {doc_id}")
             print(f"   Region: {log_doc['region_flag']} {log_doc['selected_region']}")
             print(f"   Carbon: {log_doc['carbon_intensity']} gCO₂/kWh")
             print(f"   Savings: {log_doc['savings_gco2']} gCO₂/kWh ({log_doc['savings_percent']}%)")
             
             if execution_result:
-                status = "✅ Success" if execution_result.get('success') else "❌ Failed"
+                status = " Success" if execution_result.get('success') else " Failed"
                 print(f"   Execution: {status}")
             
             print("="*75 + "\n")
             return True
         
         except Exception as e:
-            print(f"❌ Failed to log to Firestore: {str(e)[:150]}")
+            print(f" Failed to log to Firestore: {str(e)[:150]}")
             print("   Falling back to console logging...")
             self._log_to_console(decision_data, execution_result)
             print("="*75 + "\n")
@@ -222,7 +222,7 @@ class FirestoreLogger:
             decision_data: Decision information
             execution_result: Optional execution result
         """
-        print("\n📋 CONSOLE LOG (Firestore unavailable):")
+        print("\n CONSOLE LOG (Firestore unavailable):")
         print(f"   Timestamp: {decision_data.get('timestamp')}")
         print(f"   Region: {decision_data.get('region_flag', '')} {decision_data.get('selected_region')} - {decision_data.get('region_name')}")
         print(f"   Carbon: {decision_data.get('carbon_intensity')} gCO₂/kWh")
@@ -244,11 +244,11 @@ class FirestoreLogger:
             List of decision dictionaries, ordered by timestamp (newest first)
         """
         print("\n" + "="*75)
-        print(f"📊 FETCHING RECENT DECISIONS (last {limit})")
+        print(f" FETCHING RECENT DECISIONS (last {limit})")
         print("="*75)
         
         if not self.connected or not self.client:
-            print("⚠️  Firestore not connected - no historical data available")
+            print("  Firestore not connected - no historical data available")
             print("="*75 + "\n")
             return []
         
@@ -265,11 +265,11 @@ class FirestoreLogger:
             for doc in docs:
                 decisions.append(doc.to_dict())
             
-            print(f"✅ Retrieved {len(decisions)} decision(s)")
+            print(f" Retrieved {len(decisions)} decision(s)")
             
             # Display summary
             if decisions:
-                print("\n📋 Recent Decisions:")
+                print("\n Recent Decisions:")
                 for i, dec in enumerate(decisions[:5], 1):  # Show first 5
                     print(f"   {i}. {dec.get('region_flag', '')} {dec.get('selected_region')} - {dec.get('carbon_intensity')} gCO₂/kWh ({dec.get('timestamp', 'N/A')[:10]})")
             
@@ -277,7 +277,7 @@ class FirestoreLogger:
             return decisions
         
         except Exception as e:
-            print(f"❌ Failed to fetch decisions: {str(e)[:150]}")
+            print(f" Failed to fetch decisions: {str(e)[:150]}")
             print("="*75 + "\n")
             return []
     
@@ -300,11 +300,11 @@ class FirestoreLogger:
             }
         """
         print("\n" + "="*75)
-        print(f"📈 COMPUTING SUMMARY STATISTICS (last {days} days)")
+        print(f" COMPUTING SUMMARY STATISTICS (last {days} days)")
         print("="*75)
         
         if not self.connected or not self.client:
-            print("⚠️  Firestore not connected - no statistics available")
+            print("  Firestore not connected - no statistics available")
             print("="*75 + "\n")
             return {}
         
@@ -323,7 +323,7 @@ class FirestoreLogger:
             decisions = [doc.to_dict() for doc in docs]
             
             if not decisions:
-                print(f"⚠️  No decisions found in the last {days} days")
+                print(f"  No decisions found in the last {days} days")
                 print("="*75 + "\n")
                 return {
                     'total_decisions': 0,
@@ -362,8 +362,8 @@ class FirestoreLogger:
             }
             
             # Display statistics
-            print(f"✅ Statistics computed successfully!")
-            print(f"\n📊 Summary (last {days} days):")
+            print(f" Statistics computed successfully!")
+            print(f"\n Summary (last {days} days):")
             print(f"   Total Decisions: {stats['total_decisions']}")
             print(f"   Avg Carbon Intensity: {stats['avg_carbon_intensity']} gCO₂/kWh")
             print(f"   Most Frequent Region: {stats['most_frequent_region']} ({stats['most_frequent_region_count']} times)")
@@ -372,7 +372,7 @@ class FirestoreLogger:
             if stats['success_rate'] is not None:
                 print(f"   Execution Success Rate: {stats['success_rate']}%")
             
-            print("\n🌍 Region Distribution:")
+            print("\n Region Distribution:")
             for region, count in region_counter.most_common():
                 percent = (count / total_decisions * 100)
                 print(f"   {region}: {count} times ({percent:.1f}%)")
@@ -381,7 +381,7 @@ class FirestoreLogger:
             return stats
         
         except Exception as e:
-            print(f"❌ Failed to compute statistics: {str(e)[:150]}")
+            print(f" Failed to compute statistics: {str(e)[:150]}")
             print("="*75 + "\n")
             return {}
     
@@ -412,16 +412,16 @@ if __name__ == "__main__":
     4. Computing statistics
     """
     
-    print("\n" + "🗄️ " * 25)
+    print("\n" + " " * 25)
     print("   CASS-LITE v2 - FIRESTORE LOGGER TEST")
-    print("🗄️ " * 25 + "\n")
+    print(" " * 25 + "\n")
     
     # Load config
     try:
         with open('config.json', 'r', encoding='utf-8') as f:
             config = json.load(f)
     except FileNotFoundError:
-        print("⚠️  config.json not found, using test configuration")
+        print("  config.json not found, using test configuration")
         config = {
             'firestore': {
                 'project_id': '',
@@ -436,7 +436,7 @@ if __name__ == "__main__":
     # Display connection status
     status = logger.get_connection_status()
     print("="*75)
-    print("📊 CONNECTION STATUS")
+    print(" CONNECTION STATUS")
     print("="*75)
     print(f"Mode: {status['mode']}")
     print(f"Connected: {status['connected']}")
@@ -449,7 +449,7 @@ if __name__ == "__main__":
         'timestamp': datetime.now().isoformat(),
         'selected_region': 'FI',
         'region_name': 'Finland',
-        'region_flag': '🇫🇮',
+        'region_flag': '',
         'carbon_intensity': 42,
         'savings_gco2': 230,
         'savings_percent': 84.6,
@@ -478,9 +478,9 @@ if __name__ == "__main__":
     stats = logger.get_summary_stats(days=7)
     
     print("\n" + "="*75)
-    print("✅ FIRESTORE LOGGER TEST COMPLETED")
+    print(" FIRESTORE LOGGER TEST COMPLETED")
     print("="*75)
-    print("💡 Notes:")
+    print(" Notes:")
     print("   - If Firestore is not configured, logger operates in console-only mode")
     print("   - To enable Firestore:")
     print("     1. Create a GCP project")
