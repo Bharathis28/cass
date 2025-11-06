@@ -1,6 +1,9 @@
 # CASS-Lite v2 - Scheduler Function Dependencies
 # Python 3.11+
 
+# Functions Framework (includes Flask for Cloud Run Functions)
+functions-framework==3.5.0
+
 # Core dependencies
 requests==2.31.0
 python-dateutil==2.8.2

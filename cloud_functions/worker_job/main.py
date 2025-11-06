@@ -23,17 +23,7 @@ import json
 import time
 from datetime import datetime
 import random
-
-# Import functions_framework - will be available in Cloud Functions runtime
-try:
-    import functions_framework
-except ImportError:
-    # For local testing - create a mock decorator
-    class MockFramework:
-        @staticmethod
-        def http(func):
-            return func
-    functions_framework = MockFramework()
+import functions_framework
 
 
 @functions_framework.http
@@ -86,7 +76,7 @@ def run_worker_job(request):
                 'cloud_function': 'run_worker_job'
             }
             print("❌ ERROR: No JSON payload")
-            return json.dumps(error_response), 400, {'Content-Type': 'application/json'}
+            return (error_response, 400, {'Content-Type': 'application/json'})
         
         # Extract job details
         task_id = request_json.get('task_id', 'unknown')
@@ -156,7 +146,7 @@ def run_worker_job(request):
         print(f"🌱 Carbon Used: {carbon_intensity} gCO₂/kWh")
         print("="*75)
         
-        return json.dumps(response_data), 200, {'Content-Type': 'application/json'}
+        return (response_data, 200, {'Content-Type': 'application/json'})
     
     except Exception as e:
         execution_time = round((time.time() - start_time) * 1000)
@@ -174,7 +164,7 @@ def run_worker_job(request):
             'failed_at': datetime.now().isoformat()
         }
         
-        return json.dumps(error_response), 500, {'Content-Type': 'application/json'}
+        return (error_response, 500, {'Content-Type': 'application/json'})
 
 
 # For local testing
