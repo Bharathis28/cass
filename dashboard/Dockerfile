@@ -11,21 +11,17 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PORT=8080
 
-# Copy requirements from project root
-COPY ../requirements.txt .
+# Copy requirements file
+COPY dashboard/requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy dashboard files
-COPY . .
+COPY dashboard/ .
 
 # Expose port 8080 (Cloud Run standard)
 EXPOSE 8080
-
-# Health check (optional but recommended)
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import requests; requests.get('http://localhost:8080/_stcore/health')" || exit 1
 
 # Run Streamlit on Cloud Run
 CMD streamlit run app.py \
@@ -33,5 +29,4 @@ CMD streamlit run app.py \
     --server.address=0.0.0.0 \
     --server.headless=true \
     --server.enableCORS=false \
-    --server.enableXsrfProtection=false \
-    --browser.gatherUsageStats=false
+    --server.enableXsrfProtection=false

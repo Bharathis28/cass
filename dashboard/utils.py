@@ -341,3 +341,219 @@ def get_region_color(carbon_intensity):
         return '#ffc107'  # Yellow - moderate
     else:
         return '#ff0066'  # Red - high carbon
+
+# ============================================================================
+# PHASE 9: ADVANCED ANALYTICS FUNCTIONS
+# ============================================================================
+
+def get_ai_insights(recent_logs, days=7):
+    """
+    Generate AI-powered insights from recent decision data.
+    
+    Args:
+        recent_logs: DataFrame with recent decision logs
+        days: Number of days to analyze
+        
+    Returns:
+        Dictionary with AI insights
+    """
+    import numpy as np
+    
+    if recent_logs.empty:
+        return {
+            'greenest_region': 'N/A',
+            'greenest_frequency': 0,
+            'trend_direction': 'stable',
+            'trend_change': 0,
+            'avg_savings': 0,
+            'peak_time': 'N/A',
+            'peak_carbon': 0,
+            'confidence_score': 0,
+            'total_decisions': 0
+        }
+    
+    try:
+        # Filter by date range
+        if 'timestamp' in recent_logs.columns:
+            cutoff = datetime.now() - timedelta(days=days)
+            recent_logs['timestamp'] = pd.to_datetime(recent_logs['timestamp'])
+            filtered_logs = recent_logs[recent_logs['timestamp'] >= cutoff].copy()
+        else:
+            filtered_logs = recent_logs.copy()
+        
+        # 1. Greenest region analysis
+        region_counts = filtered_logs['region'].value_counts()
+        greenest_region = region_counts.index[0] if not region_counts.empty else 'N/A'
+        greenest_frequency = (region_counts.iloc[0] / len(filtered_logs) * 100) if not region_counts.empty else 0
+        
+        # 2. Trend analysis
+        if 'carbon_intensity' in filtered_logs.columns and len(filtered_logs) > 1:
+            # Compare first half vs second half
+            mid_point = len(filtered_logs) // 2
+            first_half_avg = filtered_logs['carbon_intensity'].iloc[:mid_point].mean()
+            second_half_avg = filtered_logs['carbon_intensity'].iloc[mid_point:].mean()
+            
+            trend_change = ((second_half_avg - first_half_avg) / first_half_avg * 100) if first_half_avg > 0 else 0
+            
+            if trend_change < -5:
+                trend_direction = 'decreased'
+            elif trend_change > 5:
+                trend_direction = 'increased'
+            else:
+                trend_direction = 'stable'
+        else:
+            trend_direction = 'stable'
+            trend_change = 0
+        
+        # 3. Average savings
+        avg_savings = filtered_logs['savings_gco2'].mean() if 'savings_gco2' in filtered_logs.columns else 0
+        
+        # 4. Peak efficiency time
+        if 'timestamp' in filtered_logs.columns and 'carbon_intensity' in filtered_logs.columns:
+            filtered_logs['hour'] = filtered_logs['timestamp'].dt.hour
+            hourly_avg = filtered_logs.groupby('hour')['carbon_intensity'].mean()
+            peak_hour = hourly_avg.idxmin() if not hourly_avg.empty else 12
+            peak_carbon = hourly_avg.min() if not hourly_avg.empty else 0
+            
+            # Format peak time
+            peak_time = f"{peak_hour:02d}:00-{(peak_hour+1)%24:02d}:00 UTC"
+        else:
+            peak_time = 'N/A'
+            peak_carbon = 0
+        
+        # 5. Confidence score (based on data volume and consistency)
+        total_decisions = len(filtered_logs)
+        
+        if total_decisions >= 100:
+            confidence_score = 95
+        elif total_decisions >= 50:
+            confidence_score = 85
+        elif total_decisions >= 20:
+            confidence_score = 75
+        else:
+            confidence_score = max(50, total_decisions * 2)
+        
+        # Adjust confidence based on variance
+        if 'carbon_intensity' in filtered_logs.columns:
+            cv = filtered_logs['carbon_intensity'].std() / filtered_logs['carbon_intensity'].mean()
+            if cv < 0.2:  # Low variance = high consistency
+                confidence_score = min(99, confidence_score + 5)
+        
+        return {
+            'greenest_region': greenest_region,
+            'greenest_frequency': round(greenest_frequency, 1),
+            'trend_direction': trend_direction,
+            'trend_change': abs(round(trend_change, 1)),
+            'avg_savings': round(avg_savings, 1),
+            'peak_time': peak_time,
+            'peak_carbon': round(peak_carbon, 1),
+            'confidence_score': round(confidence_score, 0),
+            'total_decisions': total_decisions
+        }
+    
+    except Exception as e:
+        print(f"Error generating AI insights: {e}")
+        return {
+            'greenest_region': 'N/A',
+            'greenest_frequency': 0,
+            'trend_direction': 'stable',
+            'trend_change': 0,
+            'avg_savings': 0,
+            'peak_time': 'N/A',
+            'peak_carbon': 0,
+            'confidence_score': 0,
+            'total_decisions': 0
+        }
+
+def get_energy_mix_data(days=7):
+    """
+    Get energy mix data (renewable vs fossil) over time.
+    Uses carbon intensity as proxy for energy mix when real data unavailable.
+    
+    Args:
+        days: Number of days of historical data
+        
+    Returns:
+        DataFrame with timestamp and renewable_pct columns
+    """
+    import numpy as np
+    
+    try:
+        # Fetch recent decisions
+        recent_logs = fetch_recent_decisions(limit=1000)
+        
+        if recent_logs.empty or 'carbon_intensity' not in recent_logs.columns:
+            # Generate synthetic data
+            return generate_mock_energy_mix(days)
+        
+        # Filter by date range
+        if 'timestamp' in recent_logs.columns:
+            cutoff = datetime.now() - timedelta(days=days)
+            recent_logs['timestamp'] = pd.to_datetime(recent_logs['timestamp'])
+            recent_logs = recent_logs[recent_logs['timestamp'] >= cutoff]
+        
+        # Use carbon intensity as proxy for renewable percentage
+        # Lower carbon = higher renewable percentage
+        # Typical ranges: 0-100 gCO2/kWh = 90-100% renewable
+        #                 100-300 gCO2/kWh = 50-90% renewable
+        #                 300+ gCO2/kWh = 0-50% renewable
+        
+        def carbon_to_renewable_pct(carbon):
+            """Convert carbon intensity to estimated renewable percentage"""
+            if carbon < 100:
+                return 90 + (100 - carbon) / 10
+            elif carbon < 300:
+                return 50 + (300 - carbon) / 5
+            else:
+                return max(0, 50 - (carbon - 300) / 10)
+        
+        recent_logs['renewable_pct'] = recent_logs['carbon_intensity'].apply(carbon_to_renewable_pct)
+        recent_logs['renewable_pct'] = recent_logs['renewable_pct'].clip(0, 100)
+        
+        # Group by hour for smoother visualization
+        recent_logs['hour'] = recent_logs['timestamp'].dt.floor('H')
+        energy_mix = recent_logs.groupby('hour').agg({
+            'renewable_pct': 'mean'
+        }).reset_index()
+        energy_mix.rename(columns={'hour': 'timestamp'}, inplace=True)
+        
+        return energy_mix
+    
+    except Exception as e:
+        print(f"Error generating energy mix data: {e}")
+        return generate_mock_energy_mix(days)
+
+def generate_mock_energy_mix(days=7):
+    """Generate mock energy mix data for visualization"""
+    import numpy as np
+    
+    timestamps = pd.date_range(
+        end=datetime.now(),
+        periods=days * 24,  # Hourly data
+        freq='H'
+    )
+    
+    # Simulate renewable percentage with daily and hourly patterns
+    base_renewable = 65  # Base renewable percentage
+    
+    data = []
+    for i, ts in enumerate(timestamps):
+        # Daily variation (solar peaks during day)
+        hour_factor = np.sin((ts.hour - 6) * np.pi / 12) * 15  # Peak at noon
+        
+        # Weekly variation
+        day_factor = np.sin(i * np.pi / (24 * 7)) * 10
+        
+        # Random noise
+        noise = np.random.normal(0, 5)
+        
+        renewable_pct = base_renewable + hour_factor + day_factor + noise
+        renewable_pct = np.clip(renewable_pct, 20, 95)
+        
+        data.append({
+            'timestamp': ts,
+            'renewable_pct': renewable_pct
+        })
+    
+    return pd.DataFrame(data)
+
