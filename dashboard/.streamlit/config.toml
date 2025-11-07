@@ -1,0 +1,20 @@
+# Streamlit Configuration for Cloud Run Deployment
+
+[server]
+port = 8080
+address = "0.0.0.0"
+headless = true
+enableCORS = false
+enableXsrfProtection = false
+
+[browser]
+gatherUsageStats = false
+serverAddress = "0.0.0.0"
+serverPort = 8080
+
+[theme]
+primaryColor = "#00ffaa"
+backgroundColor = "#0a0e27"
+secondaryBackgroundColor = "#1a1a2e"
+textColor = "#ffffff"
+font = "sans serif"

@@ -519,7 +519,7 @@ def render_footer():
     st.markdown("""
     <div class="footer">
         <p>Built with <span class="footer-icon">❤️</span> by <strong>Bharathi Senthilkumar</strong></p>
-        <p> Powered by Google Cloud /p>
+        <p> Powered by Google Cloud </p>
         <p style="font-size: 0.8rem; color: #7f00ff; margin-top: 1rem;">
             Making the cloud greener, one decision at a time 
         </p>
