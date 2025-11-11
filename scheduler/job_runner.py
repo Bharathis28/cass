@@ -6,6 +6,8 @@ Cloud Function Execution Module
 This module handles triggering Google Cloud Functions in the selected region.
 It sends HTTP POST requests with job payloads and handles responses with retry logic.
 
+Phase 11 Enhancement: Authenticated invocations using service account tokens
+
 Author: CASS-Lite v2 Team
 Date: November 2025
 """
@@ -15,6 +17,8 @@ import time
 import requests
 from typing import Dict, Optional, Tuple
 from datetime import datetime
+from google.auth.transport.requests import Request
+from google.oauth2 import id_token
 
 
 class JobRunner:
@@ -48,6 +52,7 @@ class JobRunner:
         self.max_retries = max_retries
         self.retry_delay = retry_delay
         self.timeout = timeout
+        self.auth_enabled = config.get('security', {}).get('require_authentication', True)
         
         print("="*75)
         print("🚀 JOB RUNNER INITIALIZED")
@@ -55,6 +60,7 @@ class JobRunner:
         print(f"✓ Max Retries: {self.max_retries}")
         print(f"✓ Retry Delay: {self.retry_delay}s")
         print(f"✓ Timeout: {self.timeout}s")
+        print(f"🔐 Authentication: {'ENABLED' if self.auth_enabled else 'DISABLED'}")
         print("="*75 + "\n")
     
     def get_function_url(self, region: str) -> Optional[str]:
@@ -77,6 +83,29 @@ class JobRunner:
             print(f"   Using placeholder: {url}")
         
         return url
+    
+    def get_auth_token(self, target_url: str) -> Optional[str]:
+        """
+        Get authenticated ID token for invoking Cloud Functions/Cloud Run.
+        
+        Args:
+            target_url: The Cloud Function/Run URL to generate token for
+            
+        Returns:
+            ID token string, or None if authentication fails
+        """
+        if not self.auth_enabled:
+            return None
+        
+        try:
+            auth_req = Request()
+            token = id_token.fetch_id_token(auth_req, target_url)
+            print("🔐 Authentication token obtained")
+            return token
+        except Exception as e:
+            print(f"⚠️  Failed to get auth token: {str(e)[:100]}")
+            print("   Continuing without authentication...")
+            return None
     
     def trigger_function(self, region: str, payload: Dict) -> Tuple[bool, Optional[Dict]]:
         """
@@ -105,6 +134,9 @@ class JobRunner:
         print(f"🔗 URL: {function_url}")
         print("="*75 + "\n")
         
+        # Get authentication token if enabled
+        auth_token = self.get_auth_token(function_url)
+        
         # Attempt to trigger with retries
         for attempt in range(1, self.max_retries + 1):
             print(f"🔄 Attempt {attempt}/{self.max_retries}...")
@@ -113,13 +145,19 @@ class JobRunner:
                 # Send POST request
                 start_time = time.time()
                 
+                headers = {
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'CASS-Lite-v2-Scheduler'
+                }
+                
+                # Add authentication header if token available
+                if auth_token:
+                    headers['Authorization'] = f'Bearer {auth_token}'
+                
                 response = requests.post(
                     function_url,
                     json=payload,
-                    headers={
-                        'Content-Type': 'application/json',
-                        'User-Agent': 'CASS-Lite-v2-Scheduler'
-                    },
+                    headers=headers,
                     timeout=self.timeout
                 )
                 

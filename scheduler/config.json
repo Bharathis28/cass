@@ -45,6 +45,28 @@
     "collection": "carbon_logs",
     "project_id": "cass-lite"
   },
+  "security": {
+    "require_authentication": true,
+    "service_account": "scheduler-sa@cass-lite.iam.gserviceaccount.com",
+    "allowed_origins": ["https://cass-lite-dashboard-262153469989.asia-south1.run.app"],
+    "rate_limiting": {
+      "enabled": true,
+      "max_requests_per_minute": 60
+    },
+    "logging": {
+      "level": "INFO",
+      "structured": true,
+      "include_request_id": true
+    }
+  },
+  "monitoring": {
+    "alerts": {
+      "high_error_rate_threshold": 0.05,
+      "high_latency_threshold_ms": 5000,
+      "cost_alert_threshold_usd": 1.0
+    },
+    "log_retention_days": 30
+  },
   "scheduler": {
     "check_interval_minutes": 15,
     "retry_attempts": 3,
