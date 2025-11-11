@@ -6,7 +6,7 @@
 CASS-Lite v2 fetches real-time carbon intensity data from 6 global regions, intelligently picks the cleanest region, triggers serverless jobs there, and visualizes everything on a live dashboard.
 
 ---
-## 📁 Project Structure
+##  Project Structure
 
 ```
 cass-lite-v2/
@@ -34,12 +34,12 @@ cass-lite-v2/
 
 ---
 
-## 🌍 Supported Regions (6 Active)
+##  Supported Regions (6 Active)
 
 - 🇮🇳 **India (IN)** - ~508 gCO₂/kWh
-- 🇫🇮 **Finland (FI)** - ~40 gCO₂/kWh ⭐ **Cleanest!**
+- 🇫🇮 **Finland (FI)** - ~40 gCO₂/kWh  **Cleanest!**
 - 🇩🇪 **Germany (DE)** - ~265 gCO₂/kWh
-- �� **Japan (JP)** - ~502 gCO₂/kWh
+- **Japan (JP)** - ~502 gCO₂/kWh
 - 🇦🇺 **New South Wales, Australia (AU-NSW)** - ~327 gCO₂/kWh
 - 🇧🇷 **Central-South Brazil (BR-CS)** - ~161 gCO₂/kWh
 
@@ -47,19 +47,19 @@ cass-lite-v2/
 
 ---
 
-## � Sample Output
+##  Sample Output
 
 ```
-🎯 DEPLOYMENT RECOMMENDATION
-✅ Recommended Region: 🇫🇮 Finland (FI)
-🌱 Carbon Intensity: 40 gCO₂/kWh
-💰 Savings vs Average: 260 gCO₂/kWh (86.7% reduction)
-📊 Compared across 6 regions (avg: 300 gCO₂/kWh)
+ DEPLOYMENT RECOMMENDATION
+ Recommended Region: 🇫🇮 Finland (FI)
+ Carbon Intensity: 40 gCO₂/kWh
+ Savings vs Average: 260 gCO₂/kWh (86.7% reduction)
+ Compared across 6 regions (avg: 300 gCO₂/kWh)
 ```
 
 ---
 
-## � How It Works
+##  How It Works
 
 1. **Fetch** - Get live carbon intensity from 6 global regions
 2. **Analyze** - Compare carbon footprints across regions
@@ -72,7 +72,7 @@ cass-lite-v2/
 
 ---
 
-## 🔧 Configuration
+##  Configuration
 
 Edit `scheduler/config.json` to:
 - Add your ElectricityMap API key
