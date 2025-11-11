@@ -82,5 +82,113 @@ Edit `scheduler/config.json` to:
 
 ---
 
+## 🗄️ Firestore Indexes
+
+The project includes a composite index configuration for efficient querying of scheduling decisions.
+
+### Deploy Firestore Indexes
+
+```bash
+gcloud firestore indexes create firestore.indexes.json
+```
+
+This creates a composite index on the `decisions` collection with:
+- **timestamp** (descending) - Latest decisions first
+- **region** (ascending) - Grouped by region
+
+The index enables fast queries like:
+```javascript
+db.collection('decisions')
+  .orderBy('timestamp', 'desc')
+  .where('region', '==', 'FI')
+  .limit(100)
+```
+
+### Verify Index Status
+
+```bash
+gcloud firestore indexes list
+```
+
+**Note:** Index creation can take several minutes. Monitor progress in the [Firebase Console](https://console.firebase.google.com/).
+
+---
+
+## 📊 Exporting Firestore Data to BigQuery
+
+**Optional:** For long-term carbon analytics and advanced querying, you can set up scheduled exports of the Firestore `decisions` collection to BigQuery.
+
+### Step-by-Step Setup
+
+1. **Open GCP Console**
+   - Navigate to [BigQuery Data Transfers](https://console.cloud.google.com/bigquery/transfers)
+   - Click **Create Transfer**
+
+2. **Configure Source**
+   - Source type: Select **Firestore Export**
+   - Source project: Select your GCP project (e.g., `cass-lite`)
+
+3. **Set Dataset Name**
+   - Dataset ID: `cass_lite_decisions`
+   - This dataset will store all exported Firestore data
+
+4. **Configure Schedule**
+   - Schedule: **Daily at midnight UTC**
+   - This ensures fresh data for daily analytics
+   - Optionally adjust to your preferred timezone
+
+5. **Set Destination Table**
+   - Destination table: `decisions_export`
+   - This table will contain all documents from the `decisions` collection
+
+6. **Review and Create**
+   - Review configuration
+   - Click **Create** to activate the transfer
+
+### What This Enables
+
+With Firestore data in BigQuery, you can:
+- **Long-term analytics** - Query months/years of historical decisions
+- **Complex aggregations** - Calculate carbon savings trends over time
+- **Data visualization** - Connect to Looker Studio or Data Studio
+- **ML/AI analysis** - Train models on carbon scheduling patterns
+- **Cost analysis** - Track infrastructure costs alongside carbon metrics
+
+### Example BigQuery Queries
+
+```sql
+-- Total carbon savings by region (last 30 days)
+SELECT 
+  region,
+  COUNT(*) as decision_count,
+  AVG(carbon_intensity) as avg_carbon,
+  SUM(savings_gco2) as total_savings
+FROM `cass-lite.cass_lite_decisions.decisions_export`
+WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 30 DAY)
+GROUP BY region
+ORDER BY total_savings DESC;
+
+-- Daily carbon savings trend
+SELECT 
+  DATE(timestamp) as date,
+  SUM(savings_gco2) as daily_savings,
+  AVG(carbon_intensity) as avg_carbon
+FROM `cass-lite.cass_lite_decisions.decisions_export`
+GROUP BY date
+ORDER BY date DESC
+LIMIT 30;
+```
+
+### Cost Considerations
+
+- **Firestore exports** - Free (no additional cost for exports)
+- **BigQuery storage** - ~$0.02 per GB/month
+- **BigQuery queries** - First 1 TB/month free
+- **Expected cost** - Minimal for typical workloads (~$1-5/month)
+
+**Note:** This is entirely optional. The CASS-Lite dashboard provides real-time analytics without BigQuery.
+
+---
+
 **Built with ❤️ for a greener cloud.**  
 **Making serverless computing carbon-aware, one deployment at a time.** 
