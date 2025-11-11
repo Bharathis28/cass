@@ -1,4 +1,4 @@
-# CASS-Lite v2 🌱
+# CASS-Lite v2 
 ## Carbon-Aware Serverless Scheduler
 
 **Run cloud workloads in the greenest region, automatically.**
@@ -6,56 +6,30 @@
 CASS-Lite v2 fetches real-time carbon intensity data from 6 global regions, intelligently picks the cleanest region, triggers serverless jobs there, and visualizes everything on a live dashboard.
 
 ---
-
-## 🚀 Quick Start
-
-### 1. Get Your API Key
-Sign up at [ElectricityMap API Portal](https://api-portal.electricitymap.org/) and get your free API key.
-
-### 2. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Test the Carbon Fetcher
-```bash
-cd scheduler
-py carbon_fetcher.py
-```
-
-### 4. Run the Scheduler
-```bash
-py main.py
-```
-
-The scheduler will automatically select the greenest region and prepare deployment instructions.
-
----
-
 ## 📁 Project Structure
 
 ```
 cass-lite-v2/
 ├── scheduler/           # Core scheduling logic
-│   ├── main.py         # ✅ Scheduler decision engine (DONE)
-│   ├── carbon_fetcher.py   # ✅ Carbon API integration (DONE)
-│   ├── job_runner.py   # ✅ Cloud Function trigger (DONE)
-│   ├── firestore_logger.py # ✅ Database logging (DONE)
-│   └── config.json     # ✅ Configuration (DONE)
+│   ├── main.py         #  Scheduler decision engine 
+│   ├── carbon_fetcher.py   #  Carbon API integration 
+│   ├── job_runner.py   #  Cloud Function trigger 
+│   ├── firestore_logger.py #  Database logging 
+│   └── config.json     #  Configuration 
 │
 ├── cloud_functions/    # Serverless workers
-│   ├── worker_job/     # ✅ Worker function (DONE)
-│   └── scheduler_function/ # ✅ Scheduler function (DONE)
+│   ├── worker_job/     #  Worker function 
+│   └── scheduler_function/ # Scheduler function 
 │
 ├── dashboard/          # Streamlit analytics
-│   ├── app.py          # (TODO)
-│   └── utils.py        # (TODO)
+│   ├── app.py           
+│   └── utils.py        
 │
 ├── scripts/            # Deployment scripts
-│   ├── deploy_scheduler.sh # (TODO)
-│   └── deploy_worker.sh    # (TODO)
+│   ├── deploy_scheduler.sh 
+│   └── deploy_worker.sh   
 │
-└── requirements.txt    # ✅ Dependencies (DONE)
+└── requirements.txt    # Dependencies
 ```
 
 ---
@@ -73,46 +47,6 @@ cass-lite-v2/
 
 ---
 
-## ✨ Key Features
-
-### ✅ Phase 1: Carbon Data Fetching (COMPLETE)
-- Real-time carbon intensity from ElectricityMap API
-- Smart caching (5-minute TTL)
-- Flag emojis + colorized console output
-- Error handling for failed regions
-- Regional ranking system
-
-### ✅ Phase 2: Decision Engine (COMPLETE)
-- Intelligent region selection (lowest carbon)
-- Carbon savings calculation (up to 86.7%!)
-- Decision logging with timestamps
-- Job instruction preparation
-- Complete scheduling cycle orchestration
-
-### ✅ Phase 3: Job Execution (COMPLETE)
-- Cloud Function triggering with retries
-- HTTP POST requests to worker functions
-- Response handling and validation
-
-### ✅ Phase 4: Database Logging (COMPLETE)
-- Firestore integration
-- Decision persistence
-- Historical data queries
-- Statistics computation
-
-### ✅ Phase 5: Cloud Deployment (COMPLETE)
-- Scheduler Cloud Function
-- Worker Cloud Function
-- Deployment scripts (bash)
-- Multi-region support
-
-### 🚧 Phase 6: Visualization (IN PROGRESS)
-- Streamlit dashboard
-- Real-time analytics
-- Carbon savings visualization
-
----
-
 ## � Sample Output
 
 ```
@@ -122,27 +56,6 @@ cass-lite-v2/
 💰 Savings vs Average: 260 gCO₂/kWh (86.7% reduction)
 📊 Compared across 6 regions (avg: 300 gCO₂/kWh)
 ```
-
----
-
-## ️ Development Progress
-
-### ✅ Completed (11/13 files = 85%)
-- [x] Carbon fetcher module with 6 regions
-- [x] Configuration system (config.json)
-- [x] Dependencies defined
-- [x] Main scheduler decision engine
-- [x] Job runner (Cloud Function HTTP trigger)
-- [x] Firestore logger (database persistence)
-- [x] Scheduler Cloud Function
-- [x] Worker Cloud Function
-- [x] Deployment scripts (scheduler & worker)
-- [x] Console logging
-- [x] Job instruction preparation
-
-### 🚧 Remaining (Phase 6)
-- [ ] Streamlit dashboard (app.py)
-- [ ] Dashboard utilities (utils.py)
 
 ---
 
@@ -169,11 +82,5 @@ Edit `scheduler/config.json` to:
 
 ---
 
-## �📝 License
-
-MIT License - Feel free to use and modify!
-
----
-
 **Built with ❤️ for a greener cloud.**  
-**Making serverless computing carbon-aware, one deployment at a time.** 🌍
+**Making serverless computing carbon-aware, one deployment at a time.** 
