@@ -374,6 +374,11 @@ st.markdown("""
         flex-direction: column;
         justify-content: center;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        font-family: 'Orbitron', monospace;
+    }
+    
+    .insight-card * {
+        font-family: 'Orbitron', monospace;
     }
     
     .insight-title {
@@ -382,12 +387,15 @@ st.markdown("""
         color: #00ffaa;
         font-weight: 600;
         margin-bottom: 0.75rem;
+        letter-spacing: 0.5px;
     }
     
     .insight-text {
+        font-family: 'Orbitron', monospace;
         color: #a0aec0;
         font-size: 0.95rem;
         line-height: 1.6;
+        font-weight: 400;
     }
     
     .insight-metric {
@@ -396,6 +404,7 @@ st.markdown("""
         color: #00ffff;
         padding: 0.2rem 0.6rem;
         border-radius: 5px;
+        font-family: 'Orbitron', monospace;
         font-weight: 700;
         margin: 0 0.2rem;
     }
