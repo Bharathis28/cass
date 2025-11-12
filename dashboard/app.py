@@ -83,6 +83,10 @@ def apply_high_contrast_css():
                 background: #1a1a1a !important;
                 border-left: 4px solid #FFFF00 !important;
                 color: #FFFFFF !important;
+                min-height: 160px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
             }
         </style>
         """, unsafe_allow_html=True)
@@ -359,11 +363,17 @@ st.markdown("""
     .insight-card {
         background: linear-gradient(135deg, rgba(147, 51, 234, 0.2) 0%, rgba(0, 255, 170, 0.2) 100%);
         border-left: 4px solid #00ffaa;
-        border-radius: 10px;
-        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        padding: 1.5rem;
         margin: 0.5rem 0;
         backdrop-filter: blur(10px);
         animation: fadeInUp 0.5s ease-out;
+        width: 100%;
+        min-height: 160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
     }
     
     .insight-title {
@@ -371,7 +381,7 @@ st.markdown("""
         font-size: 1rem;
         color: #00ffaa;
         font-weight: 600;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
     }
     
     .insight-text {
@@ -908,7 +918,8 @@ def render_ai_insights_section(recent_logs, stats, days=7):
     try:
         insights = get_ai_insights(recent_logs, days)
         
-        col1, col2, col3 = st.columns(3)
+        # First row - 2 cards
+        col1, col2 = st.columns(2)
         
         with col1:
             st.markdown(f"""
@@ -936,6 +947,9 @@ def render_ai_insights_section(recent_logs, stats, days=7):
             </div>
             """, unsafe_allow_html=True)
         
+        # Second row - 2 cards
+        col3, col4 = st.columns(2)
+        
         with col3:
             st.markdown(f"""
             <div class="insight-card">
@@ -950,11 +964,6 @@ def render_ai_insights_section(recent_logs, stats, days=7):
             </div>
             """, unsafe_allow_html=True)
         
-        # Additional insights row
-        st.markdown("<br>", unsafe_allow_html=True)
-        
-        col4, col5 = st.columns(2)
-        
         with col4:
             st.markdown(f"""
             <div class="insight-card">
@@ -968,7 +977,10 @@ def render_ai_insights_section(recent_logs, stats, days=7):
             </div>
             """, unsafe_allow_html=True)
         
-        with col5:
+        # Third row - 1 card (Decision Confidence centered)
+        col5, col6, col7 = st.columns([1, 2, 1])
+        
+        with col6:
             st.markdown(f"""
             <div class="insight-card">
                 <div class="insight-title">Decision Confidence</div>
