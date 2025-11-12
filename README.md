@@ -1,4 +1,3 @@
-# CASS-Lite v2 
 ## Carbon-Aware Serverless Scheduler
 
 **Run cloud workloads in the greenest region, automatically.**
