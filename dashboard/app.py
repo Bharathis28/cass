@@ -1239,6 +1239,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-cd "c:\Users\Admin\New folder\cass\dashboard"
-py -m streamlit run app.py
