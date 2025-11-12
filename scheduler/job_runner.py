@@ -332,6 +332,8 @@ class JobRunner:
         
         # Trigger the function
         start_time = time.time()
+        # Type assertion: target_region is guaranteed to be a string from instructions
+        assert isinstance(target_region, str), "target_region must be a string"
         success, response_data = self.trigger_function(target_region, payload)
         execution_time = round((time.time() - start_time) * 1000)
         

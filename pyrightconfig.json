@@ -1,0 +1,28 @@
+{
+    "include": [
+        "scheduler",
+        "cloud_functions",
+        "dashboard"
+    ],
+    "exclude": [
+        "**/__pycache__",
+        "**/.venv",
+        "**/node_modules"
+    ],
+    "venvPath": ".",
+    "venv": ".venv",
+    "pythonVersion": "3.13",
+    "pythonPlatform": "Windows",
+    "typeCheckingMode": "basic",
+    "reportMissingImports": true,
+    "reportMissingTypeStubs": false,
+    "reportUnknownMemberType": false,
+    "reportUnknownVariableType": false,
+    "reportUnknownArgumentType": false,
+    "reportUnknownParameterType": false,
+    "reportGeneralTypeIssues": false,
+    "reportOptionalMemberAccess": "warning",
+    "reportOptionalSubscript": "warning",
+    "reportPrivateImportUsage": false,
+    "stubPath": ""
+}

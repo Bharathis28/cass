@@ -1,0 +1,23 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingTypeStubs": "none",
+        "reportUnknownMemberType": "none",
+        "reportUnknownVariableType": "none",
+        "reportUnknownArgumentType": "none",
+        "reportUnknownParameterType": "none",
+        "reportUnknownLambdaType": "none",
+        "reportOptionalMemberAccess": "warning",
+        "reportOptionalSubscript": "warning",
+        "reportPrivateImportUsage": "none",
+        "reportGeneralTypeIssues": "none"
+    },
+    "python.linting.enabled": false,
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/scheduler",
+        "${workspaceFolder}/cloud_functions/scheduler_function",
+        "${workspaceFolder}/cloud_functions/worker_job",
+        "${workspaceFolder}/dashboard"
+    ]
+}

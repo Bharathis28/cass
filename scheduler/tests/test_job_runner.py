@@ -253,6 +253,7 @@ def test_trigger_function_eventual_success():
                 
                 # Assertions
                 assert success is True, "Should succeed on third attempt"
+                assert response_data is not None, "Response data should not be None"
                 assert response_data.get('status') == 'success'
                 
                 # Verify 3 requests were made
@@ -282,6 +283,7 @@ def test_get_function_url():
     
     # Test fallback for unconfigured region
     url_fallback = runner.get_function_url("XX")
+    assert url_fallback is not None, "URL should not be None"
     assert "xx-worker" in url_fallback.lower()
 
 

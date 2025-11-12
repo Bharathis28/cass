@@ -192,8 +192,8 @@ if __name__ == '__main__':
                 }
             }
     
-    # Run function
-    response, status_code, headers = run_worker_job(MockRequest())
+    # Run function - type ignore for mock request
+    response, status_code, headers = run_worker_job(MockRequest())  # type: ignore[arg-type]
     
     print(f"\n📤 Response (Status {status_code}):")
     print(json.dumps(json.loads(response), indent=2))
