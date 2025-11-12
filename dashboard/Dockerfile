@@ -12,13 +12,13 @@ ENV PYTHONUNBUFFERED=1 \
     PORT=8080
 
 # Copy requirements file
-COPY dashboard/requirements.txt .
+COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy dashboard files
-COPY dashboard/ .
+COPY . .
 
 # Expose port 8080 (Cloud Run standard)
 EXPOSE 8080
