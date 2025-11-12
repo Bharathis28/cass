@@ -23,7 +23,9 @@ from utils import (
     fetch_current_carbon_data,
     get_region_history,
     get_ai_insights,
-    get_energy_mix_data
+    get_energy_mix_data,
+    generate_mock_decisions,
+    generate_mock_history
 )
 
 # ============================================================================
@@ -31,10 +33,59 @@ from utils import (
 # ============================================================================
 
 st.set_page_config(
-    page_title="CASS-Lite v2 - Carbon Intelligence",
+    page_title="CASS-Lite v2 - Carbon-Aware Serverless Scheduler Dashboard",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Initialize session state for high contrast mode
+if 'high_contrast' not in st.session_state:
+    st.session_state.high_contrast = False
+if 'data_loading_failed' not in st.session_state:
+    st.session_state.data_loading_failed = False
+
+# ============================================================================
+# HELPER FUNCTIONS
+# ============================================================================
+
+def render_skeleton_loader():
+    """Render skeleton loader for data loading state"""
+    st.markdown("""
+    <div class="skeleton" style="height: 150px; margin: 10px 0;"></div>
+    <div class="skeleton" style="height: 150px; margin: 10px 0;"></div>
+    <div class="skeleton" style="height: 300px; margin: 10px 0;"></div>
+    """, unsafe_allow_html=True)
+
+def apply_high_contrast_css():
+    """Apply high contrast CSS overrides"""
+    if st.session_state.high_contrast:
+        st.markdown("""
+        <style>
+            .stApp {
+                background: #000000 !important;
+            }
+            .stMarkdown, .stMarkdown p, .stMarkdown span, .metric-label, .metric-value {
+                color: #FFFFFF !important;
+            }
+            .hero-title {
+                background: linear-gradient(90deg, #FFFFFF 0%, #FFFF00 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .metric-card, .chart-container {
+                background: #1a1a1a !important;
+                border: 2px solid #FFFFFF !important;
+            }
+            .chart-title {
+                color: #FFFF00 !important;
+            }
+            .insight-card {
+                background: #1a1a1a !important;
+                border-left: 4px solid #FFFF00 !important;
+                color: #FFFFFF !important;
+            }
+        </style>
+        """, unsafe_allow_html=True)
 
 # ============================================================================
 # CUSTOM CSS - FUTURISTIC NEON THEME
@@ -49,6 +100,19 @@ st.markdown("""
     .stApp {
         background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #16213e 100%);
         font-family: 'Rajdhani', sans-serif;
+    }
+    
+    /* Loading Skeleton */
+    .skeleton {
+        background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s ease-in-out infinite;
+        border-radius: 10px;
+    }
+    
+    @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
     }
     
     /* Ensure Streamlit columns are uniform */
@@ -250,7 +314,7 @@ st.markdown("""
     }
     
     .stButton>button:hover {
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
         transform: scale(1.05);
     }
     
@@ -455,13 +519,24 @@ def render_hero():
 # ============================================================================
 
 def render_metrics(stats):
+    """Render metric cards with skeleton loaders for empty data"""
     col1, col2, col3, col4 = st.columns(4)
+    
+    # Check if stats is empty or None
+    if not stats or stats.get('total_decisions', 0) == 0:
+        # Render skeleton loaders
+        for col in [col1, col2, col3, col4]:
+            with col:
+                st.markdown("""
+                <div class="skeleton" style="height: 150px;"></div>
+                """, unsafe_allow_html=True)
+        return
     
     with col1:
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-label">Avg Carbon Intensity</div>
-            <div class="metric-value">{stats['avg_carbon']:.1f}</div>
+            <div class="metric-value">{stats.get('avg_carbon', 0):.1f}</div>
             <div class="metric-delta">gCO₂/kWh</div>
         </div>
         """, unsafe_allow_html=True)
@@ -470,7 +545,7 @@ def render_metrics(stats):
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-label">Carbon Savings</div>
-            <div class="metric-value">{stats['savings_percent']:.1f}%</div>
+            <div class="metric-value">{stats.get('savings_percent', 0):.1f}%</div>
             <div class="metric-delta">vs Average</div>
         </div>
         """, unsafe_allow_html=True)
@@ -479,8 +554,8 @@ def render_metrics(stats):
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-label">Greenest Region</div>
-            <div class="metric-value">{stats['greenest_region']}</div>
-            <div class="metric-delta">{stats['greenest_flag']}</div>
+            <div class="metric-value">{stats.get('greenest_region', 'N/A')}</div>
+            <div class="metric-delta">{stats.get('greenest_flag', '🌍')}</div>
         </div>
         """, unsafe_allow_html=True)
     
@@ -488,7 +563,7 @@ def render_metrics(stats):
         st.markdown(f"""
         <div class="metric-card">
             <div class="metric-label">Total Decisions</div>
-            <div class="metric-value">{stats['total_decisions']}</div>
+            <div class="metric-value">{stats.get('total_decisions', 0)}</div>
             <div class="metric-delta">Last 7 days</div>
         </div>
         """, unsafe_allow_html=True)
@@ -963,29 +1038,46 @@ def main():
     # Render hero section
     render_hero()
     
-    # PHASE 9: Theme Toggle Button (top-right corner)
-    theme_toggle = st.sidebar.checkbox("🌙 Dark Mode", value=True)
+    # Apply high contrast mode if enabled
+    apply_high_contrast_css()
     
     # Sidebar controls
     with st.sidebar:
-        st.markdown("### Dashboard Controls")
+        st.markdown("### ⚙️ Dashboard Controls")
+        
+        # High Contrast Mode Toggle
+        st.markdown("---")
+        st.markdown("### 🎨 Accessibility")
+        high_contrast = st.checkbox(
+            "High Contrast Mode",
+            value=st.session_state.high_contrast,
+            help="Toggle high contrast mode for better visibility"
+        )
+        
+        if high_contrast != st.session_state.high_contrast:
+            st.session_state.high_contrast = high_contrast
+            st.rerun()
+        
+        # PHASE 9: Theme Toggle Button
+        theme_toggle = st.checkbox("🌙 Dark Mode", value=True)
         
         st.markdown("---")
-        st.markdown("###  Data Range")
+        st.markdown("### 📅 Data Range")
         days_filter = st.selectbox("Show last", [1, 3, 7, 14, 30], index=2)
         
         st.markdown("---")
-        st.markdown("###  Quick Actions")
+        st.markdown("### 🚀 Quick Actions")
         
-        if st.button("Trigger Scheduler"):
+        if st.button("⚡ Trigger Scheduler"):
             st.info("Triggering scheduler function...")
             # Add logic to call Cloud Function
         
-        if st.button(" Refresh Data"):
+        if st.button("🔄 Refresh Data"):
+            st.session_state.data_loading_failed = False
             st.rerun()
         
         st.markdown("---")
-        st.markdown("### Cloud Run Metrics")
+        st.markdown("### 📊 Cloud Run Metrics")
         
         try:
             # PHASE 9: Display Cloud Run metrics
@@ -996,23 +1088,87 @@ def main():
             st.info("Metrics loading...")
         
         st.markdown("---")
-        st.markdown("### ℹ Project Info")
+        st.markdown("### ℹ️ Project Info")
         st.markdown("""
         **Project:** CASS-Lite v2  
-        **Version:** 2.0.0 
-        **Status:** Active  
+        **Version:** 2.0.0 ⚡  
+        **Status:** 🟢 Active  
         **Region:** asia-south1  
         **Cost:** $0.08/month  
         """)
     
-    # Fetch data
-    with st.spinner(" Loading carbon intelligence data..."):
-        stats = get_summary_stats(days=days_filter)
-        recent_logs = fetch_recent_decisions(limit=100)
-        region_history = get_region_history(days=days_filter)
+    # Fetch data with loading indicators and error handling
+    stats = None
+    recent_logs = pd.DataFrame()
+    region_history = pd.DataFrame()
     
-    # Render metrics
-    render_metrics(stats)
+    try:
+        # Show loading spinner while fetching data
+        with st.spinner("🔄 Loading carbon intelligence data..."):
+            # Progress indicator
+            progress_bar = st.progress(0)
+            
+            # Fetch stats
+            progress_bar.progress(25)
+            stats = get_summary_stats(days=days_filter)
+            
+            # Fetch recent logs
+            progress_bar.progress(50)
+            recent_logs = fetch_recent_decisions(limit=100)
+            
+            # Fetch region history
+            progress_bar.progress(75)
+            region_history = get_region_history(days=days_filter)
+            
+            progress_bar.progress(100)
+            time.sleep(0.2)  # Brief pause to show completion
+            progress_bar.empty()
+            
+            # Mark successful data load
+            st.session_state.data_loading_failed = False
+            
+    except Exception as e:
+        # Display error banner
+        st.error(f"⚠️ Failed to fetch Firestore data: {str(e)}")
+        st.warning("🔄 Falling back to mock data for demonstration...")
+        
+        # Fallback to mock data
+        try:
+            with st.spinner("📊 Loading mock data..."):
+                stats = get_summary_stats(days=days_filter)
+                recent_logs = generate_mock_decisions(100)
+                region_history = generate_mock_history(days=days_filter)
+                
+            st.session_state.data_loading_failed = True
+            st.info("ℹ️ Displaying mock data. Connect to Firestore for real-time data.")
+            
+        except Exception as fallback_error:
+            st.error(f"❌ Critical error: {str(fallback_error)}")
+            st.stop()
+    
+    # Display data status indicator
+    if st.session_state.data_loading_failed:
+        st.markdown("""
+        <div style="background: rgba(255, 193, 7, 0.2); 
+                    border: 1px solid #ffc107; 
+                    border-radius: 10px; 
+                    padding: 10px; 
+                    margin-bottom: 20px;
+                    text-align: center;">
+            <span style="color: #ffc107;">⚠️ Using Mock Data</span>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Render metrics (with skeleton loaders if no data)
+    if stats is None or len(recent_logs) == 0:
+        # Show skeleton loaders
+        st.markdown("### 📊 Loading Metrics...")
+        col1, col2, col3, col4 = st.columns(4)
+        for col in [col1, col2, col3, col4]:
+            with col:
+                st.markdown('<div class="skeleton" style="height: 150px;"></div>', unsafe_allow_html=True)
+    else:
+        render_metrics(stats)
     
     st.markdown("<br>", unsafe_allow_html=True)
     
@@ -1020,13 +1176,25 @@ def main():
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        render_carbon_intensity_chart(region_history)
+        if region_history.empty:
+            st.markdown("### 📈 Carbon Intensity Over Time")
+            st.markdown('<div class="skeleton" style="height: 400px;"></div>', unsafe_allow_html=True)
+        else:
+            render_carbon_intensity_chart(region_history)
     
     with col2:
-        render_savings_gauge(stats['savings_percent'])
+        if stats:
+            render_savings_gauge(stats.get('savings_percent', 0))
+        else:
+            st.markdown("### 💰 Carbon Savings")
+            st.markdown('<div class="skeleton" style="height: 300px;"></div>', unsafe_allow_html=True)
     
     # PHASE 9: Geographic Map
-    render_geographic_map(recent_logs)
+    if not recent_logs.empty:
+        render_geographic_map(recent_logs)
+    else:
+        st.markdown("### 🌍 Global Carbon Intensity Map")
+        st.markdown('<div class="skeleton" style="height: 500px;"></div>', unsafe_allow_html=True)
     
     # Two column layout for advanced charts
     col3, col4 = st.columns(2)
@@ -1035,19 +1203,24 @@ def main():
         # Region frequency chart
         if not recent_logs.empty:
             render_region_frequency_chart(recent_logs)
+        else:
+            st.markdown("### 📍 Region Selection Frequency")
+            st.markdown('<div class="skeleton" style="height: 400px;"></div>', unsafe_allow_html=True)
     
     with col4:
         # PHASE 9: Energy mix chart
         render_energy_mix_chart(days=days_filter)
     
     # PHASE 9: AI Insights Section
-    render_ai_insights_section(recent_logs, stats, days=days_filter)
+    if stats and not recent_logs.empty:
+        render_ai_insights_section(recent_logs, stats, days=days_filter)
     
     # Live logs table
     render_logs_table(recent_logs)
     
     # PHASE 9: Export Section
-    render_export_section(recent_logs)
+    if not recent_logs.empty:
+        render_export_section(recent_logs)
     
     # Footer
     render_footer()
@@ -1066,3 +1239,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+cd "c:\Users\Admin\New folder\cass\dashboard"
+py -m streamlit run app.py
