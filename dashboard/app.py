@@ -88,6 +88,36 @@ def apply_high_contrast_css():
                 flex-direction: column;
                 justify-content: center;
             }
+            .insight-card *,
+            .insight-card h1,
+            .insight-card h2,
+            .insight-card h3,
+            .insight-card h4,
+            .insight-card h5,
+            .insight-card h6,
+            .insight-card p,
+            .insight-card span,
+            .insight-card div,
+            .insight-card strong,
+            .insight-card em,
+            .insight-card a {
+                font-family: 'Orbitron', monospace !important;
+            }
+            .insight-title {
+                color: #FFFF00 !important;
+                font-family: 'Orbitron', monospace !important;
+                font-weight: 600 !important;
+            }
+            .insight-text {
+                color: #FFFFFF !important;
+                font-family: 'Orbitron', monospace !important;
+            }
+            .insight-metric {
+                background: #FFFF00 !important;
+                color: #000000 !important;
+                font-family: 'Orbitron', monospace !important;
+                font-weight: 700 !important;
+            }
         </style>
         """, unsafe_allow_html=True)
 
@@ -374,28 +404,41 @@ st.markdown("""
         flex-direction: column;
         justify-content: center;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-        font-family: 'Orbitron', monospace;
+        font-family: 'Orbitron', monospace !important;
     }
     
-    .insight-card * {
-        font-family: 'Orbitron', monospace;
+    /* High specificity override for ALL elements inside insight cards */
+    .insight-card *,
+    .insight-card h1,
+    .insight-card h2,
+    .insight-card h3,
+    .insight-card h4,
+    .insight-card h5,
+    .insight-card h6,
+    .insight-card p,
+    .insight-card span,
+    .insight-card div,
+    .insight-card strong,
+    .insight-card em,
+    .insight-card a {
+        font-family: 'Orbitron', monospace !important;
     }
     
     .insight-title {
-        font-family: 'Orbitron', monospace;
+        font-family: 'Orbitron', monospace !important;
         font-size: 1rem;
         color: #00ffaa;
-        font-weight: 600;
+        font-weight: 600 !important;
         margin-bottom: 0.75rem;
         letter-spacing: 0.5px;
     }
     
     .insight-text {
-        font-family: 'Orbitron', monospace;
+        font-family: 'Orbitron', monospace !important;
         color: #a0aec0;
         font-size: 0.95rem;
         line-height: 1.6;
-        font-weight: 400;
+        font-weight: 400 !important;
     }
     
     .insight-metric {
@@ -404,8 +447,8 @@ st.markdown("""
         color: #00ffff;
         padding: 0.2rem 0.6rem;
         border-radius: 5px;
-        font-family: 'Orbitron', monospace;
-        font-weight: 700;
+        font-family: 'Orbitron', monospace !important;
+        font-weight: 700 !important;
         margin: 0 0.2rem;
     }
     
