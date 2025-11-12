@@ -7,7 +7,18 @@
     "exclude": [
         "**/__pycache__",
         "**/.venv",
-        "**/node_modules"
+        "**/node_modules",
+        "**/*.pyc",
+        "**/.pytest_cache",
+        "**/.mypy_cache",
+        "**/dist",
+        "**/build"
+    ],
+    "extraPaths": [
+        "scheduler",
+        "cloud_functions/scheduler_function",
+        "cloud_functions/worker_job",
+        "dashboard"
     ],
     "venvPath": ".",
     "venv": ".venv",
@@ -24,5 +35,6 @@
     "reportOptionalMemberAccess": "warning",
     "reportOptionalSubscript": "warning",
     "reportPrivateImportUsage": false,
+    "reportUnknownLambdaType": false,
     "stubPath": ""
 }
