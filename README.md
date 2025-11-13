@@ -10,23 +10,23 @@ CASS-Lite v2 fetches real-time carbon intensity data from 6 global regions, inte
 ```
 cass-lite-v2/
 ├── scheduler/           # Core scheduling logic
-│   ├── main.py         #  Scheduler decision engine 
-│   ├── carbon_fetcher.py   #  Carbon API integration 
-│   ├── job_runner.py   #  Cloud Function trigger 
-│   ├── firestore_logger.py #  Database logging 
-│   └── config.json     #  Configuration 
+│   ├── main.py         #  Scheduler decision engine
+│   ├── carbon_fetcher.py   #  Carbon API integration
+│   ├── job_runner.py   #  Cloud Function trigger
+│   ├── firestore_logger.py #  Database logging
+│   └── config.json     #  Configuration
 │
 ├── cloud_functions/    # Serverless workers
-│   ├── worker_job/     #  Worker function 
-│   └── scheduler_function/ # Scheduler function 
+│   ├── worker_job/     #  Worker function
+│   └── scheduler_function/ # Scheduler function
 │
 ├── dashboard/          # Streamlit analytics
-│   ├── app.py           
-│   └── utils.py        
+│   ├── app.py
+│   └── utils.py
 │
 ├── scripts/            # Deployment scripts
-│   ├── deploy_scheduler.sh 
-│   └── deploy_worker.sh   
+│   ├── deploy_scheduler.sh
+│   └── deploy_worker.sh
 │
 └── requirements.txt    # Dependencies
 ```
@@ -221,7 +221,7 @@ With Firestore data in BigQuery, you can:
 
 ```sql
 -- Total carbon savings by region (last 30 days)
-SELECT 
+SELECT
   region,
   COUNT(*) as decision_count,
   AVG(carbon_intensity) as avg_carbon,
@@ -232,7 +232,7 @@ GROUP BY region
 ORDER BY total_savings DESC;
 
 -- Daily carbon savings trend
-SELECT 
+SELECT
   DATE(timestamp) as date,
   SUM(savings_gco2) as daily_savings,
   AVG(carbon_intensity) as avg_carbon
@@ -253,5 +253,5 @@ LIMIT 30;
 
 ---
 
-**Built with ❤️ for a greener cloud.**  
-**Making serverless computing carbon-aware, one deployment at a time.** 
+**Built with ❤️ for a greener cloud.**
+**Making serverless computing carbon-aware, one deployment at a time.**
