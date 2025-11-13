@@ -129,13 +129,13 @@ st.markdown("""
 <style>
     /* Import Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
-    
+
     /* Global Styles */
     .stApp {
         background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #16213e 100%);
         font-family: 'Rajdhani', sans-serif;
     }
-    
+
     /* Loading Skeleton */
     .skeleton {
         background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
@@ -143,24 +143,24 @@ st.markdown("""
         animation: loading 1.5s ease-in-out infinite;
         border-radius: 10px;
     }
-    
+
     @keyframes loading {
         0% { background-position: 200% 0; }
         100% { background-position: -200% 0; }
     }
-    
+
     /* Ensure Streamlit columns are uniform */
     [data-testid="column"] {
         display: flex;
         flex-direction: column;
     }
-    
+
     [data-testid="column"] > div {
         flex: 1;
         display: flex;
         flex-direction: column;
     }
-    
+
     /* Hero Header */
     .hero-header {
         background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
@@ -172,12 +172,12 @@ st.markdown("""
         box-shadow: 0 8px 32px rgba(0, 255, 255, 0.2);
         animation: glow-pulse 3s ease-in-out infinite;
     }
-    
+
     @keyframes glow-pulse {
         0%, 100% { box-shadow: 0 8px 32px rgba(0, 255, 255, 0.2); }
         50% { box-shadow: 0 8px 48px rgba(0, 255, 255, 0.4); }
     }
-    
+
     .hero-title {
         font-family: 'Orbitron', monospace;
         font-size: 3rem;
@@ -189,7 +189,7 @@ st.markdown("""
         margin-bottom: 0.5rem;
         text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
     }
-    
+
     .hero-subtitle {
         font-family: 'Rajdhani', sans-serif;
         font-size: 1.3rem;
@@ -198,7 +198,7 @@ st.markdown("""
         font-weight: 300;
         letter-spacing: 2px;
     }
-    
+
     /* Live Carbon Ticker */
     .carbon-ticker {
         background: linear-gradient(90deg, rgba(0, 255, 255, 0.2) 0%, rgba(127, 0, 255, 0.2) 100%);
@@ -212,12 +212,12 @@ st.markdown("""
         margin-top: 1rem;
         animation: ticker-glow 2s ease-in-out infinite;
     }
-    
+
     @keyframes ticker-glow {
         0%, 100% { border-color: rgba(0, 255, 255, 0.4); }
         50% { border-color: rgba(0, 255, 255, 0.8); }
     }
-    
+
     /* Metric Cards */
     .metric-card {
         background: linear-gradient(135deg, rgba(10, 14, 39, 0.8) 0%, rgba(26, 26, 46, 0.8) 100%);
@@ -233,13 +233,13 @@ st.markdown("""
         flex-direction: column;
         justify-content: space-between;
     }
-    
+
     .metric-card:hover {
         border-color: rgba(0, 255, 255, 0.6);
         box-shadow: 0 8px 40px rgba(0, 255, 255, 0.3);
         transform: translateY(-5px);
     }
-    
+
     .metric-label {
         font-size: 0.9rem;
         color: #00ffaa;
@@ -249,7 +249,7 @@ st.markdown("""
         margin-bottom: 0.5rem;
         text-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
     }
-    
+
     .metric-value {
         font-family: 'Orbitron', monospace;
         font-size: 2.5rem;
@@ -264,14 +264,14 @@ st.markdown("""
         align-items: center;
         justify-content: flex-start;
     }
-    
+
     .metric-delta {
         font-size: 0.85rem;
         color: #9333ea;
         font-weight: 500;
         min-height: 24px;
     }
-    
+
     /* Chart Container */
     .chart-container {
         background: linear-gradient(135deg, rgba(10, 14, 39, 0.6) 0%, rgba(26, 26, 46, 0.6) 100%);
@@ -281,7 +281,7 @@ st.markdown("""
         backdrop-filter: blur(10px);
         margin-bottom: 1.5rem;
     }
-    
+
     .chart-title {
         font-family: 'Orbitron', monospace;
         font-size: 1.3rem;
@@ -289,14 +289,14 @@ st.markdown("""
         margin-bottom: 1rem;
         font-weight: 600;
     }
-    
+
     /* Table Styles */
     .dataframe {
         background: rgba(10, 14, 39, 0.8) !important;
         border: 1px solid rgba(0, 255, 255, 0.2) !important;
         border-radius: 10px;
     }
-    
+
     .dataframe th {
         background: linear-gradient(90deg, rgba(0, 255, 255, 0.2) 0%, rgba(147, 51, 234, 0.2) 100%) !important;
         color: #00ffff !important;
@@ -304,12 +304,12 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-    
+
     .dataframe td {
         color: #a0aec0 !important;
         border-color: rgba(0, 255, 255, 0.1) !important;
     }
-    
+
     /* Footer */
     .footer {
         text-align: center;
@@ -319,22 +319,22 @@ st.markdown("""
         color: #00ffaa;
         font-size: 0.9rem;
     }
-    
+
     .footer-icon {
         color: #ff0066;
         animation: heartbeat 1.5s ease-in-out infinite;
     }
-    
+
     @keyframes heartbeat {
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.1); }
     }
-    
+
     /* Sidebar */
     .css-1d391kg {
         background: linear-gradient(180deg, #0a0e27 0%, #1a1a2e 100%);
     }
-    
+
     /* Buttons */
     .stButton>button {
         background: linear-gradient(90deg, #00ffff 0%, #7f00ff 100%);
@@ -346,27 +346,27 @@ st.markdown("""
         font-size: 1rem;
         transition: all 0.3s ease;
     }
-    
+
     .stButton>button:hover {
         box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
         transform: scale(1.05);
     }
-    
+
     /* Phase 9 Enhancements */
-    
+
     /* Animated Background Gradient */
     @keyframes gradient-shift {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     }
-    
+
     .stApp {
         background: linear-gradient(-45deg, #0a0e27, #1a1a2e, #16213e, #1a0a3e);
         background-size: 400% 400%;
         animation: gradient-shift 15s ease infinite;
     }
-    
+
     /* Fade-in animations for cards */
     @keyframes fadeInUp {
         from {
@@ -378,17 +378,17 @@ st.markdown("""
             transform: translateY(0);
         }
     }
-    
+
     .metric-card {
         animation: fadeInUp 0.6s ease-out;
         animation-fill-mode: both;
     }
-    
+
     .metric-card:nth-child(1) { animation-delay: 0.1s; }
     .metric-card:nth-child(2) { animation-delay: 0.2s; }
     .metric-card:nth-child(3) { animation-delay: 0.3s; }
     .metric-card:nth-child(4) { animation-delay: 0.4s; }
-    
+
     /* Insight Cards */
     .insight-card {
         background: linear-gradient(135deg, rgba(147, 51, 234, 0.2) 0%, rgba(0, 255, 170, 0.2) 100%);
@@ -406,7 +406,7 @@ st.markdown("""
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         font-family: 'Orbitron', monospace !important;
     }
-    
+
     /* High specificity override for ALL elements inside insight cards */
     .insight-card *,
     .insight-card h1,
@@ -423,7 +423,7 @@ st.markdown("""
     .insight-card a {
         font-family: 'Orbitron', monospace !important;
     }
-    
+
     .insight-title {
         font-family: 'Orbitron', monospace !important;
         font-size: 1rem;
@@ -432,7 +432,7 @@ st.markdown("""
         margin-bottom: 0.75rem;
         letter-spacing: 0.5px;
     }
-    
+
     .insight-text {
         font-family: 'Orbitron', monospace !important;
         color: #a0aec0;
@@ -440,7 +440,7 @@ st.markdown("""
         line-height: 1.6;
         font-weight: 400 !important;
     }
-    
+
     .insight-metric {
         display: inline-block;
         background: rgba(0, 255, 170, 0.2);
@@ -451,7 +451,7 @@ st.markdown("""
         font-weight: 700 !important;
         margin: 0 0.2rem;
     }
-    
+
     /* Theme Toggle */
     .theme-toggle {
         position: fixed;
@@ -465,12 +465,12 @@ st.markdown("""
         cursor: pointer;
         transition: all 0.3s ease;
     }
-    
+
     .theme-toggle:hover {
         background: rgba(0, 255, 255, 0.4);
         box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
     }
-    
+
     /* Export Button Styling */
     .stDownloadButton>button {
         background: linear-gradient(90deg, #00ff88 0%, #00ffff 100%);
@@ -482,12 +482,12 @@ st.markdown("""
         font-size: 0.95rem;
         transition: all 0.3s ease;
     }
-    
+
     .stDownloadButton>button:hover {
         box-shadow: 0 0 20px rgba(0, 255, 170, 0.6);
         transform: scale(1.05);
     }
-    
+
     /* Geographic Map Container */
     .geo-map-container {
         background: linear-gradient(135deg, rgba(10, 14, 39, 0.7) 0%, rgba(26, 26, 46, 0.7) 100%);
@@ -496,12 +496,12 @@ st.markdown("""
         padding: 1.5rem;
         margin: 1rem 0;
     }
-    
+
     /* Loading Spinner Custom */
     .stSpinner > div {
         border-color: #00ffff transparent transparent transparent !important;
     }
-    
+
     /* Refresh Indicator */
     .refresh-indicator {
         position: fixed;
@@ -516,12 +516,12 @@ st.markdown("""
         z-index: 1000;
         animation: pulse 2s ease-in-out infinite;
     }
-    
+
     @keyframes pulse {
         0%, 100% { opacity: 0.6; transform: scale(1); }
         50% { opacity: 1; transform: scale(1.05); }
     }
-    
+
     /* Section Divider */
     .section-divider {
         height: 2px;
@@ -531,12 +531,12 @@ st.markdown("""
     }
 
     }
-    
+
     .stButton>button:hover {
         box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
         transform: scale(1.05);
     }
-    
+
     /* Status Badge */
     .status-badge {
         display: inline-block;
@@ -546,13 +546,13 @@ st.markdown("""
         font-weight: 600;
         text-transform: uppercase;
     }
-    
+
     .status-success {
         background: rgba(0, 255, 136, 0.2);
         border: 1px solid #00ff88;
         color: #00ff88;
     }
-    
+
     .status-warning {
         background: rgba(255, 193, 7, 0.2);
         border: 1px solid #ffc107;
@@ -568,10 +568,10 @@ st.markdown("""
 def render_hero():
     st.markdown("""
     <div class="hero-header">
-        <h1 class="hero-title">CASS-Lite v2</h1>
+        <h1 class="hero-title">CASS</h1>
         <p class="hero-subtitle">Carbon-Aware Cloud Intelligence Dashboard</p>
         <div class="carbon-ticker">
-             Optimizing workloads for a sustainable cloud future 
+             Optimizing workloads for a sustainable cloud future
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -583,7 +583,7 @@ def render_hero():
 def render_metrics(stats):
     """Render metric cards with skeleton loaders for empty data"""
     col1, col2, col3, col4 = st.columns(4)
-    
+
     # Check if stats is empty or None
     if not stats or stats.get('total_decisions', 0) == 0:
         # Render skeleton loaders
@@ -593,7 +593,7 @@ def render_metrics(stats):
                 <div class="skeleton" style="height: 150px;"></div>
                 """, unsafe_allow_html=True)
         return
-    
+
     with col1:
         st.markdown(f"""
         <div class="metric-card">
@@ -602,7 +602,7 @@ def render_metrics(stats):
             <div class="metric-delta">gCO₂/kWh</div>
         </div>
         """, unsafe_allow_html=True)
-    
+
     with col2:
         st.markdown(f"""
         <div class="metric-card">
@@ -611,7 +611,7 @@ def render_metrics(stats):
             <div class="metric-delta">vs Average</div>
         </div>
         """, unsafe_allow_html=True)
-    
+
     with col3:
         st.markdown(f"""
         <div class="metric-card">
@@ -620,7 +620,7 @@ def render_metrics(stats):
             <div class="metric-delta">{stats.get('greenest_flag', '🌍')}</div>
         </div>
         """, unsafe_allow_html=True)
-    
+
     with col4:
         st.markdown(f"""
         <div class="metric-card">
@@ -637,9 +637,9 @@ def render_metrics(stats):
 def render_carbon_intensity_chart(data):
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
     st.markdown('<h3 class="chart-title">Real-Time Carbon Intensity by Region</h3>', unsafe_allow_html=True)
-    
+
     fig = go.Figure()
-    
+
     for region in data['region'].unique():
         region_data = data[data['region'] == region]
         fig.add_trace(go.Scatter(
@@ -653,7 +653,7 @@ def render_carbon_intensity_chart(data):
                          'Time: %{x}<br>' +
                          'Carbon: %{y} gCO₂/kWh<extra></extra>'
         ))
-    
+
     fig.update_layout(
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
@@ -678,7 +678,7 @@ def render_carbon_intensity_chart(data):
             borderwidth=1
         )
     )
-    
+
     st.plotly_chart(fig, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -689,10 +689,10 @@ def render_carbon_intensity_chart(data):
 def render_region_frequency_chart(data):
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
     st.markdown('<h3 class="chart-title">Greenest Region Selection Frequency</h3>', unsafe_allow_html=True)
-    
+
     region_counts = data['region'].value_counts().reset_index()
     region_counts.columns = ['region', 'count']
-    
+
     # Add flags
     region_flags = {
         'IN': '🇮🇳', 'FI': '🇫🇮', 'DE': '🇩🇪',
@@ -701,7 +701,7 @@ def render_region_frequency_chart(data):
     region_counts['display'] = region_counts['region'].map(
         lambda x: f"{region_flags.get(x, '🌍')} {x}"
     )
-    
+
     fig = go.Figure(data=[
         go.Bar(
             x=region_counts['display'],
@@ -716,7 +716,7 @@ def render_region_frequency_chart(data):
             hovertemplate='<b>%{x}</b><br>Selections: %{y}<extra></extra>'
         )
     ])
-    
+
     fig.update_layout(
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
@@ -735,7 +735,7 @@ def render_region_frequency_chart(data):
         height=400,
         showlegend=False
     )
-    
+
     st.plotly_chart(fig, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -746,7 +746,7 @@ def render_region_frequency_chart(data):
 def render_savings_gauge(savings_percent):
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
     st.markdown('<h3 class="chart-title">Carbon Savings Achievement</h3>', unsafe_allow_html=True)
-    
+
     fig = go.Figure(go.Indicator(
         mode="gauge+number+delta",
         value=savings_percent,
@@ -771,14 +771,14 @@ def render_savings_gauge(savings_percent):
             }
         }
     ))
-    
+
     fig.update_layout(
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
         font=dict(color='#00ffaa', family='Orbitron'),
         height=300
     )
-    
+
     st.plotly_chart(fig, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -789,26 +789,26 @@ def render_savings_gauge(savings_percent):
 def render_logs_table(logs_df):
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
     st.markdown('<h3 class="chart-title">Recent Scheduling Decisions</h3>', unsafe_allow_html=True)
-    
+
     if not logs_df.empty:
         # Format the dataframe for display
         display_df = logs_df.copy()
         display_df['timestamp'] = pd.to_datetime(display_df['timestamp']).dt.strftime('%Y-%m-%d %H:%M:%S')
-        
+
         # Add status badges
         display_df['status'] = display_df['status'].apply(
             lambda x: '✅ Success' if x == 'success' else 'Warning'
         )
-        
+
         st.dataframe(
-            display_df[['timestamp', 'region_flag', 'region', 'carbon_intensity', 
+            display_df[['timestamp', 'region_flag', 'region', 'carbon_intensity',
                        'savings_gco2', 'savings_percent', 'status']],
             use_container_width=True,
             height=400
         )
     else:
         st.info("📭 No decisions logged yet. Trigger the scheduler to see data!")
-    
+
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ============================================================================
@@ -819,7 +819,7 @@ def render_geographic_map(recent_logs):
     """Render geographic heatmap of regions with carbon intensity"""
     st.markdown('<div class="geo-map-container">', unsafe_allow_html=True)
     st.markdown('<h3 class="chart-title">Global Carbon Intensity Map</h3>', unsafe_allow_html=True)
-    
+
     # Region coordinates
     region_coords = {
         'IN': {'lat': 20.5937, 'lon': 78.9629, 'name': 'India'},
@@ -829,14 +829,14 @@ def render_geographic_map(recent_logs):
         'AU-NSW': {'lat': -31.8406, 'lon': 147.3222, 'name': 'Australia (NSW)'},
         'BR-CS': {'lat': -15.8267, 'lon': -47.9218, 'name': 'Brazil (Central-South)'}
     }
-    
+
     if not recent_logs.empty:
         # Get latest carbon intensity for each region
         latest_data = recent_logs.groupby('region').agg({
             'carbon_intensity': 'last',
             'timestamp': 'last'
         }).reset_index()
-        
+
         # Create map data
         map_data = []
         for _, row in latest_data.iterrows():
@@ -849,10 +849,10 @@ def render_geographic_map(recent_logs):
                     'carbon': row['carbon_intensity'],
                     'size': max(10, 100 - row['carbon_intensity'])  # Invert for visual
                 })
-        
+
         if map_data:
             df_map = pd.DataFrame(map_data)
-            
+
             fig = px.scatter_geo(df_map,
                 lat='lat',
                 lon='lon',
@@ -864,7 +864,7 @@ def render_geographic_map(recent_logs):
                 size_max=50,
                 labels={'carbon': 'Carbon Intensity (gCO₂/kWh)'}
             )
-            
+
             fig.update_layout(
                 geo=dict(
                     projection_type='natural earth',
@@ -882,28 +882,28 @@ def render_geographic_map(recent_logs):
                 height=400,
                 font=dict(color='#00ffaa', family='Rajdhani')
             )
-            
+
             st.plotly_chart(fig, use_container_width=True)
         else:
             st.info("No region data available for map visualization")
     else:
         st.info("No data available - trigger scheduler to see regions")
-    
+
     st.markdown('</div>', unsafe_allow_html=True)
 
 def render_energy_mix_chart(days=7):
     """Render stacked area chart showing energy mix over time"""
     st.markdown('<div class="chart-container">', unsafe_allow_html=True)
     st.markdown('<h3 class="chart-title">Renewable vs Carbon Energy Mix Trend</h3>', unsafe_allow_html=True)
-    
+
     try:
         energy_mix_data = get_energy_mix_data(days)
-        
+
         if not energy_mix_data.empty and 'renewable_pct' in energy_mix_data.columns:
             energy_mix_data['fossil_pct'] = 100 - energy_mix_data['renewable_pct']
-            
+
             fig = go.Figure()
-            
+
             fig.add_trace(go.Scatter(
                 x=energy_mix_data['timestamp'],
                 y=energy_mix_data['renewable_pct'],
@@ -913,7 +913,7 @@ def render_energy_mix_chart(days=7):
                 line=dict(color='#00ff88', width=2),
                 hovertemplate='%{y:.1f}% Renewable<extra></extra>'
             ))
-            
+
             fig.add_trace(go.Scatter(
                 x=energy_mix_data['timestamp'],
                 y=energy_mix_data['fossil_pct'],
@@ -923,7 +923,7 @@ def render_energy_mix_chart(days=7):
                 line=dict(color='#ff6347', width=2),
                 hovertemplate='%{y:.1f}% Fossil<extra></extra>'
             ))
-            
+
             fig.update_layout(
                 paper_bgcolor='rgba(0,0,0,0)',
                 plot_bgcolor='rgba(0,0,0,0)',
@@ -953,107 +953,107 @@ def render_energy_mix_chart(days=7):
                     font=dict(color='#ffffff')
                 )
             )
-            
+
             st.plotly_chart(fig, use_container_width=True)
         else:
             st.info("Energy mix data not available - using carbon intensity as proxy")
     except Exception as e:
         st.warning(f"Energy mix visualization unavailable: {str(e)}")
-    
+
     st.markdown('</div>', unsafe_allow_html=True)
 
 def render_ai_insights_section(recent_logs, stats, days=7):
     """Render AI-powered insights and trend analysis"""
     st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
     st.markdown('<h2 class="chart-title" style="text-align: center; margin: 2rem 0;">AI Insights & Predictions</h2>', unsafe_allow_html=True)
-    
+
     try:
         insights = get_ai_insights(recent_logs, days)
-        
+
         # First row - 2 cards
         col1, col2 = st.columns(2)
-        
+
         with col1:
             st.markdown(f"""
             <div class="insight-card">
                 <div class="insight-title">Greenest Region Analysis</div>
                 <div class="insight-text">
                     <span class="insight-metric">{insights.get('greenest_region', 'N/A')}</span>
-                    has been selected 
+                    has been selected
                     <span class="insight-metric">{insights.get('greenest_frequency', 0):.1f}%</span>
                     of the time, maintaining consistently low carbon intensity.
                 </div>
             </div>
             """, unsafe_allow_html=True)
-        
+
         with col2:
             st.markdown(f"""
             <div class="insight-card">
                 <div class="insight-title">Carbon Savings Trend</div>
                 <div class="insight-text">
-                    Carbon intensity 
+                    Carbon intensity
                     <span class="insight-metric">{insights.get('trend_direction', 'stable')}</span>
                     by <span class="insight-metric">{abs(insights.get('trend_change', 0)):.1f}%</span>
                     this week compared to baseline.
                 </div>
             </div>
             """, unsafe_allow_html=True)
-        
+
         # Second row - 2 cards
         col3, col4 = st.columns(2)
-        
+
         with col3:
             st.markdown(f"""
             <div class="insight-card">
                 <div class="insight-title">Optimization Performance</div>
                 <div class="insight-text">
-                    Average savings of 
+                    Average savings of
                     <span class="insight-metric">{insights.get('avg_savings', 0):.1f} gCO₂</span>
-                    per decision, achieving 
+                    per decision, achieving
                     <span class="insight-metric">{stats.get('savings_percent', 0):.1f}%</span>
                     reduction target.
                 </div>
             </div>
             """, unsafe_allow_html=True)
-        
+
         with col4:
             st.markdown(f"""
             <div class="insight-card">
                 <div class="insight-title">Peak Efficiency Time</div>
                 <div class="insight-text">
-                    Best carbon efficiency observed during 
+                    Best carbon efficiency observed during
                     <span class="insight-metric">{insights.get('peak_time', 'N/A')}</span>
-                    with average intensity below 
+                    with average intensity below
                     <span class="insight-metric">{insights.get('peak_carbon', 0):.0f} gCO₂/kWh</span>.
                 </div>
             </div>
             """, unsafe_allow_html=True)
-        
+
         # Third row - 1 card (Decision Confidence centered)
         col5, col6, col7 = st.columns([1, 2, 1])
-        
+
         with col6:
             st.markdown(f"""
             <div class="insight-card">
                 <div class="insight-title">Decision Confidence</div>
                 <div class="insight-text">
                     <span class="insight-metric">{insights.get('confidence_score', 95):.0f}%</span>
-                    confidence in region selection based on 
+                    confidence in region selection based on
                     <span class="insight-metric">{insights.get('total_decisions', 0)}</span>
                     historical decisions analyzed.
                 </div>
             </div>
             """, unsafe_allow_html=True)
-        
+
     except Exception as e:
         st.info(f"Generating AI insights... {str(e)}")
 
 def render_export_section(logs_df):
     """Render data export options"""
     st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-    
+
     col1, col2, col3, col4 = st.columns([2, 1, 1, 2])
-    
+
     with col2:
         if not logs_df.empty:
             csv_data = logs_df.to_csv(index=False)
@@ -1064,7 +1064,7 @@ def render_export_section(logs_df):
                 mime="text/csv",
                 use_container_width=True
             )
-    
+
     with col3:
         if not logs_df.empty:
             json_data = logs_df.to_json(orient='records', date_format='iso', indent=2)
@@ -1086,7 +1086,7 @@ def render_footer():
         <p>Built with <span class="footer-icon">❤️</span> by <strong>Bharathi Senthilkumar</strong></p>
         <p> Powered by Google Cloud </p>
         <p style="font-size: 0.8rem; color: #7f00ff; margin-top: 1rem;">
-            Making the cloud greener, one decision at a time 
+            Making the cloud greener, one decision at a time
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -1098,17 +1098,17 @@ def render_footer():
 def main():
     # PHASE 9: Auto-refresh for real-time updates
     st_autorefresh(interval=30000, key="datarefresh")  # 30 seconds
-    
+
     # Render hero section
     render_hero()
-    
+
     # Apply high contrast mode if enabled
     apply_high_contrast_css()
-    
+
     # Sidebar controls
     with st.sidebar:
         st.markdown("### ⚙️ Dashboard Controls")
-        
+
         # High Contrast Mode Toggle
         st.markdown("---")
         st.markdown("### 🎨 Accessibility")
@@ -1117,32 +1117,32 @@ def main():
             value=st.session_state.high_contrast,
             help="Toggle high contrast mode for better visibility"
         )
-        
+
         if high_contrast != st.session_state.high_contrast:
             st.session_state.high_contrast = high_contrast
             st.rerun()
-        
+
         # PHASE 9: Theme Toggle Button
         theme_toggle = st.checkbox("🌙 Dark Mode", value=True)
-        
+
         st.markdown("---")
         st.markdown("### 📅 Data Range")
         days_filter = st.selectbox("Show last", [1, 3, 7, 14, 30], index=2)
-        
+
         st.markdown("---")
         st.markdown("### 🚀 Quick Actions")
-        
+
         if st.button("⚡ Trigger Scheduler"):
             st.info("Triggering scheduler function...")
             # Add logic to call Cloud Function
-        
+
         if st.button("🔄 Refresh Data"):
             st.session_state.data_loading_failed = False
             st.rerun()
-        
+
         st.markdown("---")
         st.markdown("### 📊 Cloud Run Metrics")
-        
+
         try:
             # PHASE 9: Display Cloud Run metrics
             st.metric("CPU Usage", "12%", "↓ 3%")
@@ -1150,79 +1150,79 @@ def main():
             st.metric("Request Count", "1.2K", "↑ 15%")
         except Exception:
             st.info("Metrics loading...")
-        
+
         st.markdown("---")
         st.markdown("### ℹ️ Project Info")
         st.markdown("""
-        **Project:** CASS-Lite v2  
-        **Version:** 2.0.0 ⚡  
-        **Status:** 🟢 Active  
-        **Region:** asia-south1  
-        **Cost:** $0.08/month  
+        **Project:** CASS-Lite v2
+        **Version:** 2.0.0 ⚡
+        **Status:** 🟢 Active
+        **Region:** asia-south1
+        **Cost:** $0.08/month
         """)
-    
+
     # Fetch data with loading indicators and error handling
     stats = None
     recent_logs = pd.DataFrame()
     region_history = pd.DataFrame()
-    
+
     try:
         # Show loading spinner while fetching data
         with st.spinner("🔄 Loading carbon intelligence data..."):
             # Progress indicator
             progress_bar = st.progress(0)
-            
+
             # Fetch stats
             progress_bar.progress(25)
             stats = get_summary_stats(days=days_filter)
-            
+
             # Fetch recent logs
             progress_bar.progress(50)
             recent_logs = fetch_recent_decisions(limit=100)
-            
+
             # Fetch region history
             progress_bar.progress(75)
             region_history = get_region_history(days=days_filter)
-            
+
             progress_bar.progress(100)
             time.sleep(0.2)  # Brief pause to show completion
             progress_bar.empty()
-            
+
             # Mark successful data load
             st.session_state.data_loading_failed = False
-            
+
     except Exception as e:
         # Display error banner
         st.error(f"⚠️ Failed to fetch Firestore data: {str(e)}")
         st.warning("🔄 Falling back to mock data for demonstration...")
-        
+
         # Fallback to mock data
         try:
             with st.spinner("📊 Loading mock data..."):
                 stats = get_summary_stats(days=days_filter)
                 recent_logs = generate_mock_decisions(100)
                 region_history = generate_mock_history(days=days_filter)
-                
+
             st.session_state.data_loading_failed = True
             st.info("ℹ️ Displaying mock data. Connect to Firestore for real-time data.")
-            
+
         except Exception as fallback_error:
             st.error(f"❌ Critical error: {str(fallback_error)}")
             st.stop()
-    
+
     # Display data status indicator
     if st.session_state.data_loading_failed:
         st.markdown("""
-        <div style="background: rgba(255, 193, 7, 0.2); 
-                    border: 1px solid #ffc107; 
-                    border-radius: 10px; 
-                    padding: 10px; 
+        <div style="background: rgba(255, 193, 7, 0.2);
+                    border: 1px solid #ffc107;
+                    border-radius: 10px;
+                    padding: 10px;
                     margin-bottom: 20px;
                     text-align: center;">
             <span style="color: #ffc107;">⚠️ Using Mock Data</span>
         </div>
         """, unsafe_allow_html=True)
-    
+
     # Render metrics (with skeleton loaders if no data)
     if stats is None or len(recent_logs) == 0:
         # Show skeleton loaders
@@ -1233,36 +1233,36 @@ def main():
                 st.markdown('<div class="skeleton" style="height: 150px;"></div>', unsafe_allow_html=True)
     else:
         render_metrics(stats)
-    
+
     st.markdown("<br>", unsafe_allow_html=True)
-    
+
     # Two column layout for charts
     col1, col2 = st.columns([2, 1])
-    
+
     with col1:
         if region_history.empty:
             st.markdown("### 📈 Carbon Intensity Over Time")
             st.markdown('<div class="skeleton" style="height: 400px;"></div>', unsafe_allow_html=True)
         else:
             render_carbon_intensity_chart(region_history)
-    
+
     with col2:
         if stats:
             render_savings_gauge(stats.get('savings_percent', 0))
         else:
             st.markdown("### 💰 Carbon Savings")
             st.markdown('<div class="skeleton" style="height: 300px;"></div>', unsafe_allow_html=True)
-    
+
     # PHASE 9: Geographic Map
     if not recent_logs.empty:
         render_geographic_map(recent_logs)
     else:
         st.markdown("### 🌍 Global Carbon Intensity Map")
         st.markdown('<div class="skeleton" style="height: 500px;"></div>', unsafe_allow_html=True)
-    
+
     # Two column layout for advanced charts
     col3, col4 = st.columns(2)
-    
+
     with col3:
         # Region frequency chart
         if not recent_logs.empty:
@@ -1270,25 +1270,25 @@ def main():
         else:
             st.markdown("### 📍 Region Selection Frequency")
             st.markdown('<div class="skeleton" style="height: 400px;"></div>', unsafe_allow_html=True)
-    
+
     with col4:
         # PHASE 9: Energy mix chart
         render_energy_mix_chart(days=days_filter)
-    
+
     # PHASE 9: AI Insights Section
     if stats and not recent_logs.empty:
         render_ai_insights_section(recent_logs, stats, days=days_filter)
-    
+
     # Live logs table
     render_logs_table(recent_logs)
-    
+
     # PHASE 9: Export Section
     if not recent_logs.empty:
         render_export_section(recent_logs)
-    
+
     # Footer
     render_footer()
-    
+
     # PHASE 9: Refresh Indicator (bottom-right)
     st.markdown("""
     <div class="refresh-indicator">
