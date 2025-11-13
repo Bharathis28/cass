@@ -49,9 +49,21 @@ REGION_LATENCY = {
 class PredictiveScheduler:
     """Multi-objective scheduler with carbon intensity forecasting"""
 
-    def __init__(self, firestore_project_id: str = "cass-lite"):
-        self.carbon_fetcher = CarbonFetcher()
-        self.firestore_logger = FirestoreLogger(firestore_project_id)
+    def __init__(self, firestore_project_id: str = "cass-lite", api_key: str = ""):
+        # Initialize carbon fetcher with API key from environment or parameter
+        import os
+        api_key = api_key or os.getenv('ELECTRICITYMAP_API_KEY', 'gwASf8vJiQ92CPIuRzuy')
+        self.carbon_fetcher = CarbonFetcher(api_key=api_key)
+
+        # Create config for FirestoreLogger
+        config = {
+            'firestore': {
+                'project_id': firestore_project_id,
+                'collection': 'decisions',
+                'credentials_path': ''
+            }
+        }
+        self.firestore_logger = FirestoreLogger(config)
         self.logger = logging.getLogger(__name__)
 
     def fetch_historical_data(
