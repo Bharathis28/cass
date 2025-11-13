@@ -71,6 +71,70 @@ cass-lite-v2/
 
 ---
 
+## 🚀 Deploy to Google Cloud
+
+### One-Click Deployment (Recommended)
+
+Push a version tag to automatically deploy all services:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+GitHub Actions will automatically deploy:
+- ✅ Scheduler Function (Cloud Functions Gen2)
+- ✅ Worker Function (Cloud Functions Gen2)
+- ✅ Dashboard (Cloud Run)
+
+Watch deployment progress: [GitHub Actions](https://github.com/Bharathis28/cass/actions)
+
+### Manual Deployment
+
+Deploy individual services using gcloud CLI:
+
+**Deploy Scheduler Function:**
+```bash
+gcloud functions deploy cass-scheduler \
+  --gen2 \
+  --runtime python312 \
+  --region=asia-south1 \
+  --source ./cloud_functions/scheduler_function \
+  --entry-point=run_scheduler \
+  --trigger-http \
+  --allow-unauthenticated
+```
+
+**Deploy Worker Function:**
+```bash
+gcloud functions deploy cass-worker \
+  --gen2 \
+  --runtime python312 \
+  --region=asia-south1 \
+  --source ./cloud_functions/worker_job \
+  --entry-point=run_worker_job \
+  --trigger-http \
+  --allow-unauthenticated
+```
+
+**Deploy Dashboard:**
+```bash
+cd dashboard
+gcloud run deploy cass-lite-dashboard \
+  --source . \
+  --platform managed \
+  --region=asia-south1 \
+  --allow-unauthenticated
+```
+
+### 🌐 Live Services
+
+- **Dashboard:** [https://cass-lite-dashboard-ocbydgmwia-el.a.run.app](https://cass-lite-dashboard-ocbydgmwia-el.a.run.app)
+- **Scheduler API:** [https://cass-scheduler-ocbydgmwia-el.a.run.app](https://cass-scheduler-ocbydgmwia-el.a.run.app)
+- **Worker API:** [https://cass-worker-ocbydgmwia-el.a.run.app](https://cass-worker-ocbydgmwia-el.a.run.app)
+
+---
+
 ##  Configuration
 
 Edit `scheduler/config.json` to:
