@@ -1069,18 +1069,9 @@ def render_multi_objective_optimizer():
 
     # Import predictive scheduler
     try:
-        import sys
-        import os
-        # Add parent directory to path to import scheduler module
-        parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        if parent_dir not in sys.path:
-            sys.path.insert(0, parent_dir)
+        from predictor import SimplePredictiveScheduler
 
-        from scheduler.predictive_scheduler import PredictiveScheduler
-
-        scheduler = PredictiveScheduler(firestore_project_id="cass-lite")
-
-        # Create two columns for sliders and results
+        scheduler = SimplePredictiveScheduler()        # Create two columns for sliders and results
         col1, col2 = st.columns([1, 2])
 
         with col1:
@@ -1134,23 +1125,14 @@ def render_multi_objective_optimizer():
                 </div>
                 """, unsafe_allow_html=True)
 
-            # Prediction toggle
-            use_prediction = st.checkbox(
-                "Use Forecasted Carbon Intensity",
-                value=False,
-                help="Use Prophet forecasting to predict future carbon intensity"
-            )
-
-            if use_prediction:
-                hours_ahead = st.slider(
-                    "Forecast Hours Ahead",
-                    min_value=1,
-                    max_value=24,
-                    value=1,
-                    help="Number of hours to forecast ahead"
-                )
-            else:
-                hours_ahead = 1
+            # Note about data source
+            st.markdown("""
+            <div style="margin-top: 20px; padding: 10px; 
+                       background: rgba(0, 212, 255, 0.1); 
+                       border-radius: 10px; font-size: 0.85rem;">
+                💡 Using real-time carbon intensity data
+            </div>
+            """, unsafe_allow_html=True)
 
             # Run optimization button
             if st.button("🚀 Optimize Region Selection", type="primary", use_container_width=True):
@@ -1158,9 +1140,7 @@ def render_multi_objective_optimizer():
                     result = scheduler.select_optimal_region(
                         w_carbon=w_carbon,
                         w_latency=w_latency,
-                        w_cost=w_cost,
-                        use_prediction=use_prediction,
-                        hours_ahead=hours_ahead
+                        w_cost=w_cost
                     )
 
                     if result['success']:
