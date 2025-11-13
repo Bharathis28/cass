@@ -398,6 +398,59 @@ class FirestoreLogger:
             'project_id': self.config.get('firestore', {}).get('project_id', 'Not configured'),
             'mode': 'Firestore' if self.connected else 'Console-only'
         }
+    
+    def get_decisions_by_region(
+        self,
+        region: str,
+        start_time: datetime,
+        end_time: datetime,
+        limit: int = 1000
+    ) -> List[Dict]:
+        """
+        Fetch decisions for a specific region within a time range.
+        
+        Args:
+            region: Region code (e.g., 'FI', 'DE')
+            start_time: Start of time range
+            end_time: End of time range
+            limit: Maximum number of decisions to return
+            
+        Returns:
+            List of decision dictionaries
+        """
+        if not self.connected or self.client is None:
+            print(f"⚠️  Firestore not connected, cannot fetch region data")
+            return []
+        
+        try:
+            # Query Firestore for decisions in time range and region
+            decisions_ref = self.client.collection(self.collection_name)
+            
+            query = decisions_ref \
+                .where('selected_region', '==', region) \
+                .where('timestamp', '>=', start_time) \
+                .where('timestamp', '<=', end_time) \
+                .order_by('timestamp', direction='DESCENDING') \
+                .limit(limit)
+            
+            docs = query.stream()
+            
+            decisions = []
+            for doc in docs:
+                data = doc.to_dict()
+                # Ensure timestamp is datetime object
+                if isinstance(data.get('timestamp'), str):
+                    try:
+                        data['timestamp'] = datetime.fromisoformat(data['timestamp'])
+                    except:
+                        pass
+                decisions.append(data)
+            
+            return decisions
+            
+        except Exception as e:
+            print(f"⚠️  Error fetching region data: {str(e)[:100]}")
+            return []
 
 
 # Example usage and testing
