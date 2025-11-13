@@ -1056,31 +1056,31 @@ def render_multi_objective_optimizer():
     """
     st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
     st.markdown("## 🎯 Multi-Objective Optimization")
-    
+
     st.markdown("""
     <div style="background: linear-gradient(135deg, rgba(127, 0, 255, 0.1), rgba(0, 212, 255, 0.1));
                 border-radius: 15px; padding: 20px; margin-bottom: 20px;">
         <p style="color: #e0e0e0; font-size: 0.95rem; line-height: 1.6;">
-            Balance carbon efficiency, network latency, and cost to find the optimal region 
+            Balance carbon efficiency, network latency, and cost to find the optimal region
             for your workload. Adjust weights to prioritize different objectives.
         </p>
     </div>
     """, unsafe_allow_html=True)
-    
+
     # Import predictive scheduler
     try:
         import sys
         sys.path.append('.')
         from scheduler.predictive_scheduler import PredictiveScheduler
-        
+
         scheduler = PredictiveScheduler(firestore_project_id="cass-lite")
-        
+
         # Create two columns for sliders and results
         col1, col2 = st.columns([1, 2])
-        
+
         with col1:
             st.markdown("### ⚖️ Objective Weights")
-            
+
             # Weight sliders
             w_carbon = st.slider(
                 "🌱 Carbon Weight",
@@ -1090,7 +1090,7 @@ def render_multi_objective_optimizer():
                 step=0.1,
                 help="Higher values prioritize lower carbon intensity"
             )
-            
+
             w_latency = st.slider(
                 "⚡ Latency Weight",
                 min_value=0.0,
@@ -1099,7 +1099,7 @@ def render_multi_objective_optimizer():
                 step=0.1,
                 help="Higher values prioritize lower network latency"
             )
-            
+
             w_cost = st.slider(
                 "💰 Cost Weight",
                 min_value=0.0,
@@ -1108,17 +1108,17 @@ def render_multi_objective_optimizer():
                 step=0.1,
                 help="Higher values prioritize lower regional costs"
             )
-            
+
             # Normalize weights display
             total = w_carbon + w_latency + w_cost
             if total > 0:
                 norm_carbon = (w_carbon / total) * 100
                 norm_latency = (w_latency / total) * 100
                 norm_cost = (w_cost / total) * 100
-                
+
                 st.markdown(f"""
-                <div style="margin-top: 20px; padding: 15px; 
-                           background: rgba(127, 0, 255, 0.1); 
+                <div style="margin-top: 20px; padding: 15px;
+                           background: rgba(127, 0, 255, 0.1);
                            border-radius: 10px;">
                     <div style="font-size: 0.9rem; color: #b0b0b0; margin-bottom: 10px;">
                         Normalized Weights:
@@ -1128,14 +1128,14 @@ def render_multi_objective_optimizer():
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
-            
+
             # Prediction toggle
             use_prediction = st.checkbox(
                 "Use Forecasted Carbon Intensity",
                 value=False,
                 help="Use Prophet forecasting to predict future carbon intensity"
             )
-            
+
             if use_prediction:
                 hours_ahead = st.slider(
                     "Forecast Hours Ahead",
@@ -1146,7 +1146,7 @@ def render_multi_objective_optimizer():
                 )
             else:
                 hours_ahead = 1
-            
+
             # Run optimization button
             if st.button("🚀 Optimize Region Selection", type="primary", use_container_width=True):
                 with st.spinner("🧮 Computing optimal region..."):
@@ -1157,18 +1157,18 @@ def render_multi_objective_optimizer():
                         use_prediction=use_prediction,
                         hours_ahead=hours_ahead
                     )
-                    
+
                     if result['success']:
                         st.session_state.optimization_result = result
                     else:
                         st.error(f"❌ Optimization failed: {result.get('error', 'Unknown error')}")
-        
+
         with col2:
             if 'optimization_result' in st.session_state:
                 result = st.session_state.optimization_result
-                
+
                 st.markdown("### 🎯 Optimal Region")
-                
+
                 # Display optimal region card
                 st.markdown(f"""
                 <div style="background: linear-gradient(135deg, #7f00ff, #00d4ff);
@@ -1181,40 +1181,40 @@ def render_multi_objective_optimizer():
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
-                
+
                 # Metrics in three columns
                 met1, met2, met3 = st.columns(3)
-                
+
                 with met1:
                     st.metric(
                         "🌱 Carbon",
                         f"{result['carbon_intensity']:.0f} gCO₂/kWh",
                         f"{result['savings_gco2']:.0f} saved" if result['savings_gco2'] > 0 else None
                     )
-                
+
                 with met2:
                     st.metric(
                         "⚡ Latency",
                         f"{result['latency']}ms",
                         "Estimated"
                     )
-                
+
                 with met3:
                     st.metric(
                         "💰 Cost",
                         f"${result['cost']:.4f}",
                         "per vCPU-hour"
                     )
-                
+
                 # Show all candidates comparison
                 st.markdown("### 📊 All Candidates Comparison")
-                
+
                 candidates_df = pd.DataFrame(result['all_candidates'])
                 candidates_df = candidates_df.sort_values('score')
-                
+
                 # Create comparison chart
                 fig = go.Figure()
-                
+
                 fig.add_trace(go.Bar(
                     x=candidates_df['region'],
                     y=candidates_df['score'],
@@ -1227,7 +1227,7 @@ def render_multi_objective_optimizer():
                         colorbar=dict(title="Score<br>(lower=better)")
                     )
                 ))
-                
+
                 fig.update_layout(
                     title="Multi-Objective Scores by Region",
                     xaxis_title="Region",
@@ -1237,25 +1237,25 @@ def render_multi_objective_optimizer():
                     font=dict(color='white', family='Orbitron'),
                     height=400
                 )
-                
+
                 st.plotly_chart(fig, use_container_width=True)
-                
+
                 # Pareto Frontier
                 st.markdown("### 📈 Pareto Frontier (Carbon vs Latency)")
-                
+
                 # Generate Pareto frontier
                 pareto_points = scheduler.generate_pareto_frontier(
                     objective1='carbon',
                     objective2='latency'
                 )
-                
+
                 if pareto_points:
                     # Create Pareto plot
                     all_points_df = pd.DataFrame(result['all_candidates'])
                     pareto_df = pd.DataFrame(pareto_points)
-                    
+
                     fig_pareto = go.Figure()
-                    
+
                     # All regions
                     fig_pareto.add_trace(go.Scatter(
                         x=all_points_df['carbon_intensity'],
@@ -1266,7 +1266,7 @@ def render_multi_objective_optimizer():
                         text=all_points_df['region'],
                         hovertemplate='<b>%{text}</b><br>Carbon: %{x:.0f} gCO₂/kWh<br>Latency: %{y}ms<extra></extra>'
                     ))
-                    
+
                     # Pareto frontier
                     fig_pareto.add_trace(go.Scatter(
                         x=pareto_df['carbon'],
@@ -1278,7 +1278,7 @@ def render_multi_objective_optimizer():
                         text=pareto_df['region'],
                         hovertemplate='<b>%{text}</b><br>Carbon: %{x:.0f} gCO₂/kWh<br>Latency: %{y}ms<extra></extra>'
                     ))
-                    
+
                     # Highlight selected region
                     selected_row = all_points_df[all_points_df['region'] == result['region']].iloc[0]
                     fig_pareto.add_trace(go.Scatter(
@@ -1289,7 +1289,7 @@ def render_multi_objective_optimizer():
                         marker=dict(size=20, color='#ff00ff', symbol='diamond', line=dict(color='white', width=2)),
                         hovertemplate=f"<b>{result['region']} (Selected)</b><br>Carbon: {selected_row['carbon_intensity']:.0f} gCO₂/kWh<br>Latency: {selected_row['latency']}ms<extra></extra>"
                     ))
-                    
+
                     fig_pareto.update_layout(
                         title="Carbon Intensity vs Network Latency - Pareto Optimal Solutions",
                         xaxis_title="Carbon Intensity (gCO₂/kWh)",
@@ -1308,21 +1308,21 @@ def render_multi_objective_optimizer():
                             borderwidth=2
                         )
                     )
-                    
+
                     st.plotly_chart(fig_pareto, use_container_width=True)
-                    
+
                     st.markdown("""
                     <div style="background: rgba(127, 0, 255, 0.1); border-radius: 10px; padding: 15px; margin-top: 10px;">
                         <p style="color: #b0b0b0; font-size: 0.9rem; margin: 0;">
-                            <strong>💡 Pareto Frontier:</strong> Regions on the frontier represent optimal trade-offs. 
+                            <strong>💡 Pareto Frontier:</strong> Regions on the frontier represent optimal trade-offs.
                             No region can improve one objective without worsening another.
                         </p>
                     </div>
                     """, unsafe_allow_html=True)
-            
+
             else:
                 st.info("👈 Adjust weights and click 'Optimize Region Selection' to see results")
-    
+
     except ImportError as e:
         st.warning(f"⚠️ Predictive scheduler not available: {str(e)}")
         st.info("Install required packages: `pip install prophet pandas`")

@@ -23,10 +23,10 @@ jobs:
       # ============================================
       # SETUP
       # ============================================
-      - name: 📥 Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: 🔧 Set up Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -34,31 +34,31 @@ jobs:
       # ============================================
       # GOOGLE CLOUD AUTHENTICATION
       # ============================================
-      - name: 🔑 Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-      - name: ☁️ Set up Cloud SDK
+      - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ env.PROJECT_ID }}
 
-      - name: 🔧 Configure Docker for Artifact Registry
+      - name: Configure Docker for Artifact Registry
         run: |
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
 
       # ============================================
       # DEPLOY SCHEDULER CLOUD FUNCTION
       # ============================================
-      - name: 🚀 Deploy Scheduler Function (Cloud Functions Gen2)
+      - name: Deploy Scheduler Function (Cloud Functions Gen2)
         id: deploy-scheduler
         continue-on-error: false
         run: |
           cd cloud_functions/scheduler_function
 
-          echo "📦 Deploying scheduler function..."
+          echo " Deploying scheduler function..."
           gcloud functions deploy cass-scheduler \
             --gen2 \
             --runtime=python${{ env.PYTHON_VERSION }} \
@@ -79,19 +79,19 @@ jobs:
             --region=${{ env.REGION }} \
             --format='value(serviceConfig.uri)')
 
-          echo "✅ Scheduler deployed: $SCHEDULER_URL"
+          echo "Scheduler deployed: $SCHEDULER_URL"
           echo "scheduler_url=$SCHEDULER_URL" >> $GITHUB_OUTPUT
 
       # ============================================
       # DEPLOY WORKER CLOUD FUNCTION
       # ============================================
-      - name: 🔧 Deploy Worker Function (Cloud Functions Gen2)
+      - name: Deploy Worker Function (Cloud Functions Gen2)
         id: deploy-worker
         continue-on-error: false
         run: |
           cd cloud_functions/worker_job
 
-          echo "📦 Deploying worker function..."
+          echo "Deploying worker function..."
           gcloud functions deploy cass-worker \
             --gen2 \
             --runtime=python${{ env.PYTHON_VERSION }} \
@@ -112,19 +112,19 @@ jobs:
             --region=${{ env.REGION }} \
             --format='value(serviceConfig.uri)')
 
-          echo "✅ Worker deployed: $WORKER_URL"
+          echo " Worker deployed: $WORKER_URL"
           echo "worker_url=$WORKER_URL" >> $GITHUB_OUTPUT
 
       # ============================================
       # DEPLOY DASHBOARD TO CLOUD RUN
       # ============================================
-      - name: 📊 Deploy Dashboard (Cloud Run)
+      - name: Deploy Dashboard (Cloud Run)
         id: deploy-dashboard
         continue-on-error: false
         run: |
           cd dashboard
 
-          echo "📦 Building and deploying dashboard..."
+          echo " Building and deploying dashboard..."
           gcloud run deploy cass-lite-dashboard \
             --source=. \
             --platform=managed \
@@ -145,17 +145,17 @@ jobs:
             --region=${{ env.REGION }} \
             --format='value(status.url)')
 
-          echo "✅ Dashboard deployed: $DASHBOARD_URL"
+          echo "Dashboard deployed: $DASHBOARD_URL"
           echo "dashboard_url=$DASHBOARD_URL" >> $GITHUB_OUTPUT
 
       # ============================================
       # VERIFY DEPLOYMENTS
       # ============================================
-      - name: ✅ Verify Deployments
+      - name: Verify Deployments
         id: verify
         continue-on-error: true
         run: |
-          echo "🔍 Verifying deployments..."
+          echo " Verifying deployments..."
 
           # Check scheduler function
           SCHEDULER_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
@@ -173,14 +173,14 @@ jobs:
           echo "worker_status=$WORKER_STATUS" >> $GITHUB_OUTPUT
           echo "dashboard_status=$DASHBOARD_STATUS" >> $GITHUB_OUTPUT
 
-          echo "📡 Scheduler HTTP: $SCHEDULER_STATUS"
-          echo "🔧 Worker HTTP: $WORKER_STATUS"
-          echo "📊 Dashboard HTTP: $DASHBOARD_STATUS"
+          echo " Scheduler HTTP: $SCHEDULER_STATUS"
+          echo " Worker HTTP: $WORKER_STATUS"
+          echo " Dashboard HTTP: $DASHBOARD_STATUS"
 
       # ============================================
       # POST DEPLOYMENT SUMMARY
       # ============================================
-      - name: 📝 Post Deployment Summary
+      - name: Post Deployment Summary
         uses: actions/github-script@v7
         with:
           script: |
@@ -200,7 +200,7 @@ jobs:
             };
 
             const summary = `
-            # 🚀 CASS-Lite v2 Deployment Summary
+            # CASS-Lite v2 Deployment Summary
 
             **Version:** \`${tag}\`
             **Region:** \`${{ env.REGION }}\`
@@ -208,17 +208,17 @@ jobs:
 
             ---
 
-            ## 📦 Deployed Services
+            ##  Deployed Services
 
             | Service | Status | URL |
             |---------|--------|-----|
-            | 🧠 Scheduler Function | ${getStatusEmoji(schedulerStatus)} HTTP ${schedulerStatus} | [${schedulerUrl}](${schedulerUrl}) |
-            | 🔧 Worker Function | ${getStatusEmoji(workerStatus)} HTTP ${workerStatus} | [${workerUrl}](${workerUrl}) |
-            | 📊 Dashboard | ${getStatusEmoji(dashboardStatus)} HTTP ${dashboardStatus} | [${dashboardUrl}](${dashboardUrl}) |
+            |  Scheduler Function | ${getStatusEmoji(schedulerStatus)} HTTP ${schedulerStatus} | [${schedulerUrl}](${schedulerUrl}) |
+            |  Worker Function | ${getStatusEmoji(workerStatus)} HTTP ${workerStatus} | [${workerUrl}](${workerUrl}) |
+            |  Dashboard | ${getStatusEmoji(dashboardStatus)} HTTP ${dashboardStatus} | [${dashboardUrl}](${dashboardUrl}) |
 
             ---
 
-            ## 🌟 Quick Actions
+            ## Quick Actions
 
             ### Test the Scheduler
             \`\`\`bash
@@ -244,7 +244,7 @@ jobs:
 
             ---
 
-            ## 🎯 Deployment Details
+            ## Deployment Details
 
             - **Python Runtime:** ${{ env.PYTHON_VERSION }}
             - **Project ID:** \`${{ env.PROJECT_ID }}\`
@@ -253,7 +253,7 @@ jobs:
 
             ---
 
-            ## 📊 Resource Configuration
+            ## Resource Configuration
 
             | Service | Memory | CPU | Timeout | Max Instances |
             |---------|--------|-----|---------|---------------|
@@ -263,7 +263,7 @@ jobs:
 
             ---
 
-            ## 🔗 Useful Links
+            ##  Useful Links
 
             - [View Functions](https://console.cloud.google.com/functions/list?project=${{ env.PROJECT_ID }})
             - [View Cloud Run Services](https://console.cloud.google.com/run?project=${{ env.PROJECT_ID }})
@@ -272,7 +272,7 @@ jobs:
 
             ---
 
-            **🎉 Deployment completed successfully!**
+            ** Deployment completed successfully!**
             `;
 
             await core.summary
@@ -282,7 +282,7 @@ jobs:
       # ============================================
       # HANDLE FAILURES
       # ============================================
-      - name: ❌ Deployment Failed
+      - name:  Deployment Failed
         if: failure()
         uses: actions/github-script@v7
         with:
@@ -290,7 +290,7 @@ jobs:
             const tag = context.ref.replace('refs/tags/', '');
 
             const summary = `
-            # ❌ CASS-Lite v2 Deployment Failed
+            #  CASS-Lite v2 Deployment Failed
 
             **Version:** \`${tag}\`
             **Region:** \`${{ env.REGION }}\`
@@ -298,7 +298,7 @@ jobs:
 
             ---
 
-            ## 🔍 Troubleshooting Steps
+            ##  Troubleshooting Steps
 
             1. **Check Service Account Permissions**
                - Ensure \`GCP_SA_KEY\` secret is set correctly
@@ -320,7 +320,7 @@ jobs:
 
             ---
 
-            ## 📝 Next Steps
+            ##  Next Steps
 
             1. Review the [Actions logs](${context.payload.repository.html_url}/actions/runs/${context.runId})
             2. Fix the issue
