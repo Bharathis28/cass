@@ -530,6 +530,232 @@ st.markdown("""
         opacity: 0.3;
     }
 
+    /* Multi-Objective Optimizer Custom Styles */
+    .equal-card {
+        min-height: 420px;
+        display: flex;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        padding: 25px;
+        transition: all 0.3s ease;
+    }
+
+    .equal-card:hover {
+        border-color: rgba(0, 212, 255, 0.3);
+        box-shadow: 0 12px 35px rgba(0, 212, 255, 0.2);
+        transform: translateY(-3px);
+    }
+
+    /* Section Title Glassmorphism */
+    .section-title {
+        padding: 12px 20px;
+        border-radius: 12px;
+        backdrop-filter: blur(8px);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        font-family: 'Orbitron', monospace;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+        animation: fadeDown 0.6s ease;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #8A2BE2, #1E90FF, #00E1FF);
+        transition: all 0.4s ease;
+        transform: translateX(-50%);
+    }
+
+    .section-title:hover::after {
+        width: 100%;
+    }
+
+    @keyframes fadeDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Entrance Animations */
+    @keyframes fadeLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .anim-left {
+        animation: fadeLeft 0.8s ease;
+    }
+
+    .anim-center {
+        animation: fadeInScale 1.0s ease;
+    }
+
+    .anim-right {
+        animation: fadeRight 0.8s ease;
+    }
+
+    /* Neon Gradient Divider */
+    .neon-divider {
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #8A2BE2, #1E90FF, #00E1FF);
+        margin-top: 35px;
+        margin-bottom: 20px;
+        border-radius: 2px;
+        box-shadow: 0 0 10px rgba(0, 225, 255, 0.5);
+    }
+
+    /* Pareto Container with Neon Border */
+    .pareto-container {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(0, 225, 255, 0.3);
+        border-radius: 20px;
+        padding: 25px;
+        margin-top: 20px;
+        box-shadow: 0 0 20px rgba(0, 225, 255, 0.15);
+    }
+
+    .pareto-header {
+        background: linear-gradient(90deg, #8A2BE2, #1E90FF, #00E1FF);
+        padding: 15px 20px;
+        border-radius: 12px 12px 0 0;
+        margin: -25px -25px 20px -25px;
+        text-align: center;
+        color: white;
+        font-family: 'Orbitron', monospace;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    /* Floating Pill Badge */
+    .floating-badge {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(138, 43, 226, 0.9);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 10px 25px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+        animation: fadeInUp 0.8s ease;
+        z-index: 1000;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .floating-badge.live-mode {
+        background: rgba(0, 255, 170, 0.9);
+        box-shadow: 0 4px 15px rgba(0, 255, 170, 0.4);
+    }
+
+    .floating-badge.simulated-mode {
+        background: rgba(138, 43, 226, 0.9);
+        box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+    }
+
+    /* Insights Panel */
+    .insights-panel {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        padding: 25px;
+        margin-top: 20px;
+    }
+
+    .insight-summary {
+        background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(138, 43, 226, 0.1));
+        border-left: 4px solid #00d4ff;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .insight-bullets {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .insight-bullets li {
+        padding: 8px 0;
+        padding-left: 25px;
+        position: relative;
+        color: #b0b0b0;
+        line-height: 1.6;
+    }
+
+    .insight-bullets li::before {
+        content: '▶';
+        position: absolute;
+        left: 0;
+        color: #00d4ff;
+        font-size: 0.8rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .equal-card {
+            min-height: auto;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            padding: 10px 15px;
+        }
+
+        .floating-badge {
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            padding: 8px 18px;
+        }
     }
 
     .stButton>button:hover {
@@ -1051,31 +1277,43 @@ def render_ai_insights_section(recent_logs, stats, days=7):
 
 def render_multi_objective_optimizer():
     """
-    Render Multi-Objective Optimization Section with interactive sliders
-    and Pareto frontier visualization
+    Render Multi-Objective Optimization Section with redesigned responsive layout
+    Featuring: 3-column responsive grid, glassmorphism cards, entrance animations,
+    Pareto frontier visualization, analytics charts, and insights panel
     """
-    st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-    st.markdown("## 🎯 Multi-Objective Optimization")
+    import streamlit as st
+    import pandas as pd
+    import plotly.graph_objects as go
 
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, rgba(127, 0, 255, 0.1), rgba(0, 212, 255, 0.1));
-                border-radius: 15px; padding: 20px; margin-bottom: 20px;">
-        <p style="color: #e0e0e0; font-size: 0.95rem; line-height: 1.6;">
-            Balance carbon efficiency, network latency, and cost to find the optimal region
-            for your workload. Adjust weights to prioritize different objectives.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown('<div class="neon-divider"></div>', unsafe_allow_html=True)
+
+    # Main header
+    st.markdown('<div class="section-title">Optimize Region Selection</div>', unsafe_allow_html=True)
 
     # Import predictive scheduler
     try:
         from predictor import SimplePredictiveScheduler
 
-        scheduler = SimplePredictiveScheduler()        # Create two columns for sliders and results
-        col1, col2 = st.columns([1, 2])
+        scheduler = SimplePredictiveScheduler()
 
+        # Determine data mode for floating badge
+        data_mode = "live-mode" if not st.session_state.data_loading_failed else "simulated-mode"
+        data_mode_text = "Live Mode" if not st.session_state.data_loading_failed else "Simulated Mode"
+
+        # Add floating pill badge
+        st.markdown(f"""
+        <div class="floating-badge {data_mode}">
+            {data_mode_text}
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Three-column responsive layout with animations
+        col1, col2, col3 = st.columns([1.3, 1, 1.2])
+
+        # Column 1: Objective Weights Panel
         with col1:
-            st.markdown("### ⚖️ Objective Weights")
+            st.markdown('<div class="equal-card anim-left">', unsafe_allow_html=True)
+            st.markdown("#### Objective Weights")
 
             # Weight sliders
             w_carbon = st.slider(
@@ -1114,12 +1352,13 @@ def render_multi_objective_optimizer():
 
                 st.markdown(f"""
                 <div style="margin-top: 20px; padding: 15px;
-                           background: rgba(127, 0, 255, 0.1);
-                           border-radius: 10px;">
-                    <div style="font-size: 0.9rem; color: #b0b0b0; margin-bottom: 10px;">
+                           background: rgba(127, 0, 255, 0.15);
+                           border-radius: 10px;
+                           border: 1px solid rgba(127, 0, 255, 0.3);">
+                    <div style="font-size: 0.85rem; color: #00ffaa; margin-bottom: 10px; font-weight: 600;">
                         Normalized Weights:
                     </div>
-                    <div style="font-size: 1.1rem; color: #00d4ff;">
+                    <div style="font-size: 1.05rem; color: #00d4ff; font-weight: 600;">
                         🌱 {norm_carbon:.1f}% | ⚡ {norm_latency:.1f}% | 💰 {norm_cost:.1f}%
                     </div>
                 </div>
@@ -1127,9 +1366,10 @@ def render_multi_objective_optimizer():
 
             # Note about data source
             st.markdown("""
-            <div style="margin-top: 20px; padding: 10px;
+            <div style="margin-top: 15px; padding: 10px;
                        background: rgba(0, 212, 255, 0.1);
-                       border-radius: 10px; font-size: 0.85rem;">
+                       border-radius: 8px; font-size: 0.8rem;
+                       border: 1px solid rgba(0, 212, 255, 0.2);">
                 💡 Using real-time carbon intensity data
             </div>
             """, unsafe_allow_html=True)
@@ -1148,51 +1388,74 @@ def render_multi_objective_optimizer():
                     else:
                         st.error(f"❌ Optimization failed: {result.get('error', 'Unknown error')}")
 
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        # Column 2: Optimal Region Card
         with col2:
+            st.markdown('<div class="equal-card anim-center">', unsafe_allow_html=True)
+
             if 'optimization_result' in st.session_state:
                 result = st.session_state.optimization_result
 
-                st.markdown("### 🎯 Optimal Region")
+                st.markdown("#### Optimal Region")
 
                 # Display optimal region card
                 st.markdown(f"""
                 <div style="background: linear-gradient(135deg, #7f00ff, #00d4ff);
-                           border-radius: 15px; padding: 25px; margin-bottom: 20px;">
-                    <div style="font-size: 2.5rem; font-weight: bold; color: white; margin-bottom: 10px;">
+                           border-radius: 15px; padding: 25px; margin-bottom: 15px;
+                           text-align: center; box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);">
+                    <div style="font-size: 2.2rem; font-weight: bold; color: white; margin-bottom: 10px;
+                               font-family: 'Orbitron', monospace;">
                         {result['region']}
                     </div>
-                    <div style="font-size: 1.2rem; color: rgba(255,255,255,0.9);">
-                        Optimization Score: <strong>{result['score']:.3f}</strong>
+                    <div style="font-size: 1rem; color: rgba(255,255,255,0.95);">
+                        Score: <strong style="font-size: 1.2rem;">{result['score']:.3f}</strong>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
 
-                # Metrics in three columns
-                met1, met2, met3 = st.columns(3)
+                # Metrics stacked vertically
+                st.metric(
+                    "🌱 Carbon",
+                    f"{result['carbon_intensity']:.0f} gCO₂/kWh",
+                    f"{result['savings_gco2']:.0f} saved" if result['savings_gco2'] > 0 else None
+                )
 
-                with met1:
-                    st.metric(
-                        "🌱 Carbon",
-                        f"{result['carbon_intensity']:.0f} gCO₂/kWh",
-                        f"{result['savings_gco2']:.0f} saved" if result['savings_gco2'] > 0 else None
-                    )
+                st.metric(
+                    "⚡ Latency",
+                    f"{result['latency']}ms",
+                    "Estimated"
+                )
 
-                with met2:
-                    st.metric(
-                        "⚡ Latency",
-                        f"{result['latency']}ms",
-                        "Estimated"
-                    )
+                st.metric(
+                    "💰 Cost",
+                    f"${result['cost']:.4f}",
+                    "per vCPU-hour"
+                )
 
-                with met3:
-                    st.metric(
-                        "💰 Cost",
-                        f"${result['cost']:.4f}",
-                        "per vCPU-hour"
-                    )
+            else:
+                st.markdown("""
+                <div style="display: flex; align-items: center; justify-content: center;
+                           height: 100%; text-align: center; color: #b0b0b0;">
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🎯</div>
+                        <div style="font-size: 0.95rem;">
+                            Adjust weights and click<br/><strong>Optimize Region Selection</strong>
+                        </div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
 
-                # Show all candidates comparison
-                st.markdown("### 📊 All Candidates Comparison")
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        # Column 3: All Candidates Comparison Panel
+        with col3:
+            st.markdown('<div class="equal-card anim-right">', unsafe_allow_html=True)
+
+            if 'optimization_result' in st.session_state:
+                result = st.session_state.optimization_result
+
+                st.markdown("#### All Candidates Comparison")
 
                 candidates_df = pd.DataFrame(result['all_candidates'])
                 candidates_df = candidates_df.sort_values('score')
@@ -1208,105 +1471,325 @@ def render_multi_objective_optimizer():
                     marker=dict(
                         color=candidates_df['score'],
                         colorscale='Viridis_r',
-                        showscale=True,
-                        colorbar=dict(title="Score<br>(lower=better)")
+                        showscale=False
                     )
                 ))
 
                 fig.update_layout(
-                    title="Multi-Objective Scores by Region",
-                    xaxis_title="Region",
-                    yaxis_title="Optimization Score",
+                    xaxis_title="",
+                    yaxis_title="Score",
                     plot_bgcolor='rgba(0,0,0,0)',
                     paper_bgcolor='rgba(0,0,0,0)',
-                    font=dict(color='white', family='Orbitron'),
-                    height=400
+                    font=dict(color='white', family='Orbitron', size=10),
+                    height=320,
+                    margin=dict(l=40, r=20, t=20, b=40),
+                    xaxis=dict(
+                        tickangle=-45,
+                        gridcolor='rgba(255,255,255,0.1)'
+                    ),
+                    yaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)'
+                    )
                 )
 
                 st.plotly_chart(fig, use_container_width=True)
 
-                # Pareto Frontier
-                st.markdown("### 📈 Pareto Frontier (Carbon vs Latency)")
+            else:
+                st.markdown("""
+                <div style="display: flex; align-items: center; justify-content: center;
+                           height: 100%; text-align: center; color: #b0b0b0;">
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 15px;">📊</div>
+                        <div style="font-size: 0.95rem;">
+                            Comparison chart<br/>will appear here
+                        </div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
 
-                # Generate Pareto frontier
-                pareto_points = scheduler.generate_pareto_frontier(
-                    objective1='carbon',
-                    objective2='latency'
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        # Pareto Frontier Section (Full Width Below)
+        if 'optimization_result' in st.session_state:
+            result = st.session_state.optimization_result
+
+            st.markdown('<div class="neon-divider" style="margin-top: 30px;"></div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-title">Pareto Frontier</div>', unsafe_allow_html=True)
+
+            # Generate Pareto frontier
+            pareto_points = scheduler.generate_pareto_frontier(
+                objective1='carbon',
+                objective2='latency'
+            )
+
+            if pareto_points:
+                st.markdown('<div class="pareto-container">', unsafe_allow_html=True)
+
+                # Create Pareto plot
+                all_points_df = pd.DataFrame(result['all_candidates'])
+                pareto_df = pd.DataFrame(pareto_points)
+
+                fig_pareto = go.Figure()
+
+                # All regions
+                fig_pareto.add_trace(go.Scatter(
+                    x=all_points_df['carbon_intensity'],
+                    y=all_points_df['latency'],
+                    mode='markers',
+                    name='All Regions',
+                    marker=dict(size=12, color='rgba(127, 0, 255, 0.5)'),
+                    text=all_points_df['region'],
+                    hovertemplate='<b>%{text}</b><br>Carbon: %{x:.0f} gCO₂/kWh<br>Latency: %{y}ms<extra></extra>'
+                ))
+
+                # Pareto frontier
+                fig_pareto.add_trace(go.Scatter(
+                    x=pareto_df['carbon'],
+                    y=pareto_df['latency'],
+                    mode='lines+markers',
+                    name='Pareto Frontier',
+                    line=dict(color='#00d4ff', width=3),
+                    marker=dict(size=15, color='#00d4ff', symbol='star'),
+                    text=pareto_df['region'],
+                    hovertemplate='<b>%{text}</b><br>Carbon: %{x:.0f} gCO₂/kWh<br>Latency: %{y}ms<extra></extra>'
+                ))
+
+                # Highlight selected region
+                selected_row = all_points_df[all_points_df['region'] == result['region']].iloc[0]
+                fig_pareto.add_trace(go.Scatter(
+                    x=[selected_row['carbon_intensity']],
+                    y=[selected_row['latency']],
+                    mode='markers',
+                    name='Selected',
+                    marker=dict(size=20, color='#ff00ff', symbol='diamond', line=dict(color='white', width=2)),
+                    hovertemplate=f"<b>{result['region']} (Selected)</b><br>Carbon: {selected_row['carbon_intensity']:.0f} gCO₂/kWh<br>Latency: {selected_row['latency']}ms<extra></extra>"
+                ))
+
+                fig_pareto.update_layout(
+                    title=dict(
+                        text="Carbon Intensity vs Network Latency",
+                        font=dict(size=16, color='white', family='Orbitron')
+                    ),
+                    xaxis_title="Carbon Intensity (gCO₂/kWh)",
+                    yaxis_title="Network Latency (ms)",
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='white', family='Orbitron'),
+                    height=450,
+                    hovermode='closest',
+                    showlegend=True,
+                    legend=dict(
+                        x=0.98,
+                        y=0.98,
+                        xanchor='right',
+                        yanchor='top',
+                        bgcolor='rgba(0,0,0,0.7)',
+                        bordercolor='rgba(0, 212, 255, 0.5)',
+                        borderwidth=2
+                    ),
+                    xaxis=dict(
+                        gridcolor='rgba(0, 212, 255, 0.1)',
+                        showgrid=True
+                    ),
+                    yaxis=dict(
+                        gridcolor='rgba(0, 212, 255, 0.1)',
+                        showgrid=True
+                    )
                 )
 
-                if pareto_points:
-                    # Create Pareto plot
-                    all_points_df = pd.DataFrame(result['all_candidates'])
-                    pareto_df = pd.DataFrame(pareto_points)
+                st.plotly_chart(fig_pareto, use_container_width=True)
 
-                    fig_pareto = go.Figure()
+                st.markdown("""
+                <div style="background: rgba(127, 0, 255, 0.1); border-radius: 10px; padding: 15px; margin-top: 15px;
+                           border: 1px solid rgba(127, 0, 255, 0.2);">
+                    <p style="color: #b0b0b0; font-size: 0.9rem; margin: 0;">
+                        <strong style="color: #00ffaa;">💡 Pareto Frontier:</strong> Regions on the frontier represent optimal trade-offs.
+                        No region can improve one objective without worsening another.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
-                    # All regions
-                    fig_pareto.add_trace(go.Scatter(
-                        x=all_points_df['carbon_intensity'],
-                        y=all_points_df['latency'],
-                        mode='markers',
-                        name='All Regions',
-                        marker=dict(size=12, color='rgba(127, 0, 255, 0.5)'),
-                        text=all_points_df['region'],
-                        hovertemplate='<b>%{text}</b><br>Carbon: %{x:.0f} gCO₂/kWh<br>Latency: %{y}ms<extra></extra>'
-                    ))
+                st.markdown('</div>', unsafe_allow_html=True)
 
-                    # Pareto frontier
-                    fig_pareto.add_trace(go.Scatter(
-                        x=pareto_df['carbon'],
-                        y=pareto_df['latency'],
-                        mode='lines+markers',
-                        name='Pareto Frontier',
-                        line=dict(color='#00d4ff', width=3),
-                        marker=dict(size=15, color='#00d4ff', symbol='star'),
-                        text=pareto_df['region'],
-                        hovertemplate='<b>%{text}</b><br>Carbon: %{x:.0f} gCO₂/kWh<br>Latency: %{y}ms<extra></extra>'
-                    ))
+            # Multi-Objective Analytics Section
+            st.markdown('<div class="neon-divider" style="margin-top: 35px;"></div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-title">Multi-Objective Analytics</div>', unsafe_allow_html=True)
 
-                    # Highlight selected region
-                    selected_row = all_points_df[all_points_df['region'] == result['region']].iloc[0]
-                    fig_pareto.add_trace(go.Scatter(
-                        x=[selected_row['carbon_intensity']],
-                        y=[selected_row['latency']],
-                        mode='markers',
-                        name='Selected',
-                        marker=dict(size=20, color='#ff00ff', symbol='diamond', line=dict(color='white', width=2)),
-                        hovertemplate=f"<b>{result['region']} (Selected)</b><br>Carbon: {selected_row['carbon_intensity']:.0f} gCO₂/kWh<br>Latency: {selected_row['latency']}ms<extra></extra>"
-                    ))
+            # Two-column chart grid
+            chart_col1, chart_col2 = st.columns([1, 1])
 
-                    fig_pareto.update_layout(
-                        title="Carbon Intensity vs Network Latency - Pareto Optimal Solutions",
-                        xaxis_title="Carbon Intensity (gCO₂/kWh)",
-                        yaxis_title="Network Latency (ms)",
-                        plot_bgcolor='rgba(0,0,0,0)',
-                        paper_bgcolor='rgba(0,0,0,0)',
-                        font=dict(color='white', family='Orbitron'),
-                        height=500,
-                        hovermode='closest',
-                        showlegend=True,
-                        legend=dict(
-                            x=0.02,
-                            y=0.98,
-                            bgcolor='rgba(0,0,0,0.7)',
-                            bordercolor='#7f00ff',
-                            borderwidth=2
+            with chart_col1:
+                st.markdown('<div class="equal-card" style="min-height: 400px;">', unsafe_allow_html=True)
+                st.markdown("#### Multi-Objective Scores")
+
+                # Create detailed scores chart
+                candidates_df = pd.DataFrame(result['all_candidates'])
+                candidates_df = candidates_df.sort_values('score')
+
+                fig_scores = go.Figure()
+
+                fig_scores.add_trace(go.Bar(
+                    x=candidates_df['region'],
+                    y=candidates_df['score'],
+                    text=candidates_df['score'].apply(lambda x: f'{x:.3f}'),
+                    textposition='outside',
+                    marker=dict(
+                        color=candidates_df['score'],
+                        colorscale='Viridis_r',
+                        showscale=True,
+                        colorbar=dict(
+                            title="Score",
+                            x=1.15
                         )
                     )
+                ))
 
-                    st.plotly_chart(fig_pareto, use_container_width=True)
+                fig_scores.update_layout(
+                    xaxis_title="Region",
+                    yaxis_title="Optimization Score",
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='white', family='Orbitron', size=11),
+                    height=350,
+                    margin=dict(l=50, r=80, t=30, b=50),
+                    xaxis=dict(
+                        tickangle=-45,
+                        gridcolor='rgba(255,255,255,0.1)'
+                    ),
+                    yaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)'
+                    )
+                )
 
-                    st.markdown("""
-                    <div style="background: rgba(127, 0, 255, 0.1); border-radius: 10px; padding: 15px; margin-top: 10px;">
-                        <p style="color: #b0b0b0; font-size: 0.9rem; margin: 0;">
-                            <strong>💡 Pareto Frontier:</strong> Regions on the frontier represent optimal trade-offs.
-                            No region can improve one objective without worsening another.
-                        </p>
+                st.plotly_chart(fig_scores, use_container_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
+
+            with chart_col2:
+                st.markdown('<div class="equal-card" style="min-height: 400px;">', unsafe_allow_html=True)
+                st.markdown("#### Carbon vs Cost Trade-off")
+
+                # Create carbon vs cost scatter
+                fig_tradeoff = go.Figure()
+
+                fig_tradeoff.add_trace(go.Scatter(
+                    x=candidates_df['carbon_intensity'],
+                    y=candidates_df['cost'],
+                    mode='markers+text',
+                    text=candidates_df['region'],
+                    textposition='top center',
+                    marker=dict(
+                        size=15,
+                        color=candidates_df['latency'],
+                        colorscale='Plasma',
+                        showscale=True,
+                        colorbar=dict(
+                            title="Latency<br>(ms)",
+                            x=1.15
+                        ),
+                        line=dict(color='white', width=1)
+                    ),
+                    hovertemplate='<b>%{text}</b><br>Carbon: %{x:.0f} gCO₂/kWh<br>Cost: $%{y:.4f}<extra></extra>'
+                ))
+
+                # Highlight selected region
+                selected_row = candidates_df[candidates_df['region'] == result['region']].iloc[0]
+                fig_tradeoff.add_trace(go.Scatter(
+                    x=[selected_row['carbon_intensity']],
+                    y=[selected_row['cost']],
+                    mode='markers',
+                    name='Selected',
+                    marker=dict(size=25, color='#ff00ff', symbol='diamond', line=dict(color='white', width=2)),
+                    showlegend=False
+                ))
+
+                fig_tradeoff.update_layout(
+                    xaxis_title="Carbon Intensity (gCO₂/kWh)",
+                    yaxis_title="Cost ($/vCPU-hour)",
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='white', family='Orbitron', size=11),
+                    height=350,
+                    margin=dict(l=50, r=80, t=30, b=50),
+                    xaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)'
+                    ),
+                    yaxis=dict(
+                        gridcolor='rgba(255,255,255,0.1)'
+                    ),
+                    showlegend=False
+                )
+
+                st.plotly_chart(fig_tradeoff, use_container_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
+
+            # Insights Panel
+            st.markdown('<div class="neon-divider" style="margin-top: 35px;"></div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-title">Candidate Region Comparison</div>', unsafe_allow_html=True)
+
+            insight_col1, insight_col2 = st.columns([1, 1])
+
+            with insight_col1:
+                st.markdown('<div class="insights-panel">', unsafe_allow_html=True)
+                st.markdown("#### Selected Region Summary")
+
+                st.markdown(f"""
+                <div class="insight-summary">
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #00d4ff; margin-bottom: 10px;">
+                        {result['region']}
                     </div>
-                    """, unsafe_allow_html=True)
+                    <div style="color: #b0b0b0; line-height: 1.8;">
+                        <strong style="color: white;">Carbon:</strong> {result['carbon_intensity']:.0f} gCO₂/kWh<br/>
+                        <strong style="color: white;">Latency:</strong> {result['latency']}ms<br/>
+                        <strong style="color: white;">Cost:</strong> ${result['cost']:.4f}/vCPU-hour<br/>
+                        <strong style="color: white;">Score:</strong> {result['score']:.3f}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
 
-            else:
-                st.info("👈 Adjust weights and click 'Optimize Region Selection' to see results")
+                # Trend analysis
+                rank = (candidates_df['score'] <= result['score']).sum()
+                st.markdown(f"""
+                <div style="margin-top: 15px; padding: 10px; background: rgba(0, 255, 170, 0.1);
+                           border-radius: 8px; border: 1px solid rgba(0, 255, 170, 0.2);">
+                    <strong style="color: #00ffaa;">Ranking:</strong>
+                    <span style="color: white; font-size: 1.1rem;">{rank} of {len(candidates_df)}</span> regions
+                </div>
+                """, unsafe_allow_html=True)
+
+                st.markdown('</div>', unsafe_allow_html=True)
+
+            with insight_col2:
+                st.markdown('<div class="insights-panel">', unsafe_allow_html=True)
+                st.markdown("#### Why This Region?")
+
+                # Generate insights based on weights
+                insights = []
+
+                if norm_carbon > 40:
+                    carbon_rank = (candidates_df['carbon_intensity'] <= result['carbon_intensity']).sum()
+                    insights.append(f"Low carbon intensity ranked #{carbon_rank} among candidates")
+
+                if norm_latency > 40:
+                    latency_rank = (candidates_df['latency'] <= result['latency']).sum()
+                    insights.append(f"Network latency ranked #{latency_rank} for performance")
+
+                if norm_cost > 40:
+                    cost_rank = (candidates_df['cost'] <= result['cost']).sum()
+                    insights.append(f"Cost efficiency ranked #{cost_rank} economically")
+
+                if not insights:
+                    insights = [
+                        "Balanced performance across all objectives",
+                        "Optimal trade-off between carbon, latency, and cost",
+                        "Best weighted score among all candidates"
+                    ]
+
+                st.markdown('<ul class="insight-bullets">', unsafe_allow_html=True)
+                for insight in insights:
+                    st.markdown(f'<li>{insight}</li>', unsafe_allow_html=True)
+                st.markdown('</ul>', unsafe_allow_html=True)
+
+                st.markdown('</div>', unsafe_allow_html=True)
 
     except ImportError as e:
         st.warning(f"⚠️ Predictive scheduler not available: {str(e)}")
@@ -1573,3 +2056,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
