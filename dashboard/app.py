@@ -1127,8 +1127,8 @@ def render_multi_objective_optimizer():
 
             # Note about data source
             st.markdown("""
-            <div style="margin-top: 20px; padding: 10px; 
-                       background: rgba(0, 212, 255, 0.1); 
+            <div style="margin-top: 20px; padding: 10px;
+                       background: rgba(0, 212, 255, 0.1);
                        border-radius: 10px; font-size: 0.85rem;">
                 💡 Using real-time carbon intensity data
             </div>
@@ -1310,7 +1310,7 @@ def render_multi_objective_optimizer():
 
     except ImportError as e:
         st.warning(f"⚠️ Predictive scheduler not available: {str(e)}")
-        st.info("Install required packages: `pip install prophet pandas`")
+        st.info("Install required packages: `pip install requests numpy`")
     except Exception as e:
         st.error(f"❌ Error in multi-objective optimizer: {str(e)}")
 
