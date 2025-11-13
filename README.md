@@ -1,4 +1,3 @@
-# CASS-Lite v2 
 ## Carbon-Aware Serverless Scheduler
 
 **Run cloud workloads in the greenest region, automatically.**
@@ -82,7 +81,7 @@ Edit `scheduler/config.json` to:
 
 ---
 
-## 🗄️ Firestore Indexes
+##  Firestore Indexes
 
 The project includes a composite index configuration for efficient querying of scheduling decisions.
 
@@ -114,7 +113,7 @@ gcloud firestore indexes list
 
 ---
 
-## 📊 Exporting Firestore Data to BigQuery
+##  Exporting Firestore Data to BigQuery
 
 **Optional:** For long-term carbon analytics and advanced querying, you can set up scheduled exports of the Firestore `decisions` collection to BigQuery.
 
