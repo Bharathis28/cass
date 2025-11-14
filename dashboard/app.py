@@ -1732,111 +1732,60 @@ def render_multi_objective_optimizer():
                 </div>
                 """, unsafe_allow_html=True)
 
-            # Multi-Objective Analytics Section
+            # Multi-Objective Analytics - TWO CHARTS ONLY, NO CONTAINERS
             st.markdown('<div class="neon-divider" style="margin-top: 35px;"></div>', unsafe_allow_html=True)
             st.markdown('<div class="section-title">Multi-Objective Analytics</div>', unsafe_allow_html=True)
 
-            # Two-column chart grid
-            chart_col1, chart_col2 = st.columns([1, 1])
+            col1, col2 = st.columns([1, 1])
 
-            with chart_col1:
+            with col1:
                 st.markdown("#### Multi-Objective Scores")
-
-                # Create detailed scores chart
-                candidates_df = pd.DataFrame(result['all_candidates'])
-                candidates_df = candidates_df.sort_values('score')
-
+                candidates_df = pd.DataFrame(result['all_candidates']).sort_values('score')
+                
                 fig_scores = go.Figure()
-
                 fig_scores.add_trace(go.Bar(
                     x=candidates_df['region'],
                     y=candidates_df['score'],
                     text=candidates_df['score'].apply(lambda x: f'{x:.3f}'),
                     textposition='outside',
-                    marker=dict(
-                        color=candidates_df['score'],
-                        colorscale='Viridis_r',
-                        showscale=True,
-                        colorbar=dict(
-                            title="Score",
-                            x=1.15
-                        )
-                    )
+                    marker=dict(color=candidates_df['score'], colorscale='Viridis_r', showscale=True,
+                              colorbar=dict(title="Score", x=1.15))
                 ))
-
                 fig_scores.update_layout(
-                    xaxis_title="Region",
-                    yaxis_title="Optimization Score",
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    paper_bgcolor='rgba(0,0,0,0)',
-                    font=dict(color='white', family='Orbitron', size=11),
-                    height=350,
+                    xaxis_title="Region", yaxis_title="Optimization Score",
+                    plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='white', family='Orbitron', size=11), height=350,
                     margin=dict(l=50, r=80, t=30, b=50),
-                    xaxis=dict(
-                        tickangle=-45,
-                        gridcolor='rgba(255,255,255,0.1)'
-                    ),
-                    yaxis=dict(
-                        gridcolor='rgba(255,255,255,0.1)'
-                    )
+                    xaxis=dict(tickangle=-45, gridcolor='rgba(255,255,255,0.1)'),
+                    yaxis=dict(gridcolor='rgba(255,255,255,0.1)')
                 )
-
                 st.plotly_chart(fig_scores, use_container_width=True)
 
-            with chart_col2:
+            with col2:
                 st.markdown("#### Carbon vs Cost Trade-off")
-
-                # Create carbon vs cost scatter
+                
                 fig_tradeoff = go.Figure()
-
                 fig_tradeoff.add_trace(go.Scatter(
-                    x=candidates_df['carbon_intensity'],
-                    y=candidates_df['cost'],
-                    mode='markers+text',
-                    text=candidates_df['region'],
-                    textposition='top center',
-                    marker=dict(
-                        size=15,
-                        color=candidates_df['latency'],
-                        colorscale='Plasma',
-                        showscale=True,
-                        colorbar=dict(
-                            title="Latency<br>(ms)",
-                            x=1.15
-                        ),
-                        line=dict(color='white', width=1)
-                    ),
+                    x=candidates_df['carbon_intensity'], y=candidates_df['cost'],
+                    mode='markers+text', text=candidates_df['region'], textposition='top center',
+                    marker=dict(size=15, color=candidates_df['latency'], colorscale='Plasma', showscale=True,
+                              colorbar=dict(title="Latency<br>(ms)", x=1.15), line=dict(color='white', width=1)),
                     hovertemplate='<b>%{text}</b><br>Carbon: %{x:.0f} gCO₂/kWh<br>Cost: $%{y:.4f}<extra></extra>'
                 ))
-
-                # Highlight selected region
                 selected_row = candidates_df[candidates_df['region'] == result['region']].iloc[0]
                 fig_tradeoff.add_trace(go.Scatter(
-                    x=[selected_row['carbon_intensity']],
-                    y=[selected_row['cost']],
-                    mode='markers',
-                    name='Selected',
+                    x=[selected_row['carbon_intensity']], y=[selected_row['cost']], mode='markers',
                     marker=dict(size=25, color='#ff00ff', symbol='diamond', line=dict(color='white', width=2)),
                     showlegend=False
                 ))
-
                 fig_tradeoff.update_layout(
-                    xaxis_title="Carbon Intensity (gCO₂/kWh)",
-                    yaxis_title="Cost ($/vCPU-hour)",
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    paper_bgcolor='rgba(0,0,0,0)',
-                    font=dict(color='white', family='Orbitron', size=11),
-                    height=350,
+                    xaxis_title="Carbon Intensity (gCO₂/kWh)", yaxis_title="Cost ($/vCPU-hour)",
+                    plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='white', family='Orbitron', size=11), height=350,
                     margin=dict(l=50, r=80, t=30, b=50),
-                    xaxis=dict(
-                        gridcolor='rgba(255,255,255,0.1)'
-                    ),
-                    yaxis=dict(
-                        gridcolor='rgba(255,255,255,0.1)'
-                    ),
-                    showlegend=False
+                    xaxis=dict(gridcolor='rgba(255,255,255,0.1)'),
+                    yaxis=dict(gridcolor='rgba(255,255,255,0.1)'), showlegend=False
                 )
-
                 st.plotly_chart(fig_tradeoff, use_container_width=True)
 
             # Insights Panel
