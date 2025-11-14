@@ -784,6 +784,50 @@ st.markdown("""
         border: 1px solid #ffc107;
         color: #ffc107;
     }
+
+    /* Tab Labels - Match AI Insights & Predictions Typography */
+    [data-baseweb="tab"] button,
+    [data-baseweb="tab"] p,
+    .stTabs [data-baseweb="tab-list"] button,
+    .stTabs [data-baseweb="tab-list"] button p,
+    .stTabs [data-baseweb="tab-list"] button div {
+        font-family: 'Orbitron', monospace !important;
+        font-size: 1.3rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.05em !important;
+        line-height: 1.4 !important;
+        color: #ffffff !important;
+        text-transform: none !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+
+    /* Tab active state with neon glow */
+    [data-baseweb="tab"][aria-selected="true"] button,
+    [data-baseweb="tab"][aria-selected="true"] button p {
+        color: #00ffff !important;
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.6),
+                     0 0 20px rgba(0, 255, 255, 0.4),
+                     0 0 30px rgba(0, 255, 255, 0.2) !important;
+    }
+
+    /* Tab hover state */
+    [data-baseweb="tab"] button:hover,
+    [data-baseweb="tab"] button:hover p {
+        color: #00d4ff !important;
+        text-shadow: 0 0 8px rgba(0, 212, 255, 0.5) !important;
+    }
+
+    /* Tab underline/border */
+    [data-baseweb="tab-highlight] {
+        background-color: #00ffff !important;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.8) !important;
+    }
+
+    /* Tab border styling */
+    [data-baseweb="tab-border"] {
+        background-color: rgba(0, 255, 255, 0.3) !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
