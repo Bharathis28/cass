@@ -814,38 +814,6 @@ st.markdown("""
         font-weight: 600;
     }
 
-    /* Floating Pill Badge */
-    .floating-badge {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: rgba(138, 43, 226, 0.9);
-        backdrop-filter: blur(10px);
-        color: white;
-        font-family: 'Orbitron', monospace !important;
-        padding: 10px 25px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        letter-spacing: 0.05em;
-        box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
-        animation: fadeInUp 0.8s ease;
-        z-index: 1000;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-
-    .floating-badge.live-mode {
-        background: rgba(0, 255, 170, 0.9);
-        box-shadow: 0 4px 15px rgba(0, 255, 170, 0.4);
-    }
-
-    .floating-badge.simulated-mode {
-        background: rgba(138, 43, 226, 0.9);
-        box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
-    }
-
     /* Insights Panel */
     .insights-panel {
         background: rgba(255, 255, 255, 0.04);
@@ -900,13 +868,6 @@ st.markdown("""
         .section-title {
             font-size: 1.1rem;
             padding: 10px 15px;
-        }
-
-        .floating-badge {
-            bottom: 10px;
-            right: 10px;
-            font-size: 0.8rem;
-            padding: 8px 18px;
         }
     }
 
@@ -1494,15 +1455,6 @@ def render_multi_objective_optimizer():
         from predictor import SimplePredictiveScheduler
         scheduler = SimplePredictiveScheduler()
 
-        # Floating badge
-        data_mode = "live-mode" if not st.session_state.data_loading_failed else "simulated-mode"
-        data_mode_text = "Live Mode" if not st.session_state.data_loading_failed else "Simulated Mode"
-
-        st.markdown(
-            f'<div class="floating-badge {data_mode}">{data_mode_text}</div>',
-            unsafe_allow_html=True
-        )
-
         # ---------------------- 3 COLUMN GRID ---------------------- #
         col1, col2, col3 = st.columns([1.3, 1, 1.2])
 
@@ -1741,7 +1693,7 @@ def render_multi_objective_optimizer():
             with col1:
                 st.markdown("#### Multi-Objective Scores")
                 candidates_df = pd.DataFrame(result['all_candidates']).sort_values('score')
-                
+
                 fig_scores = go.Figure()
                 fig_scores.add_trace(go.Bar(
                     x=candidates_df['region'],
@@ -1763,7 +1715,7 @@ def render_multi_objective_optimizer():
 
             with col2:
                 st.markdown("#### Carbon vs Cost Trade-off")
-                
+
                 fig_tradeoff = go.Figure()
                 fig_tradeoff.add_trace(go.Scatter(
                     x=candidates_df['carbon_intensity'], y=candidates_df['cost'],
