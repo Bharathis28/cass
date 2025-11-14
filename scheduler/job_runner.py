@@ -62,11 +62,12 @@ class JobRunner:
         self.auth_enabled = config.get('security', {}).get('require_authentication', True)
 
         # Multi-cloud adapter support
-        self.cloud_provider = config.get('cloud_provider', 'gcp').lower()
+        self.cloud_provider = config.get('cloud_provider', 'gcp')
         self.cloud_adapter: Optional[CloudAdapter] = None
 
-        # Initialize cloud adapter if provider is specified
-        if self.cloud_provider:
+        # Initialize cloud adapter if provider is specified and not None
+        if self.cloud_provider and self.cloud_provider.lower() != 'none':
+            self.cloud_provider = self.cloud_provider.lower()
             try:
                 adapter_config = {
                     'worker_url': config.get('worker_url'),
@@ -80,6 +81,9 @@ class JobRunner:
                 print(f"⚠️  Failed to initialize cloud adapter: {str(e)}")
                 print("   Falling back to direct HTTP calls")
                 self.cloud_adapter = None
+                self.cloud_provider = None
+        else:
+            self.cloud_provider = None
 
         print("="*75)
         print("🚀 JOB RUNNER INITIALIZED")
@@ -87,7 +91,7 @@ class JobRunner:
         print(f"✓ Max Retries: {self.max_retries}")
         print(f"✓ Retry Delay: {self.retry_delay}s")
         print(f"✓ Timeout: {self.timeout}s")
-        print(f"☁️  Cloud Provider: {self.cloud_provider.upper()}")
+        print(f"☁️  Cloud Provider: {self.cloud_provider.upper() if self.cloud_provider else 'Legacy (Direct HTTP)'}")
         print(f"🔐 Authentication: {'ENABLED' if self.auth_enabled else 'DISABLED'}")
         print("="*75 + "\n")
 
