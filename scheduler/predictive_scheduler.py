@@ -266,7 +266,15 @@ class PredictiveScheduler:
         w_cost /= total_weight
 
         # Fetch current carbon intensity
-        carbon_data = self.carbon_fetcher.get_carbon_intensity()
+        carbon_data_raw = self.carbon_fetcher.fetch_all_regions(display_details=False)
+        
+        # Extract carbon intensity values from response
+        carbon_data = {}
+        for region, data in carbon_data_raw.items():
+            if data and 'carbonIntensity' in data:
+                carbon_data[region] = data['carbonIntensity']
+            elif data and 'carbon_intensity' in data:
+                carbon_data[region] = data['carbon_intensity']
 
         if not carbon_data:
             return {
@@ -357,7 +365,15 @@ class PredictiveScheduler:
         Returns:
             List of Pareto-optimal points
         """
-        carbon_data = self.carbon_fetcher.get_carbon_intensity()
+        carbon_data_raw = self.carbon_fetcher.fetch_all_regions(display_details=False)
+        
+        # Extract carbon intensity values
+        carbon_data = {}
+        for region, data in carbon_data_raw.items():
+            if data and 'carbonIntensity' in data:
+                carbon_data[region] = data['carbonIntensity']
+            elif data and 'carbon_intensity' in data:
+                carbon_data[region] = data['carbon_intensity']
 
         if not carbon_data:
             return []
