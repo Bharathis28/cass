@@ -1496,7 +1496,7 @@ def render_multi_objective_optimizer():
         data_mode = "live-mode" if not st.session_state.data_loading_failed else "simulated-mode"
         data_mode_text = "Live Mode" if not st.session_state.data_loading_failed else "Simulated Mode"
 
-        # Add floating pill badge
+        # Add floating pill badge (single instance)
         st.markdown(f"""
         <div class="floating-badge {data_mode}">
             {data_mode_text}
@@ -1634,7 +1634,7 @@ def render_multi_objective_optimizer():
                 <div style="display: flex; align-items: center; justify-content: center;
                            height: 100%; text-align: center; color: #b0b0b0;">
                     <div>
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🎯</div>
+                        <div style="font-size: 3rem; margin-bottom: 15px;"></div>
                         <div style="font-size: 0.95rem;">
                             Adjust weights and click<br/><strong>Optimize Region Selection</strong>
                         </div>
@@ -1695,7 +1695,7 @@ def render_multi_objective_optimizer():
                 <div style="display: flex; align-items: center; justify-content: center;
                            height: 100%; text-align: center; color: #b0b0b0;">
                     <div>
-                        <div style="font-size: 3rem; margin-bottom: 15px;">📊</div>
+                        <div style="font-size: 3rem; margin-bottom: 15px;"></div>
                         <div style="font-size: 0.95rem;">
                             Comparison chart<br/>will appear here
                         </div>
@@ -1705,7 +1705,7 @@ def render_multi_objective_optimizer():
 
             st.markdown('</div>', unsafe_allow_html=True)
 
-        # Pareto Frontier Section (Full Width Below)
+        # Pareto Frontier Section (Full Width Below) - only after optimization
         if 'optimization_result' in st.session_state:
             result = st.session_state.optimization_result
 
@@ -2072,13 +2072,13 @@ def main():
         theme_toggle = st.checkbox("🌙 Dark Mode", value=True)
 
         st.markdown("---")
-        st.markdown("###  Data Range")
+        st.markdown("### Data Range")
         days_filter = st.selectbox("Show last", [1, 3, 7, 14, 30], index=2)
 
         st.markdown("---")
-        st.markdown("###  Quick Actions")
+        st.markdown("### Quick Actions")
 
-        if st.button("⚡ Trigger Scheduler"):
+        if st.button("Trigger Scheduler"):
             st.info("Triggering scheduler function...")
             # Add logic to call Cloud Function
 
@@ -2087,7 +2087,7 @@ def main():
             st.rerun()
 
         st.markdown("---")
-        st.markdown("###  Cloud Run Metrics")
+        st.markdown("### Cloud Run Metrics")
 
         try:
             # PHASE 9: Display Cloud Run metrics
@@ -2098,7 +2098,7 @@ def main():
             st.info("Metrics loading...")
 
         st.markdown("---")
-        st.markdown("### ℹ Project Info")
+        st.markdown("### Project Info")
         st.markdown("""
         **Project:** CASS-Lite v2
         **Version:** 2.0.0
