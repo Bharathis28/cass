@@ -155,7 +155,7 @@ class JobRunner:
         print("🎯 TRIGGERING CLOUD FUNCTION")
         print("="*75)
         print(f"📍 Region: {region}")
-        print(f"☁️  Provider: {self.cloud_provider.upper()}")
+        print(f"☁️  Provider: {self.cloud_provider.upper() if self.cloud_provider else 'Legacy (Direct HTTP)'}")
         print(f"📦 Task ID: {payload.get('task_id', 'N/A')}")
         print(f"⏰ Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
