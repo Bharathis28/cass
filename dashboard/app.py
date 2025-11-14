@@ -667,6 +667,7 @@ st.markdown("""
     /* Multi-Objective Optimizer Custom Styles */
     .equal-card {
         min-height: 420px;
+        height: auto;
         display: flex;
         flex-direction: column;
         background: rgba(255, 255, 255, 0.04);
@@ -675,6 +676,7 @@ st.markdown("""
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
         padding: 25px;
         transition: all 0.3s ease;
+        overflow: visible;
     }
 
     .equal-card:hover {
