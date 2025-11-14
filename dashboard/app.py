@@ -670,6 +670,8 @@ st.markdown("""
         height: auto;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
         background: rgba(255, 255, 255, 0.04);
         border: 1px solid rgba(255, 255, 255, 0.06);
         border-radius: 20px;
