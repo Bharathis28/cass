@@ -1512,204 +1512,194 @@ def render_multi_objective_optimizer():
 
         # Column 1: Objective Weights Panel
         with col1:
-            st.markdown('<div class="equal-card anim-left">', unsafe_allow_html=True)
-            st.markdown("#### Objective Weights")
+            with st.container():
+                st.markdown("#### Objective Weights")
 
-            # Weight sliders
-            w_carbon = st.slider(
-                "Carbon Weight",
-                min_value=0.0,
-                max_value=1.0,
-                value=0.5,
-                step=0.1,
-                help="Higher values prioritize lower carbon intensity"
-            )
+                # Weight sliders
+                w_carbon = st.slider(
+                    "Carbon Weight",
+                    min_value=0.0,
+                    max_value=1.0,
+                    value=0.5,
+                    step=0.1,
+                    help="Higher values prioritize lower carbon intensity"
+                )
 
-            w_latency = st.slider(
-                "Latency Weight",
-                min_value=0.0,
-                max_value=1.0,
-                value=0.3,
-                step=0.1,
-                help="Higher values prioritize lower network latency"
-            )
+                w_latency = st.slider(
+                    "Latency Weight",
+                    min_value=0.0,
+                    max_value=1.0,
+                    value=0.3,
+                    step=0.1,
+                    help="Higher values prioritize lower network latency"
+                )
 
-            w_cost = st.slider(
-                "Cost Weight",
-                min_value=0.0,
-                max_value=1.0,
-                value=0.2,
-                step=0.1,
-                help="Higher values prioritize lower regional costs"
-            )
+                w_cost = st.slider(
+                    "Cost Weight",
+                    min_value=0.0,
+                    max_value=1.0,
+                    value=0.2,
+                    step=0.1,
+                    help="Higher values prioritize lower regional costs"
+                )
 
-            # Normalize weights display
-            total = w_carbon + w_latency + w_cost
-            if total > 0:
-                norm_carbon = (w_carbon / total) * 100
-                norm_latency = (w_latency / total) * 100
-                norm_cost = (w_cost / total) * 100
+                # Normalize weights display
+                total = w_carbon + w_latency + w_cost
+                if total > 0:
+                    norm_carbon = (w_carbon / total) * 100
+                    norm_latency = (w_latency / total) * 100
+                    norm_cost = (w_cost / total) * 100
 
-                st.markdown(f"""
-                <div style="margin-top: 20px; padding: 15px;
-                           background: rgba(127, 0, 255, 0.15);
-                           border-radius: 10px;
-                           border: 1px solid rgba(127, 0, 255, 0.3);">
-                    <div style="font-size: 0.85rem; color: #00ffaa; margin-bottom: 10px; font-weight: 600;">
-                        Normalized Weights:
+                    st.markdown(f"""
+                    <div style="margin-top: 20px; padding: 15px;
+                               background: rgba(127, 0, 255, 0.15);
+                               border-radius: 10px;
+                               border: 1px solid rgba(127, 0, 255, 0.3);">
+                        <div style="font-size: 0.85rem; color: #00ffaa; margin-bottom: 10px; font-weight: 600;">
+                            Normalized Weights:
+                        </div>
+                        <div style="font-size: 1.05rem; color: #00d4ff; font-weight: 600;">
+                             {norm_carbon:.1f}% |  {norm_latency:.1f}% |  {norm_cost:.1f}%
+                        </div>
                     </div>
-                    <div style="font-size: 1.05rem; color: #00d4ff; font-weight: 600;">
-                         {norm_carbon:.1f}% |  {norm_latency:.1f}% |  {norm_cost:.1f}%
-                    </div>
+                    """, unsafe_allow_html=True)
+
+                # Note about data source
+                st.markdown("""
+                <div style="margin-top: 15px; padding: 10px;
+                           background: rgba(0, 212, 255, 0.1);
+                           border-radius: 8px; font-size: 0.8rem;
+                           border: 1px solid rgba(0, 212, 255, 0.2);">
+                     Using real-time carbon intensity data
                 </div>
                 """, unsafe_allow_html=True)
 
-            # Note about data source
-            st.markdown("""
-            <div style="margin-top: 15px; padding: 10px;
-                       background: rgba(0, 212, 255, 0.1);
-                       border-radius: 8px; font-size: 0.8rem;
-                       border: 1px solid rgba(0, 212, 255, 0.2);">
-                 Using real-time carbon intensity data
-            </div>
-            """, unsafe_allow_html=True)
+                # Run optimization button
+                if st.button(" Optimize Region Selection", type="primary", use_container_width=True):
+                    with st.spinner("Computing optimal region..."):
+                        result = scheduler.select_optimal_region(
+                            w_carbon=w_carbon,
+                            w_latency=w_latency,
+                            w_cost=w_cost
+                        )
 
-            # Run optimization button
-            if st.button(" Optimize Region Selection", type="primary", use_container_width=True):
-                with st.spinner("Computing optimal region..."):
-                    result = scheduler.select_optimal_region(
-                        w_carbon=w_carbon,
-                        w_latency=w_latency,
-                        w_cost=w_cost
-                    )
-
-                    if result['success']:
-                        st.session_state.optimization_result = result
-                    else:
-                        st.error(f" Optimization failed: {result.get('error', 'Unknown error')}")
-
-            st.markdown('</div>', unsafe_allow_html=True)
+                        if result['success']:
+                            st.session_state.optimization_result = result
+                        else:
+                            st.error(f" Optimization failed: {result.get('error', 'Unknown error')}")
 
         # Column 2: Optimal Region Card
         with col2:
-            st.markdown('<div class="equal-card anim-center">', unsafe_allow_html=True)
+            with st.container():
+                if 'optimization_result' in st.session_state:
+                    result = st.session_state.optimization_result
 
-            if 'optimization_result' in st.session_state:
-                result = st.session_state.optimization_result
+                    st.markdown("#### Optimal Region")
 
-                st.markdown("#### Optimal Region")
-
-                # Display optimal region card
-                st.markdown(f"""
-                <div style="background: linear-gradient(135deg, #7f00ff, #00d4ff);
-                           border-radius: 15px; padding: 25px; margin-bottom: 15px;
-                           text-align: center; box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);">
-                    <div style="font-size: 2.2rem; font-weight: bold; color: white; margin-bottom: 10px;
-                               font-family: 'Orbitron', monospace;">
-                        {result['region']}
-                    </div>
-                    <div style="font-size: 1rem; color: rgba(255,255,255,0.95);">
-                        Score: <strong style="font-size: 1.2rem;">{result['score']:.3f}</strong>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-
-                # Metrics stacked vertically
-                st.metric(
-                    "Carbon",
-                    f"{result['carbon_intensity']:.0f} gCO₂/kWh",
-                    f"{result['savings_gco2']:.0f} saved" if result['savings_gco2'] > 0 else None
-                )
-
-                st.metric(
-                    "Latency",
-                    f"{result['latency']}ms",
-                    "Estimated"
-                )
-
-                st.metric(
-                    "Cost",
-                    f"${result['cost']:.4f}",
-                    "per vCPU-hour"
-                )
-
-            else:
-                st.markdown("""
-                <div style="display: flex; align-items: center; justify-content: center;
-                           height: 100%; text-align: center; color: #b0b0b0;">
-                    <div>
-                        <div style="font-size: 3rem; margin-bottom: 15px;"></div>
-                        <div style="font-size: 0.95rem;">
-                            Adjust weights and click<br/><strong>Optimize Region Selection</strong>
+                    # Display optimal region card
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(135deg, #7f00ff, #00d4ff);
+                               border-radius: 15px; padding: 25px; margin-bottom: 15px;
+                               text-align: center; box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);">
+                        <div style="font-size: 2.2rem; font-weight: bold; color: white; margin-bottom: 10px;
+                                   font-family: 'Orbitron', monospace;">
+                            {result['region']}
+                        </div>
+                        <div style="font-size: 1rem; color: rgba(255,255,255,0.95);">
+                            Score: <strong style="font-size: 1.2rem;">{result['score']:.3f}</strong>
                         </div>
                     </div>
-                </div>
-                """, unsafe_allow_html=True)
+                    """, unsafe_allow_html=True)
 
-            st.markdown('</div>', unsafe_allow_html=True)
+                    # Metrics stacked vertically
+                    st.metric(
+                        "Carbon",
+                        f"{result['carbon_intensity']:.0f} gCO₂/kWh",
+                        f"{result['savings_gco2']:.0f} saved" if result['savings_gco2'] > 0 else None
+                    )
+
+                    st.metric(
+                        "Latency",
+                        f"{result['latency']}ms",
+                        "Estimated"
+                    )
+
+                    st.metric(
+                        "Cost",
+                        f"${result['cost']:.4f}",
+                        "per vCPU-hour"
+                    )
+
+                else:
+                    st.markdown("""
+                    <div style="display: flex; align-items: center; justify-content: center;
+                               height: 100%; text-align: center; color: #b0b0b0;">
+                        <div>
+                            <div style="font-size: 3rem; margin-bottom: 15px;"></div>
+                            <div style="font-size: 0.95rem;">
+                                Adjust weights and click<br/><strong>Optimize Region Selection</strong>
+                            </div>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
         # Column 3: All Candidates Comparison Panel
         with col3:
-            st.markdown('<div class="equal-card anim-right">', unsafe_allow_html=True)
+            with st.container():
+                if 'optimization_result' in st.session_state:
+                    result = st.session_state.optimization_result
 
-            if 'optimization_result' in st.session_state:
-                result = st.session_state.optimization_result
+                    st.markdown("#### All Candidates Comparison")
 
-                st.markdown("#### All Candidates Comparison")
+                    candidates_df = pd.DataFrame(result['all_candidates'])
+                    candidates_df = candidates_df.sort_values('score')
 
-                candidates_df = pd.DataFrame(result['all_candidates'])
-                candidates_df = candidates_df.sort_values('score')
+                    # Create comparison chart
+                    fig = go.Figure()
 
-                # Create comparison chart
-                fig = go.Figure()
+                    fig.add_trace(go.Bar(
+                        x=candidates_df['region'],
+                        y=candidates_df['score'],
+                        text=candidates_df['score'].apply(lambda x: f'{x:.3f}'),
+                        textposition='outside',
+                        marker=dict(
+                            color=candidates_df['score'],
+                            colorscale='Viridis_r',
+                            showscale=False
+                        )
+                    ))
 
-                fig.add_trace(go.Bar(
-                    x=candidates_df['region'],
-                    y=candidates_df['score'],
-                    text=candidates_df['score'].apply(lambda x: f'{x:.3f}'),
-                    textposition='outside',
-                    marker=dict(
-                        color=candidates_df['score'],
-                        colorscale='Viridis_r',
-                        showscale=False
+                    fig.update_layout(
+                        xaxis_title="",
+                        yaxis_title="Score",
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        paper_bgcolor='rgba(0,0,0,0)',
+                        font=dict(color='white', family='Orbitron', size=10),
+                        height=320,
+                        margin=dict(l=40, r=20, t=20, b=40),
+                        xaxis=dict(
+                            tickangle=-45,
+                            gridcolor='rgba(255,255,255,0.1)'
+                        ),
+                        yaxis=dict(
+                            gridcolor='rgba(255,255,255,0.1)'
+                        )
                     )
-                ))
 
-                fig.update_layout(
-                    xaxis_title="",
-                    yaxis_title="Score",
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    paper_bgcolor='rgba(0,0,0,0)',
-                    font=dict(color='white', family='Orbitron', size=10),
-                    height=320,
-                    margin=dict(l=40, r=20, t=20, b=40),
-                    xaxis=dict(
-                        tickangle=-45,
-                        gridcolor='rgba(255,255,255,0.1)'
-                    ),
-                    yaxis=dict(
-                        gridcolor='rgba(255,255,255,0.1)'
-                    )
-                )
+                    st.plotly_chart(fig, use_container_width=True)
 
-                st.plotly_chart(fig, use_container_width=True)
-
-            else:
-                st.markdown("""
-                <div style="display: flex; align-items: center; justify-content: center;
-                           height: 100%; text-align: center; color: #b0b0b0;">
-                    <div>
-                        <div style="font-size: 3rem; margin-bottom: 15px;"></div>
-                        <div style="font-size: 0.95rem;">
-                            Comparison chart<br/>will appear here
+                else:
+                    st.markdown("""
+                    <div style="display: flex; align-items: center; justify-content: center;
+                               height: 100%; text-align: center; color: #b0b0b0;">
+                        <div>
+                            <div style="font-size: 3rem; margin-bottom: 15px;"></div>
+                            <div style="font-size: 0.95rem;">
+                                Comparison chart<br/>will appear here
+                            </div>
                         </div>
                     </div>
-                </div>
-                """, unsafe_allow_html=True)
-
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        # Pareto Frontier Section (Full Width Below) - only after optimization
+                    """, unsafe_allow_html=True)        # Pareto Frontier Section (Full Width Below) - only after optimization
         if 'optimization_result' in st.session_state:
             result = st.session_state.optimization_result
 
