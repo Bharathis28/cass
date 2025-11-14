@@ -267,7 +267,7 @@ class PredictiveScheduler:
 
         # Fetch current carbon intensity
         carbon_data_raw = self.carbon_fetcher.fetch_all_regions(display_details=False)
-        
+
         # Extract carbon intensity values from response
         carbon_data = {}
         for region, data in carbon_data_raw.items():
@@ -366,7 +366,7 @@ class PredictiveScheduler:
             List of Pareto-optimal points
         """
         carbon_data_raw = self.carbon_fetcher.fetch_all_regions(display_details=False)
-        
+
         # Extract carbon intensity values
         carbon_data = {}
         for region, data in carbon_data_raw.items():
