@@ -1648,8 +1648,6 @@ def render_multi_objective_optimizer():
             )
 
             if pareto_points:
-                st.markdown('<div class="pareto-container">', unsafe_allow_html=True)
-
                 # Create Pareto plot
                 all_points_df = pd.DataFrame(result['all_candidates'])
                 pareto_df = pd.DataFrame(pareto_points)
@@ -1734,8 +1732,6 @@ def render_multi_objective_optimizer():
                 </div>
                 """, unsafe_allow_html=True)
 
-                st.markdown('</div>', unsafe_allow_html=True)
-
             # Multi-Objective Analytics Section
             st.markdown('<div class="neon-divider" style="margin-top: 35px;"></div>', unsafe_allow_html=True)
             st.markdown('<div class="section-title">Multi-Objective Analytics</div>', unsafe_allow_html=True)
@@ -1744,7 +1740,6 @@ def render_multi_objective_optimizer():
             chart_col1, chart_col2 = st.columns([1, 1])
 
             with chart_col1:
-                st.markdown('<div class="equal-card" style="min-height: 400px;">', unsafe_allow_html=True)
                 st.markdown("#### Multi-Objective Scores")
 
                 # Create detailed scores chart
@@ -1787,10 +1782,8 @@ def render_multi_objective_optimizer():
                 )
 
                 st.plotly_chart(fig_scores, use_container_width=True)
-                st.markdown('</div>', unsafe_allow_html=True)
 
             with chart_col2:
-                st.markdown('<div class="equal-card" style="min-height: 400px;">', unsafe_allow_html=True)
                 st.markdown("#### Carbon vs Cost Trade-off")
 
                 # Create carbon vs cost scatter
@@ -1845,7 +1838,6 @@ def render_multi_objective_optimizer():
                 )
 
                 st.plotly_chart(fig_tradeoff, use_container_width=True)
-                st.markdown('</div>', unsafe_allow_html=True)
 
             # Insights Panel
             st.markdown('<div class="neon-divider" style="margin-top: 35px;"></div>', unsafe_allow_html=True)
@@ -1854,7 +1846,6 @@ def render_multi_objective_optimizer():
             insight_col1, insight_col2 = st.columns([1, 1])
 
             with insight_col1:
-                st.markdown('<div class="insights-panel">', unsafe_allow_html=True)
                 st.markdown("#### Selected Region Summary")
 
                 st.markdown(f"""
@@ -1881,10 +1872,7 @@ def render_multi_objective_optimizer():
                 </div>
                 """, unsafe_allow_html=True)
 
-                st.markdown('</div>', unsafe_allow_html=True)
-
             with insight_col2:
-                st.markdown('<div class="insights-panel">', unsafe_allow_html=True)
                 st.markdown("#### Why This Region?")
 
                 # Generate insights based on weights
@@ -1913,8 +1901,6 @@ def render_multi_objective_optimizer():
                 for insight in insights:
                     st.markdown(f'<li>{insight}</li>', unsafe_allow_html=True)
                 st.markdown('</ul>', unsafe_allow_html=True)
-
-                st.markdown('</div>', unsafe_allow_html=True)
 
     except ImportError as e:
         st.warning(f" Predictive scheduler not available: {str(e)}")
