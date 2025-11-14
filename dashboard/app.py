@@ -128,12 +128,97 @@ def apply_high_contrast_css():
 st.markdown("""
 <style>
     /* Import Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&display=swap');
+
+    /* Global Typography - Orbitron Futuristic Sci-Fi Style */
+    * {
+        font-family: 'Orbitron', monospace !important;
+        letter-spacing: 0.05em !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
 
     /* Global Styles */
     .stApp {
         background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #16213e 100%);
-        font-family: 'Rajdhani', sans-serif;
+        font-family: 'Orbitron', monospace !important;
+    }
+
+    /* Typography Hierarchy - All Orbitron */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Orbitron', monospace !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.05em !important;
+        line-height: 1.4 !important;
+    }
+
+    h1 {
+        font-size: 2.5rem !important;
+        font-weight: 900 !important;
+    }
+
+    h2 {
+        font-size: 1.8rem !important;
+        font-weight: 700 !important;
+    }
+
+    h3 {
+        font-size: 1.4rem !important;
+        font-weight: 600 !important;
+    }
+
+    h4 {
+        font-size: 1.2rem !important;
+        font-weight: 600 !important;
+    }
+
+    h5, h6 {
+        font-size: 1rem !important;
+        font-weight: 500 !important;
+    }
+
+    /* Body Text */
+    p, span, div, label, input, textarea, select {
+        font-family: 'Orbitron', monospace !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.05em !important;
+        line-height: 1.6 !important;
+    }
+
+    /* Streamlit Components */
+    .stMarkdown, .stMarkdown p, .stMarkdown span, .stMarkdown div {
+        font-family: 'Orbitron', monospace !important;
+        letter-spacing: 0.05em !important;
+    }
+
+    .stButton button, .stDownloadButton button {
+        font-family: 'Orbitron', monospace !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.05em !important;
+    }
+
+    .stSelectbox, .stMultiSelect, .stTextInput, .stTextArea {
+        font-family: 'Orbitron', monospace !important;
+        font-weight: 400 !important;
+    }
+
+    .stMetric, .stMetric label, .stMetric div {
+        font-family: 'Orbitron', monospace !important;
+        letter-spacing: 0.05em !important;
+    }
+
+    .stMetric label {
+        font-weight: 500 !important;
+    }
+
+    .stMetric [data-testid="stMetricValue"] {
+        font-weight: 700 !important;
+    }
+
+    /* Sidebar */
+    [data-testid="stSidebar"], [data-testid="stSidebar"] * {
+        font-family: 'Orbitron', monospace !important;
+        letter-spacing: 0.05em !important;
     }
 
     /* Loading Skeleton */
@@ -179,24 +264,29 @@ st.markdown("""
     }
 
     .hero-title {
-        font-family: 'Orbitron', monospace;
+        font-family: 'Orbitron', monospace !important;
         font-size: 3rem;
         font-weight: 900;
+        letter-spacing: 0.05em;
         background: linear-gradient(90deg, #00ffff 0%, #7f00ff 50%, #00ff88 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
         margin-bottom: 0.5rem;
         text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .hero-subtitle {
-        font-family: 'Rajdhani', sans-serif;
+        font-family: 'Orbitron', monospace !important;
         font-size: 1.3rem;
         color: #00ffaa;
         text-align: center;
-        font-weight: 300;
-        letter-spacing: 2px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     /* Live Carbon Ticker */
@@ -208,9 +298,13 @@ st.markdown("""
         text-align: center;
         font-size: 1.2rem;
         color: #00ffff;
+        font-family: 'Orbitron', monospace !important;
         font-weight: 600;
+        letter-spacing: 0.05em;
         margin-top: 1rem;
         animation: ticker-glow 2s ease-in-out infinite;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     @keyframes ticker-glow {
@@ -241,19 +335,23 @@ st.markdown("""
     }
 
     .metric-label {
+        font-family: 'Orbitron', monospace !important;
         font-size: 0.9rem;
         color: #00ffaa;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
-        font-weight: 700;
+        letter-spacing: 0.1em;
+        font-weight: 600;
         margin-bottom: 0.5rem;
         text-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .metric-value {
-        font-family: 'Orbitron', monospace;
+        font-family: 'Orbitron', monospace !important;
         font-size: 2.5rem;
         font-weight: 700;
+        letter-spacing: 0.05em;
         background: linear-gradient(90deg, #00ffff 0%, #00ff88 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -266,10 +364,14 @@ st.markdown("""
     }
 
     .metric-delta {
+        font-family: 'Orbitron', monospace !important;
         font-size: 0.85rem;
         color: #9333ea;
         font-weight: 500;
+        letter-spacing: 0.05em;
         min-height: 24px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     /* Chart Container */
@@ -283,11 +385,15 @@ st.markdown("""
     }
 
     .chart-title {
-        font-family: 'Orbitron', monospace;
+        font-family: 'Orbitron', monospace !important;
         font-size: 1.3rem;
         color: #ffffff;
         margin-bottom: 1rem;
         font-weight: 600;
+        letter-spacing: 0.05em;
+        line-height: 1.4;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     /* Table Styles */
@@ -295,19 +401,26 @@ st.markdown("""
         background: rgba(10, 14, 39, 0.8) !important;
         border: 1px solid rgba(0, 255, 255, 0.2) !important;
         border-radius: 10px;
+        font-family: 'Orbitron', monospace !important;
     }
 
     .dataframe th {
         background: linear-gradient(90deg, rgba(0, 255, 255, 0.2) 0%, rgba(147, 51, 234, 0.2) 100%) !important;
         color: #00ffff !important;
+        font-family: 'Orbitron', monospace !important;
         font-weight: 700 !important;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.05em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .dataframe td {
         color: #a0aec0 !important;
         border-color: rgba(0, 255, 255, 0.1) !important;
+        font-family: 'Orbitron', monospace !important;
+        font-weight: 400;
+        letter-spacing: 0.05em;
     }
 
     /* Footer */
@@ -317,7 +430,12 @@ st.markdown("""
         margin-top: 3rem;
         border-top: 1px solid rgba(0, 255, 255, 0.2);
         color: #00ffaa;
+        font-family: 'Orbitron', monospace !important;
         font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .footer-icon {
@@ -339,12 +457,16 @@ st.markdown("""
     .stButton>button {
         background: linear-gradient(90deg, #00ffff 0%, #7f00ff 100%);
         color: #0a0e27;
+        font-family: 'Orbitron', monospace !important;
         font-weight: 700;
+        letter-spacing: 0.05em;
         border: none;
         border-radius: 10px;
         padding: 0.5rem 2rem;
         font-size: 1rem;
         transition: all 0.3s ease;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .stButton>button:hover {
@@ -430,7 +552,9 @@ st.markdown("""
         color: #00ffaa;
         font-weight: 600 !important;
         margin-bottom: 0.75rem;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.05em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .insight-text {
@@ -439,6 +563,9 @@ st.markdown("""
         font-size: 0.95rem;
         line-height: 1.6;
         font-weight: 400 !important;
+        letter-spacing: 0.05em;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .insight-metric {
@@ -449,7 +576,10 @@ st.markdown("""
         border-radius: 5px;
         font-family: 'Orbitron', monospace !important;
         font-weight: 700 !important;
+        letter-spacing: 0.05em;
         margin: 0 0.2rem;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     /* Theme Toggle */
@@ -475,12 +605,16 @@ st.markdown("""
     .stDownloadButton>button {
         background: linear-gradient(90deg, #00ff88 0%, #00ffff 100%);
         color: #0a0e27;
+        font-family: 'Orbitron', monospace !important;
         font-weight: 700;
+        letter-spacing: 0.05em;
         border: none;
         border-radius: 10px;
         padding: 0.6rem 1.5rem;
         font-size: 0.95rem;
         transition: all 0.3s ease;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .stDownloadButton>button:hover {
@@ -557,13 +691,17 @@ st.markdown("""
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.1);
         color: white;
-        font-family: 'Orbitron', monospace;
+        font-family: 'Orbitron', monospace !important;
         font-size: 1.3rem;
         font-weight: 600;
+        letter-spacing: 0.05em;
+        line-height: 1.4;
         margin-bottom: 20px;
         position: relative;
         overflow: hidden;
         animation: fadeDown 0.6s ease;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .section-title::after {
@@ -680,14 +818,18 @@ st.markdown("""
         background: rgba(138, 43, 226, 0.9);
         backdrop-filter: blur(10px);
         color: white;
+        font-family: 'Orbitron', monospace !important;
         padding: 10px 25px;
         border-radius: 50px;
         font-weight: 600;
         font-size: 0.9rem;
+        letter-spacing: 0.05em;
         box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
         animation: fadeInUp 0.8s ease;
         z-index: 1000;
         border: 1px solid rgba(255, 255, 255, 0.2);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .floating-badge.live-mode {
@@ -720,6 +862,7 @@ st.markdown("""
     .insight-bullets {
         list-style: none;
         padding-left: 0;
+        font-family: 'Orbitron', monospace !important;
     }
 
     .insight-bullets li {
@@ -727,7 +870,12 @@ st.markdown("""
         padding-left: 25px;
         position: relative;
         color: #b0b0b0;
+        font-family: 'Orbitron', monospace !important;
+        font-weight: 400;
+        letter-spacing: 0.05em;
         line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .insight-bullets li::before {
@@ -768,9 +916,13 @@ st.markdown("""
         display: inline-block;
         padding: 0.3rem 0.8rem;
         border-radius: 20px;
+        font-family: 'Orbitron', monospace !important;
         font-size: 0.8rem;
         font-weight: 600;
+        letter-spacing: 0.05em;
         text-transform: uppercase;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .status-success {
@@ -887,7 +1039,7 @@ def render_metrics(stats):
         <div class="metric-card">
             <div class="metric-label">Greenest Region</div>
             <div class="metric-value">{stats.get('greenest_region', 'N/A')}</div>
-            <div class="metric-delta">{stats.get('greenest_flag', '🌍')}</div>
+            <div class="metric-delta">{stats.get('greenest_flag')}</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -969,7 +1121,7 @@ def render_region_frequency_chart(data):
         'JP': '🇯🇵', 'AU-NSW': '🇦🇺', 'BR-CS': '🇧🇷'
     }
     region_counts['display'] = region_counts['region'].map(
-        lambda x: f"{region_flags.get(x, '🌍')} {x}"
+        lambda x: f"{region_flags.get(x)} {x}"
     )
 
     fig = go.Figure(data=[
@@ -1067,7 +1219,7 @@ def render_logs_table(logs_df):
 
         # Add status badges
         display_df['status'] = display_df['status'].apply(
-            lambda x: '✅ Success' if x == 'success' else 'Warning'
+            lambda x: 'Success' if x == 'success' else 'Warning'
         )
 
         st.dataframe(
@@ -1077,7 +1229,7 @@ def render_logs_table(logs_df):
             height=400
         )
     else:
-        st.info("📭 No decisions logged yet. Trigger the scheduler to see data!")
+        st.info("No decisions logged yet. Trigger the scheduler to see data!")
 
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1361,7 +1513,7 @@ def render_multi_objective_optimizer():
 
             # Weight sliders
             w_carbon = st.slider(
-                "🌱 Carbon Weight",
+                "Carbon Weight",
                 min_value=0.0,
                 max_value=1.0,
                 value=0.5,
@@ -1370,7 +1522,7 @@ def render_multi_objective_optimizer():
             )
 
             w_latency = st.slider(
-                "⚡ Latency Weight",
+                "Latency Weight",
                 min_value=0.0,
                 max_value=1.0,
                 value=0.3,
@@ -1379,7 +1531,7 @@ def render_multi_objective_optimizer():
             )
 
             w_cost = st.slider(
-                "💰 Cost Weight",
+                "Cost Weight",
                 min_value=0.0,
                 max_value=1.0,
                 value=0.2,
@@ -1403,7 +1555,7 @@ def render_multi_objective_optimizer():
                         Normalized Weights:
                     </div>
                     <div style="font-size: 1.05rem; color: #00d4ff; font-weight: 600;">
-                        🌱 {norm_carbon:.1f}% | ⚡ {norm_latency:.1f}% | 💰 {norm_cost:.1f}%
+                         {norm_carbon:.1f}% |  {norm_latency:.1f}% |  {norm_cost:.1f}%
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -1414,13 +1566,13 @@ def render_multi_objective_optimizer():
                        background: rgba(0, 212, 255, 0.1);
                        border-radius: 8px; font-size: 0.8rem;
                        border: 1px solid rgba(0, 212, 255, 0.2);">
-                💡 Using real-time carbon intensity data
+                 Using real-time carbon intensity data
             </div>
             """, unsafe_allow_html=True)
 
             # Run optimization button
-            if st.button("🚀 Optimize Region Selection", type="primary", use_container_width=True):
-                with st.spinner("🧮 Computing optimal region..."):
+            if st.button(" Optimize Region Selection", type="primary", use_container_width=True):
+                with st.spinner("Computing optimal region..."):
                     result = scheduler.select_optimal_region(
                         w_carbon=w_carbon,
                         w_latency=w_latency,
@@ -1430,7 +1582,7 @@ def render_multi_objective_optimizer():
                     if result['success']:
                         st.session_state.optimization_result = result
                     else:
-                        st.error(f"❌ Optimization failed: {result.get('error', 'Unknown error')}")
+                        st.error(f" Optimization failed: {result.get('error', 'Unknown error')}")
 
             st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1460,19 +1612,19 @@ def render_multi_objective_optimizer():
 
                 # Metrics stacked vertically
                 st.metric(
-                    "🌱 Carbon",
+                    "Carbon",
                     f"{result['carbon_intensity']:.0f} gCO₂/kWh",
                     f"{result['savings_gco2']:.0f} saved" if result['savings_gco2'] > 0 else None
                 )
 
                 st.metric(
-                    "⚡ Latency",
+                    "Latency",
                     f"{result['latency']}ms",
                     "Estimated"
                 )
 
                 st.metric(
-                    "💰 Cost",
+                    "Cost",
                     f"${result['cost']:.4f}",
                     "per vCPU-hour"
                 )
@@ -1647,7 +1799,7 @@ def render_multi_objective_optimizer():
                 <div style="background: rgba(127, 0, 255, 0.1); border-radius: 10px; padding: 15px; margin-top: 15px;
                            border: 1px solid rgba(127, 0, 255, 0.2);">
                     <p style="color: #b0b0b0; font-size: 0.9rem; margin: 0;">
-                        <strong style="color: #00ffaa;">💡 Pareto Frontier:</strong> Regions on the frontier represent optimal trade-offs.
+                        <strong style="color: #00ffaa;"> Pareto Frontier:</strong> Regions on the frontier represent optimal trade-offs.
                         No region can improve one objective without worsening another.
                     </p>
                 </div>
@@ -1836,10 +1988,10 @@ def render_multi_objective_optimizer():
                 st.markdown('</div>', unsafe_allow_html=True)
 
     except ImportError as e:
-        st.warning(f"⚠️ Predictive scheduler not available: {str(e)}")
+        st.warning(f" Predictive scheduler not available: {str(e)}")
         st.info("Install required packages: `pip install requests numpy`")
     except Exception as e:
-        st.error(f"❌ Error in multi-objective optimizer: {str(e)}")
+        st.error(f" Error in multi-objective optimizer: {str(e)}")
 
 
 def render_export_section(logs_df):
@@ -1901,11 +2053,11 @@ def main():
 
     # Sidebar controls
     with st.sidebar:
-        st.markdown("### ⚙️ Dashboard Controls")
+        st.markdown("###  Dashboard Controls")
 
         # High Contrast Mode Toggle
         st.markdown("---")
-        st.markdown("### 🎨 Accessibility")
+        st.markdown("###  Accessibility")
         high_contrast = st.checkbox(
             "High Contrast Mode",
             value=st.session_state.high_contrast,
@@ -1920,22 +2072,22 @@ def main():
         theme_toggle = st.checkbox("🌙 Dark Mode", value=True)
 
         st.markdown("---")
-        st.markdown("### 📅 Data Range")
+        st.markdown("###  Data Range")
         days_filter = st.selectbox("Show last", [1, 3, 7, 14, 30], index=2)
 
         st.markdown("---")
-        st.markdown("### 🚀 Quick Actions")
+        st.markdown("###  Quick Actions")
 
         if st.button("⚡ Trigger Scheduler"):
             st.info("Triggering scheduler function...")
             # Add logic to call Cloud Function
 
-        if st.button("🔄 Refresh Data"):
+        if st.button(" Refresh Data"):
             st.session_state.data_loading_failed = False
             st.rerun()
 
         st.markdown("---")
-        st.markdown("### 📊 Cloud Run Metrics")
+        st.markdown("###  Cloud Run Metrics")
 
         try:
             # PHASE 9: Display Cloud Run metrics
@@ -1946,11 +2098,11 @@ def main():
             st.info("Metrics loading...")
 
         st.markdown("---")
-        st.markdown("### ℹ️ Project Info")
+        st.markdown("### ℹ Project Info")
         st.markdown("""
         **Project:** CASS-Lite v2
-        **Version:** 2.0.0 ⚡
-        **Status:** 🟢 Active
+        **Version:** 2.0.0
+        **Status:**  Active
         **Region:** asia-south1
         **Cost:** $0.08/month
         """)
@@ -1962,7 +2114,7 @@ def main():
 
     try:
         # Show loading spinner while fetching data
-        with st.spinner("🔄 Loading carbon intelligence data..."):
+        with st.spinner("Loading carbon intelligence data..."):
             # Progress indicator
             progress_bar = st.progress(0)
 
@@ -1987,21 +2139,21 @@ def main():
 
     except Exception as e:
         # Display error banner
-        st.error(f"⚠️ Failed to fetch Firestore data: {str(e)}")
-        st.warning("🔄 Falling back to mock data for demonstration...")
+        st.error(f" Failed to fetch Firestore data: {str(e)}")
+        st.warning(" Falling back to mock data for demonstration...")
 
         # Fallback to mock data
         try:
-            with st.spinner("📊 Loading mock data..."):
+            with st.spinner("Loading mock data..."):
                 stats = get_summary_stats(days=days_filter)
                 recent_logs = generate_mock_decisions(100)
                 region_history = generate_mock_history(days=days_filter)
 
             st.session_state.data_loading_failed = True
-            st.info("ℹ️ Displaying mock data. Connect to Firestore for real-time data.")
+            st.info("ℹDisplaying mock data. Connect to Firestore for real-time data.")
 
         except Exception as fallback_error:
-            st.error(f"❌ Critical error: {str(fallback_error)}")
+            st.error(f"Critical error: {str(fallback_error)}")
             st.stop()
 
     # Display data status indicator
@@ -2013,14 +2165,14 @@ def main():
                     padding: 10px;
                     margin-bottom: 20px;
                     text-align: center;">
-            <span style="color: #ffc107;">⚠️ Using Mock Data</span>
+            <span style="color: #ffc107;"> Using Mock Data</span>
         </div>
         """, unsafe_allow_html=True)
 
     # Render metrics (with skeleton loaders if no data)
     if stats is None or len(recent_logs) == 0:
         # Show skeleton loaders
-        st.markdown("### 📊 Loading Metrics...")
+        st.markdown("### Loading Metrics...")
         col1, col2, col3, col4 = st.columns(4)
         for col in [col1, col2, col3, col4]:
             with col:
@@ -2035,7 +2187,7 @@ def main():
 
     with col1:
         if region_history.empty:
-            st.markdown("### 📈 Carbon Intensity Over Time")
+            st.markdown("### Carbon Intensity Over Time")
             st.markdown('<div class="skeleton" style="height: 400px;"></div>', unsafe_allow_html=True)
         else:
             render_carbon_intensity_chart(region_history)
@@ -2044,14 +2196,14 @@ def main():
         if stats:
             render_savings_gauge(stats.get('savings_percent', 0))
         else:
-            st.markdown("### 💰 Carbon Savings")
+            st.markdown("### Carbon Savings")
             st.markdown('<div class="skeleton" style="height: 300px;"></div>', unsafe_allow_html=True)
 
     # PHASE 9: Geographic Map
     if not recent_logs.empty:
         render_geographic_map(recent_logs)
     else:
-        st.markdown("### 🌍 Global Carbon Intensity Map")
+        st.markdown("### Global Carbon Intensity Map")
         st.markdown('<div class="skeleton" style="height: 500px;"></div>', unsafe_allow_html=True)
 
     # Two column layout for advanced charts
@@ -2062,7 +2214,7 @@ def main():
         if not recent_logs.empty:
             render_region_frequency_chart(recent_logs)
         else:
-            st.markdown("### 📍 Region Selection Frequency")
+            st.markdown("### Region Selection Frequency")
             st.markdown('<div class="skeleton" style="height: 400px;"></div>', unsafe_allow_html=True)
 
     with col4:
