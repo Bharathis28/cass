@@ -1,0 +1,75 @@
+{
+  "cloud_provider": "gcp",
+  "_cloud_provider_options": ["gcp", "aws", "azure"],
+  "_cloud_provider_description": "Set to 'gcp', 'aws', or 'azure' to select cloud provider. Comment explains how to switch providers.",
+
+  "project_id": "cass-lite",
+  "function_name": "cass-worker",
+  "worker_url": "https://asia-south1-cass-lite.cloudfunctions.net/cass-worker",
+
+  "cloud_config": {
+    "_comment": "Provider-specific configuration",
+
+    "gcp": {
+      "project_id": "cass-lite",
+      "function_name": "cass-worker",
+      "base_url": "https://REGION-cass-lite.cloudfunctions.net"
+    },
+
+    "aws": {
+      "account_id": "123456789012",
+      "function_name": "cass-worker",
+      "function_id": "abcdefghijk",
+      "base_url": "https://FUNCTION_ID.lambda-url.REGION.on.aws"
+    },
+
+    "azure": {
+      "app_name": "cass-function-app",
+      "function_name": "cass-worker",
+      "base_url": "https://APP_NAME.azurewebsites.net"
+    }
+  },
+
+  "regions": {
+    "FI": {
+      "name": "Finland",
+      "cloud_function_url": "https://europe-north1-cass-lite.cloudfunctions.net/cass-worker",
+      "gcp_region": "europe-north1",
+      "aws_region": "eu-north-1",
+      "azure_region": "northeurope"
+    },
+    "IN": {
+      "name": "India",
+      "cloud_function_url": "https://asia-south1-cass-lite.cloudfunctions.net/cass-worker",
+      "gcp_region": "asia-south1",
+      "aws_region": "ap-south-1",
+      "azure_region": "centralindia"
+    },
+    "DE": {
+      "name": "Germany",
+      "cloud_function_url": "https://europe-west3-cass-lite.cloudfunctions.net/cass-worker",
+      "gcp_region": "europe-west3",
+      "aws_region": "eu-central-1",
+      "azure_region": "westeurope"
+    },
+    "US": {
+      "name": "United States",
+      "cloud_function_url": "https://us-central1-cass-lite.cloudfunctions.net/cass-worker",
+      "gcp_region": "us-central1",
+      "aws_region": "us-east-1",
+      "azure_region": "eastus"
+    }
+  },
+
+  "security": {
+    "require_authentication": true
+  },
+
+  "example_usage": {
+    "_comment": "How to switch cloud providers",
+    "step1": "Set 'cloud_provider' to 'gcp', 'aws', or 'azure'",
+    "step2": "Update 'cloud_config' section with provider-specific settings",
+    "step3": "Ensure 'worker_url' points to correct provider endpoint",
+    "step4": "JobRunner will automatically use the appropriate adapter"
+  }
+}
